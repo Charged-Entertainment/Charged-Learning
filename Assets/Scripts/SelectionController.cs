@@ -14,9 +14,13 @@ public class SelectionController : MonoBehaviour
     public List<ComponentBehavior> selectedGameObjects { get; private set; }
 
     [SerializeField] private Transform selectionArea;
+    [SerializeField] private Clipboard clipboard;
+
     void Awake()
     {
         selectedGameObjects = new List<ComponentBehavior>();
+        
+        selectionArea = Instantiate(selectionArea);
         selectionArea.gameObject.SetActive(false);
     }
 
@@ -37,7 +41,7 @@ public class SelectionController : MonoBehaviour
                 Mathf.Min(startPosition.x, currentMousePosition.x),
                 Mathf.Min(startPosition.y, currentMousePosition.y)
                 );
-                
+
             Vector3 topRight = new Vector3(
                 Mathf.Max(startPosition.x, currentMousePosition.x),
                 Mathf.Max(startPosition.y, currentMousePosition.y)
@@ -68,9 +72,72 @@ public class SelectionController : MonoBehaviour
 
         }
 
-        if(Input.GetMouseButtonDown(1)){
-            foreach(var selectedObject in selectedGameObjects){
-                selectedObject.flip();
+        if (Input.GetMouseButtonDown(1))
+        {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.FlipH();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl)) {
+            clipboard.Copy(selectedGameObjects.ToArray());
+        }
+
+        else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl)) {
+            clipboard.Paste(Utils.GetMouseWorldPosition());
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.Move(new Vector3(-1f,0,0));
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.Move(new Vector3(1f,0,0));
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.Move(new Vector3(0,1,0));
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.Move(new Vector3(0,-1,0));
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.H) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.FlipH();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.FlipV();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.Rotate(45);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.LeftControl)) {
+            foreach (var selectedObject in selectedGameObjects)
+            {
+                selectedObject.Rotate(-45);
             }
         }
     }
