@@ -1,0 +1,54 @@
+.row{
+    flex-direction: row;
+}
+
+
+#controls-bar{
+    background-color: #000;
+    padding: 10px 30px;
+    color: #fff;
+    font-family: jira;
+    justify-content: space-between;
+}
+
+#pause-section{
+    justify-content: center;
+}
+#pause-section #pause-button{
+    background-image: resource("pause.png");
+}
+
+Button{
+    border-width: 0;
+    background-color: transparent;
+    margin: 0 10;
+}
+
+#pause-section #pause-label{
+    align-self: center;
+
+}
+
+#level-name{
+    justify-content: center;
+}
+
+#controls-section{
+    justify-content: space-between;
+}
+
+#controls-section #play-button{
+    background-image: resource("play.svg");
+    /* background-color: #54EE3B; */
+    /* border-radius: 100%; */
+}
+
+#controls-section #reset-button{
+    /* background-image: resource("reset.png"); */
+    background-color: #EE3B46;
+    border-radius: 50%;
+}
+
+#controls-section #hint-button{
+    background-image: resource("hint.png");
+}

@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/background.uss?fileID=7433441132597879392&amp;guid=4866d5179ff3432aabba7c3363de9a28&amp;type=3#Background" />
+    <Style src="project://database/Assets/UI/editor.uss" />
+    <ui:VisualElement name="background">
+        <ui:VisualElement name="controls-bar" class="row"> 
+            <ui:VisualElement name="pause-section" class="row">
+                <ui:Button name="pause-button"/>
+                <ui:Label text="Pause" name="pause-label"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="level-name" class="row"> 
+                <ui:Label text="Level 1: 5mm LED Circuit" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="controls-section" class="row">
+                <ui:Button name="play-button" />
+                <ui:Button name="reset-button" />
+                <ui:Button name="hint-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
