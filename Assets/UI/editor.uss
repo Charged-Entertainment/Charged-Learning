@@ -1,12 +1,22 @@
+#main{
+    background-color: aqua;
+    flex-grow: 1;
+    background-image: resource("background.png");
+    color: #fff;
+
+}
+
 .row{
     flex-direction: row;
 }
 
+.col{
+    flex-direction: column;
+}
 
 #controls-bar{
     background-color: #000;
     padding: 10px 30px;
-    color: #fff;
     font-family: jira;
     justify-content: space-between;
 }
@@ -15,13 +25,15 @@
     justify-content: center;
 }
 #pause-section #pause-button{
-    background-image: resource("pause.png");
+    background-image: resource("pause");
 }
 
-Button{
+#controls-bar Button{
     border-width: 0;
     background-color: transparent;
     margin: 0 10;
+    height: 25px;
+    align-self: center;
 }
 
 #pause-section #pause-label{
@@ -38,17 +50,91 @@ Button{
 }
 
 #controls-section #play-button{
-    background-image: resource("play.svg");
-    /* background-color: #54EE3B; */
-    /* border-radius: 100%; */
+    background-image: resource("play");
+    border-radius: 100%;
 }
 
 #controls-section #reset-button{
-    /* background-image: resource("reset.png"); */
-    background-color: #EE3B46;
-    border-radius: 50%;
+    background-image: resource("reset");
+    border-radius: 100%;
 }
 
 #controls-section #hint-button{
-    background-image: resource("hint.png");
+    background-image: resource("hint");
+    border-radius: 100%;
+}
+
+#middle-section{
+    background-color: transparent;
+    flex-grow: 1;
+    justify-content: space-between;
+    
+}
+#toolbar{
+    background-color: #333;
+}
+
+#components-bar{
+    background-color: #333;
+}
+
+.toolbar-row{
+    width: 150px;
+    -unity-text-align: upper-center;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #707070;
+    padding: 0 10px;
+    
+}
+
+.toolbar-arrow{
+    align-self: center;
+    background-image: resource("right-arrow");
+    width: 7px;
+    height: 15px;
+}
+
+.left-arrow{
+    align-self: center;
+    background-image: resource("left-arrow");
+    width: 7px;
+    height: 15px;
+}
+
+.toolbar-label{
+    font-size: 10px;
+}
+
+.toolbar-header{
+    font-size: 20px;
+    -unity-font-style: bold;
+    background-color: #1B1B1B;
+    margin: 0;
+    padding: 10px 20px;
+    align-self: center;
+}
+
+
+#game-area{
+    flex-grow: 1;
+    background-color: transparent;
+}
+
+#bottom-bar{
+    padding: 10px 30px;
+    background-color: #000;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+#logo-image{
+    background-image: resource("logo");
+    width: 100px;
+    height: 25px;
+    align-self: center;
+}
+
+#status-label{
+    margin-left: 40%;
 }

@@ -1,22 +1,66 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/background.uss?fileID=7433441132597879392&amp;guid=4866d5179ff3432aabba7c3363de9a28&amp;type=3#Background" />
-    <Style src="project://database/Assets/UI/editor.uss" />
-    <ui:VisualElement name="background">
-        <ui:VisualElement name="controls-bar" class="row"> 
+    <Style src="project://database/Assets/UI/editor.uss?fileID=7433441132597879392&amp;guid=4312f48eec6c58950a0ed79a3bd8b17a&amp;type=3#editor" />
+    <ui:VisualElement name="main">
+        <ui:VisualElement name="controls-bar" class="row">
             <ui:VisualElement name="pause-section" class="row">
-                <ui:Button name="pause-button"/>
-                <ui:Label text="Pause" name="pause-label"/>
+                <ui:Button name="pause-button" />
+                <ui:Label text="Pause" name="pause-label" />
             </ui:VisualElement>
-
-            <ui:VisualElement name="level-name" class="row"> 
+            <ui:VisualElement name="level-name" class="row">
                 <ui:Label text="Level 1: 5mm LED Circuit" />
             </ui:VisualElement>
-
             <ui:VisualElement name="controls-section" class="row">
                 <ui:Button name="play-button" />
                 <ui:Button name="reset-button" />
                 <ui:Button name="hint-button" />
             </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="middle-section" class="row">
+            <ui:VisualElement name="toolbar" class="col">
+        
+                <ui:Label text="Tools" class="toolbar-header toolbar-row"/>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Calculator" class="toolbar-label"/>
+                    <ui:Image class="toolbar-arrow"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Tips" class="toolbar-label"/>
+                    <ui:Image class="toolbar-arrow"/>
+                </ui:VisualElement>
+                
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Links" class="toolbar-label"/>
+                    <ui:Image class="toolbar-arrow"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Collection" class="toolbar-label"/>
+                    <ui:Image class="toolbar-arrow"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Help" class="toolbar-label"/>
+                    <ui:Image class="toolbar-arrow"/>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+            
+            <ui:VisualElement name="game-area" />
+
+            <ui:VisualElement name="components-bar" class="col">
+            
+                <ui:VisualElement class="row toolbar-header toolbar-row">
+                    <ui:Image class="left-arrow"/>
+                    <ui:Label name="toolbar-header" text="Goals"/>
+                </ui:VisualElement>    
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="bottom-bar" class="row">
+            <ui:Image name="logo-image" />
+            <ui:Label name="status-label" text="Running..." />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

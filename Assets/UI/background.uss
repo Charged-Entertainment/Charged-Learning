@@ -1,5 +1,0 @@
-#background{
-    background-color: aqua;
-    flex-grow: 1;
-    background-image: resource("background.png");
-}
