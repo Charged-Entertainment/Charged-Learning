@@ -29,9 +29,9 @@ public class SelectionArea : MonoBehaviour
 
     public void Adjust(Vector2 currentPosition)
     {
-        transform.position -= sprite.bounds.extents;
+        // transform.position -= sprite.bounds.extents;
         transform.localScale = currentPosition - (Vector2)transform.position;
-        transform.position += sprite.bounds.extents;
+        // transform.position += sprite.bounds.extents;
     }
 
     public List<ComponentBehavior> GetSelection()
