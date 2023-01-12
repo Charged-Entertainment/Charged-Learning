@@ -10,7 +10,7 @@ public class SelectionManager : MonoBehaviour
     on them.
     */
 
-    public Dictionary<int, ComponentBehavior> selectedGameObjects { get; private set; }
+    private Dictionary<int, ComponentBehavior> selectedGameObjects;
 
     private SelectionArea selectionArea;
     private Clipboard clipboard;
@@ -33,10 +33,16 @@ public class SelectionManager : MonoBehaviour
         selectionArea.Disable();
         cm.componentMouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
         cm.componentMouseExited += (ComponentBehavior c) => { numberOfHovers--; };
+        
+        // This should probably be moved somewhere else
         cm.componentMouseDown += (ComponentBehavior c) =>
         {
-            if (!Input.GetKey(KeyCode.LeftShift)) Clear();
-            AddComponent(c);
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                // Clear();
+                AddComponent(c);
+            }
+            else InvertComponent(c);
         };
     }
 
@@ -61,7 +67,7 @@ public class SelectionManager : MonoBehaviour
             var selected = EndMultiSelect();
 
             if (!Input.GetKey(KeyCode.LeftShift)) Clear();
-            AddComponents(selected);
+            InvertComponents(selected);
         }
     }
 
@@ -85,9 +91,19 @@ public class SelectionManager : MonoBehaviour
         return t;
     }
 
-    public void AddComponent(ComponentBehavior component)
+    public void InvertComponent(ComponentBehavior component)
     {
         if (selectedGameObjects.ContainsKey(component.GetInstanceID())) RemoveComponent(component);
+        else
+        {
+            selectedGameObjects.Add(component.GetInstanceID(), component);
+            component.SetSelectedVisible(true);
+        }
+    }
+
+    public void AddComponent(ComponentBehavior component)
+    {
+        if (selectedGameObjects.ContainsKey(component.GetInstanceID())) return;
         else
         {
             selectedGameObjects.Add(component.GetInstanceID(), component);
@@ -99,6 +115,14 @@ public class SelectionManager : MonoBehaviour
     {
         selectedGameObjects.Remove(component.GetInstanceID());
         component.SetSelectedVisible(false);
+    }
+
+    public void InvertComponents(List<ComponentBehavior> components)
+    {
+        foreach (var component in components)
+        {
+            InvertComponent(component);
+        }
     }
 
     public void AddComponents(List<ComponentBehavior> components)
@@ -121,5 +145,10 @@ public class SelectionManager : MonoBehaviour
     {
         RemoveComponents(new List<ComponentBehavior>(selectedGameObjects.Values));
         selectedGameObjects.Clear(); // just to make sure
+    }
+
+    public List<ComponentBehavior> GetSelectedComponents()
+    {
+        return new List<ComponentBehavior>(selectedGameObjects.Values);
     }
 }
