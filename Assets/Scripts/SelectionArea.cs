@@ -8,7 +8,7 @@ public class SelectionArea : MonoBehaviour
 
     private void Start()
     {
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
     public void Enable()
     {
@@ -17,8 +17,6 @@ public class SelectionArea : MonoBehaviour
 
     public void Disable()
     {
-        transform.localScale = Vector2.zero;
-        transform.position = Vector2.zero;
         gameObject.SetActive(false);
     }
 
@@ -38,7 +36,7 @@ public class SelectionArea : MonoBehaviour
     {
         List<ComponentBehavior> matches = new List<ComponentBehavior>();
 
-        Collider2D[] collidedObjectsArray = Physics2D.OverlapAreaAll(sprite.bounds.min, sprite.bounds.max);
+        Collider2D[] collidedObjectsArray = Physics2D.OverlapAreaAll(transform.position, transform.localScale);
         foreach (var collidedObject in collidedObjectsArray)
         {
             ComponentBehavior componentObject = collidedObject.GetComponent<ComponentBehavior>();

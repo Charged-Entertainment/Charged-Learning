@@ -79,9 +79,10 @@ public class SelectionManager : MonoBehaviour
 
     List<ComponentBehavior> EndMultiSelect()
     {
+        var t = selectionArea.GetSelection();
         selectionArea.Disable();
         onGoingMultiSelect = false;
-        return selectionArea.GetSelection();
+        return t;
     }
 
     public void AddComponent(ComponentBehavior component)
