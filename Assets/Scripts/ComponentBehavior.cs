@@ -1,9 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ComponentBehavior : MonoBehaviour
 {
+
+    private ComponentManager cm;
+
+    private void Awake()
+    {
+        cm = GameObject.Find("ComponentManager").GetComponent<ComponentManager>();
+        gameObject.AddComponent<ObjectSnapping>();
+    }
 
     public void FlipH()
     {
@@ -42,7 +51,6 @@ public class ComponentBehavior : MonoBehaviour
     {
         if (selected)
         {
-
             foreach (Transform t in transform)
             {
                 t.GetComponent<SpriteRenderer>().color = Color.red;
@@ -56,5 +64,36 @@ public class ComponentBehavior : MonoBehaviour
             }
         }
 
+    }
+
+    // Events
+    private void OnMouseDown()
+    {
+        if (cm.componentMouseDown != null)
+            cm.componentMouseDown.Invoke(this);
+    }
+
+    private void OnMouseUp()
+    {
+        if (cm.componentMouseUp != null)
+            cm.componentMouseUp.Invoke(this);
+    }
+
+    private void OnMouseDrag()
+    {
+        if (cm.componentDragged != null)
+            cm.componentDragged.Invoke(this);
+    }
+
+    private void OnMouseEnter()
+    {
+        if (cm.componentMouseEntered != null)
+            cm.componentMouseEntered.Invoke(this);
+    }
+
+    private void OnMouseExit()
+    {
+        if (cm.componentMouseExited != null)
+            cm.componentMouseExited.Invoke(this);
     }
 }
