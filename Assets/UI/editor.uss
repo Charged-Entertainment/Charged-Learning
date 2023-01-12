@@ -1,18 +1,92 @@
 #main{
-    background-color: aqua;
     flex-grow: 1;
-    background-image: resource("background.png");
     color: #fff;
-
 }
 
 .row{
     flex-direction: row;
 }
 
+.row-reverse{
+    flex-direction: row-reverse;
+}
+
 .col{
     flex-direction: column;
 }
+
+.justify-content-center{
+    justify-content: center;
+}
+
+.text-center{
+    -unity-text-align: middle-center;
+
+}
+
+.self-center{
+    align-self: center;
+
+}
+
+.h1{
+    font-size: 20px;
+    -unity-font-style: bold;
+}
+
+.px-1{
+    padding: 0 10px;
+}
+.px-2{
+    padding: 0 20px;
+}
+.px-3{
+    padding: 0 30px;
+}
+.px-4{
+    padding: 0 40px;
+}
+.px-5{
+    padding: 0 50px;
+}
+
+
+.pl-1{
+    
+    padding-left: 10px;
+}
+.pl-2{
+    padding-left: 20px;
+}
+.pl-3{
+    padding-left: 30px;
+}
+.pl-4{
+    padding-left: 40px;
+}
+.pl-5{
+    padding-left: 40px;
+}
+
+
+.pr-1{
+    padding-right: 10px;
+}
+.pr-2{
+    padding-right: 20px;
+}
+.pr-3{
+    padding-right: 30px;
+}
+.pr-4{
+    padding-right: 40px;
+}
+
+.pr-5{
+    padding-right: 50px;
+}
+
+
 
 #controls-bar{
     background-color: #000;
@@ -24,7 +98,7 @@
 #pause-section{
     justify-content: center;
 }
-#pause-section #pause-button{
+#pause-section #pause-btn{
     background-image: resource("pause");
 }
 
@@ -49,17 +123,17 @@
     justify-content: space-between;
 }
 
-#controls-section #play-button{
+#controls-section #play-btn{
     background-image: resource("play");
     border-radius: 100%;
 }
 
-#controls-section #reset-button{
+#controls-section #reset-btn{
     background-image: resource("reset");
     border-radius: 100%;
 }
 
-#controls-section #hint-button{
+#controls-section #hint-btn{
     background-image: resource("hint");
     border-radius: 100%;
 }
@@ -79,7 +153,7 @@
 }
 
 .toolbar-row{
-    width: 150px;
+    width: 200px;
     -unity-text-align: upper-center;
     justify-content: space-between;
     align-items: center;
@@ -103,7 +177,7 @@
 }
 
 .toolbar-label{
-    font-size: 10px;
+    font-size: 15px;
 }
 
 .toolbar-header{
@@ -119,6 +193,51 @@
 #game-area{
     flex-grow: 1;
     background-color: transparent;
+    align-items: flex-end;
+}
+
+
+#editor-controls{
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+
+.editor-control-btn{
+    background-color: rgba(255, 255, 255, 0.15);
+    border-width: 0;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+#mouse-btn Image{
+    background-image: resource("mouse-pointer");
+    width: 20px;
+    height: 20px;
+    align-self: center;
+}
+
+#zoom-in-btn Image{
+    background-image: resource("zoom-in");
+    width: 25px;
+    height: 25px;
+    align-self: center;
+}
+
+#zoom-out-btn Image{
+    background-image: resource("zoom-out");
+    width: 25px;
+    height: 25px;
+    align-self: center;
+}
+
+#wiring-btn Image{
+    background-image: resource("wiring");
+    width: 35px;
+    height: 10px;
+    align-self: center;
 }
 
 #bottom-bar{
