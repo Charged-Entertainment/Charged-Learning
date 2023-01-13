@@ -1,5 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/editor.uss?fileID=7433441132597879392&amp;guid=4312f48eec6c58950a0ed79a3bd8b17a&amp;type=3#editor" />
+    <Style src="project://database/Assets/UI/utils.uss"/>
+    <Style src="project://database/Assets/UI/controls-bar.uss"/>
+    <Style src="project://database/Assets/UI/toolbar.uss"/>
+    <Style src="project://database/Assets/UI/game-area.uss"/>
+    <Style src="project://database/Assets/UI/bottom-bar.uss"/>
     <ui:VisualElement name="main">
 
         <ui:VisualElement name="controls-bar" class="row">
@@ -28,27 +33,27 @@
 
                 <ui:VisualElement class="row toolbar-row">
                     <ui:Label text="Calculator" class="toolbar-label pl-5"/>
-                    <ui:Image class="toolbar-arrow"/>
+                    <ui:Image class="right-arrow"/>
                 </ui:VisualElement>
 
                 <ui:VisualElement class="row toolbar-row">
                     <ui:Label text="Tips" class="toolbar-label pl-5"/>
-                    <ui:Image class="toolbar-arrow"/>
+                    <ui:Image class="right-arrow"/>
                 </ui:VisualElement>
                 
                 <ui:VisualElement class="row toolbar-row">
                     <ui:Label text="Links" class="toolbar-label pl-5"/>
-                    <ui:Image class="toolbar-arrow"/>
+                    <ui:Image class="right-arrow"/>
                 </ui:VisualElement>
 
                 <ui:VisualElement class="row toolbar-row">
                     <ui:Label text="Collection" class="toolbar-label pl-5"/>
-                    <ui:Image class="toolbar-arrow"/>
+                    <ui:Image class="right-arrow"/>
                 </ui:VisualElement>
 
                 <ui:VisualElement class="row toolbar-row">
                     <ui:Label text="Help" class="toolbar-label pl-5"/>
-                    <ui:Image class="toolbar-arrow"/>
+                    <ui:Image class="right-arrow"/>
                 </ui:VisualElement>
 
             </ui:VisualElement>

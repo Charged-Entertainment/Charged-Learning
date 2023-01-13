@@ -3,140 +3,6 @@
     color: #fff;
 }
 
-.row{
-    flex-direction: row;
-}
-
-.row-reverse{
-    flex-direction: row-reverse;
-}
-
-.col{
-    flex-direction: column;
-}
-
-.justify-content-center{
-    justify-content: center;
-}
-
-.text-center{
-    -unity-text-align: middle-center;
-
-}
-
-.self-center{
-    align-self: center;
-
-}
-
-.h1{
-    font-size: 20px;
-    -unity-font-style: bold;
-}
-
-.px-1{
-    padding: 0 10px;
-}
-.px-2{
-    padding: 0 20px;
-}
-.px-3{
-    padding: 0 30px;
-}
-.px-4{
-    padding: 0 40px;
-}
-.px-5{
-    padding: 0 50px;
-}
-
-
-.pl-1{
-    
-    padding-left: 10px;
-}
-.pl-2{
-    padding-left: 20px;
-}
-.pl-3{
-    padding-left: 30px;
-}
-.pl-4{
-    padding-left: 40px;
-}
-.pl-5{
-    padding-left: 40px;
-}
-
-
-.pr-1{
-    padding-right: 10px;
-}
-.pr-2{
-    padding-right: 20px;
-}
-.pr-3{
-    padding-right: 30px;
-}
-.pr-4{
-    padding-right: 40px;
-}
-
-.pr-5{
-    padding-right: 50px;
-}
-
-
-
-#controls-bar{
-    background-color: #000;
-    padding: 10px 30px;
-    font-family: jira;
-    justify-content: space-between;
-}
-
-#pause-section{
-    justify-content: center;
-}
-#pause-section #pause-btn{
-    background-image: resource("pause");
-}
-
-#controls-bar Button{
-    border-width: 0;
-    background-color: transparent;
-    margin: 0 10;
-    height: 25px;
-    align-self: center;
-}
-
-#pause-section #pause-label{
-    align-self: center;
-
-}
-
-#level-name{
-    justify-content: center;
-}
-
-#controls-section{
-    justify-content: space-between;
-}
-
-#controls-section #play-btn{
-    background-image: resource("play");
-    border-radius: 100%;
-}
-
-#controls-section #reset-btn{
-    background-image: resource("reset");
-    border-radius: 100%;
-}
-
-#controls-section #hint-btn{
-    background-image: resource("hint");
-    border-radius: 100%;
-}
 
 #middle-section{
     background-color: transparent;
@@ -144,29 +10,9 @@
     justify-content: space-between;
     
 }
-#toolbar{
-    background-color: #333;
-}
 
 #components-bar{
     background-color: #333;
-}
-
-.toolbar-row{
-    width: 200px;
-    -unity-text-align: upper-center;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #707070;
-    padding: 0 10px;
-    
-}
-
-.toolbar-arrow{
-    align-self: center;
-    background-image: resource("right-arrow");
-    width: 7px;
-    height: 15px;
 }
 
 .left-arrow{
@@ -176,84 +22,9 @@
     height: 15px;
 }
 
-.toolbar-label{
-    font-size: 15px;
-}
-
-.toolbar-header{
-    font-size: 20px;
-    -unity-font-style: bold;
-    background-color: #1B1B1B;
-    margin: 0;
-    padding: 10px 20px;
+.right-arrow{
     align-self: center;
-}
-
-
-#game-area{
-    flex-grow: 1;
-    background-color: transparent;
-    align-items: flex-end;
-}
-
-
-#editor-controls{
-    justify-content: space-between;
-    padding: 0px 20px;
-}
-
-.editor-control-btn{
-    background-color: rgba(255, 255, 255, 0.15);
-    border-width: 0;
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-}
-
-#mouse-btn Image{
-    background-image: resource("mouse-pointer");
-    width: 20px;
-    height: 20px;
-    align-self: center;
-}
-
-#zoom-in-btn Image{
-    background-image: resource("zoom-in");
-    width: 25px;
-    height: 25px;
-    align-self: center;
-}
-
-#zoom-out-btn Image{
-    background-image: resource("zoom-out");
-    width: 25px;
-    height: 25px;
-    align-self: center;
-}
-
-#wiring-btn Image{
-    background-image: resource("wiring");
-    width: 35px;
-    height: 10px;
-    align-self: center;
-}
-
-#bottom-bar{
-    padding: 10px 30px;
-    background-color: #000;
-    align-items: flex-start;
-    justify-content: space-evenly;
-}
-
-#logo-image{
-    background-image: resource("logo");
-    width: 100px;
-    height: 25px;
-    align-self: center;
-}
-
-#status-label{
-    margin-left: 40%;
+    background-image: resource("right-arrow");
+    width: 7px;
+    height: 15px;
 }

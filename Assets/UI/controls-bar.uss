@@ -1,0 +1,50 @@
+#controls-bar{
+    background-color: #000;
+    padding: 10px 30px;
+    font-family: jira;
+    justify-content: space-between;
+}
+
+#pause-section{
+    justify-content: center;
+}
+#pause-section #pause-btn{
+    background-image: resource("pause");
+}
+
+#controls-bar Button{
+    border-width: 0;
+    background-color: transparent;
+    margin: 0 10;
+    height: 25px;
+    align-self: center;
+}
+
+#pause-section #pause-label{
+    align-self: center;
+
+}
+
+
+#level-name{
+    justify-content: center;
+}
+
+#controls-section{
+    justify-content: space-between;
+}
+
+#controls-section #play-btn{
+    background-image: resource("play");
+    border-radius: 100%;
+}
+
+#controls-section #reset-btn{
+    background-image: resource("reset");
+    border-radius: 100%;
+}
+
+#controls-section #hint-btn{
+    background-image: resource("hint");
+    border-radius: 100%;
+}
