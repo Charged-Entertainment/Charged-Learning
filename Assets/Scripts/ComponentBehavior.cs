@@ -47,6 +47,10 @@ public class ComponentBehavior : MonoBehaviour
         else transform.rotation = Quaternion.Euler(x, y, value);
     }
 
+    public void Destroy() {
+        GameObject.Destroy(gameObject);
+    }
+
     public void SetSelectedVisible(bool selected)
     {
         if (selected)
