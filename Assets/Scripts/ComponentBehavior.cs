@@ -70,6 +70,12 @@ public class ComponentBehavior : MonoBehaviour
 
     }
 
+    public Bounds GetBounds(){
+
+        Bounds bounds = transform.GetComponent<Collider2D>().bounds;
+        return bounds;
+    }
+
     // Events
     private void OnMouseDown()
     {
@@ -100,4 +106,5 @@ public class ComponentBehavior : MonoBehaviour
         if (cm.componentMouseExited != null)
             cm.componentMouseExited.Invoke(this);
     }
+
 }

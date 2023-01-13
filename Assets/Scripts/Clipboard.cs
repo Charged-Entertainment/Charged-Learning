@@ -8,10 +8,14 @@ public class Clipboard : MonoBehaviour
     {
         Debug.Log("Copying!");
         Clear();
+        Bounds bounds = Utils.GetBoundsOfComponentBehaviorArray(components);
+
+        transform.position = bounds.center;
 
         foreach (var component in components)
         {
             ComponentBehavior copy = Instantiate(component, transform);
+            copy.transform.position -= transform.position;
             copy.gameObject.SetActive(false);
 
             if (isCut) GameObject.Destroy(component);

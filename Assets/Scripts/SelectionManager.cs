@@ -92,6 +92,13 @@ public class SelectionManager : MonoBehaviour
             if (!Input.GetKey(KeyCode.LeftShift)) Clear();
             InvertComponents(selected);
         }
+        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl)) {
+            clipboard.Copy(new List<ComponentBehavior>(selectedGameObjects.Values).ToArray());
+        }
+
+        else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl)) {
+            clipboard.Paste(Utils.GetMouseWorldPosition());
+        }
     }
 
     void StartMultiSelect()
