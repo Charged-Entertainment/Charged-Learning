@@ -24,6 +24,10 @@ public class SelectionManager : MonoBehaviour
         selectedGameObjects = new Dictionary<int, ComponentBehavior>();
     }
 
+    Vector3 mouseDownStartPosition;
+    bool handleOnMouseUp = false;
+    bool shiftWasClickedOnMouseDown = false;
+
     private void Start()
     {
         selectionArea = GameObject.Find("SelectionArea").GetComponent<SelectionArea>();
@@ -33,16 +37,35 @@ public class SelectionManager : MonoBehaviour
         selectionArea.Disable();
         cm.componentMouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
         cm.componentMouseExited += (ComponentBehavior c) => { numberOfHovers--; };
-        
+
         // This should probably be moved somewhere else
         cm.componentMouseDown += (ComponentBehavior c) =>
         {
-            if (!Input.GetKey(KeyCode.LeftShift))
+            bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
+            bool isSelected = selectedGameObjects.ContainsKey(c.GetInstanceID());
+
+            mouseDownStartPosition = Utils.GetMouseWorldPosition();
+            if (shiftClicked)
             {
-                // Clear();
-                AddComponent(c);
+                if (!isSelected) AddComponent(c);
+                else { handleOnMouseUp = true; shiftWasClickedOnMouseDown = true; }
             }
-            else InvertComponent(c);
+            else
+            {
+                if (!isSelected) { Clear(); AddComponent(c); }
+                else if (selectedGameObjects.Count > 1) { handleOnMouseUp = true; }
+            }
+        };
+
+        cm.componentMouseUp += (ComponentBehavior c) =>
+        {
+            if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
+            {
+                if (shiftWasClickedOnMouseDown) { InvertComponent(c); }
+                else { Clear(); AddComponent(c); }
+            }
+            handleOnMouseUp = false;
+            shiftWasClickedOnMouseDown = false;
         };
     }
 
