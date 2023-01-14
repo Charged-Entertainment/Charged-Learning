@@ -8,7 +8,7 @@ public class ComponentBehavior : MonoBehaviour
 
     private ComponentManager cm;
 
-    private void Awake()
+    private void Start()
     {
         cm = GameObject.Find("MainManager").GetComponent<MainManager>().componentManager;
         gameObject.AddComponent<ObjectSnapping>();
