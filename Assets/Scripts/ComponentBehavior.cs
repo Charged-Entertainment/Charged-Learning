@@ -10,7 +10,7 @@ public class ComponentBehavior : MonoBehaviour
 
     private void Awake()
     {
-        cm = GameObject.Find("ComponentManager").GetComponent<ComponentManager>();
+        cm = GameObject.Find("MainManager").GetComponent<MainManager>().componentManager;
         gameObject.AddComponent<ObjectSnapping>();
     }
 

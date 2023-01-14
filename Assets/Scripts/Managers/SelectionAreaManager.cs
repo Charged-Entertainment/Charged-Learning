@@ -2,18 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionArea : MonoBehaviour
+public class SelectionAreaManager : Manager
 {
-
-    public void Enable()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void Disable()
-    {
-        gameObject.SetActive(false);
-    }
 
     public void SetAnchorPoint(Vector2 point)
     {

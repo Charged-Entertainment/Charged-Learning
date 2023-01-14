@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionManager : MonoBehaviour
+public class SelectionManager : Manager
 {
     /*
     Any operations that should be performed on selected objects will first query
@@ -12,17 +12,9 @@ public class SelectionManager : MonoBehaviour
 
     private Dictionary<int, ComponentBehavior> selectedGameObjects;
 
-    private SelectionArea selectionArea;
-    private Clipboard clipboard;
-
-    private ComponentManager cm;
+    public SelectionAreaManager selectionArea;
 
     private byte numberOfHovers = 0;
-
-    void Awake()
-    {
-        selectedGameObjects = new Dictionary<int, ComponentBehavior>();
-    }
 
     Vector3 mouseDownStartPosition;
     bool handleOnMouseUp = false;
@@ -30,10 +22,11 @@ public class SelectionManager : MonoBehaviour
 
     private void Start()
     {
-        selectionArea = GameObject.Find("SelectionArea").GetComponent<SelectionArea>();
-        cm = GameObject.Find("ComponentManager").GetComponent<ComponentManager>();
-        clipboard = GameObject.Find("Clipboard").GetComponent<Clipboard>();
+        selectedGameObjects = new Dictionary<int, ComponentBehavior>();
+        
+        selectionArea = Instantiate(((GameObject)Resources.Load("SelectionArea"))).GetComponent<SelectionAreaManager>();
 
+        var cm = mainManager.componentManager;
         selectionArea.Disable();
         cm.componentMouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
         cm.componentMouseExited += (ComponentBehavior c) => { numberOfHovers--; };
@@ -92,12 +85,14 @@ public class SelectionManager : MonoBehaviour
             if (!Input.GetKey(KeyCode.LeftShift)) Clear();
             InvertComponents(selected);
         }
-        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl)) {
-            clipboard.Copy(new List<ComponentBehavior>(selectedGameObjects.Values).ToArray());
+        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
+        {
+            mainManager.clipboardManager.Copy(new List<ComponentBehavior>(selectedGameObjects.Values).ToArray());
         }
 
-        else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl)) {
-            clipboard.Paste(Utils.GetMouseWorldPosition());
+        else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
+        {
+            mainManager.clipboardManager.Paste(Utils.GetMouseWorldPosition());
         }
     }
 

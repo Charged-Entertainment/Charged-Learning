@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clipboard : MonoBehaviour
+public class ClipboardManager : Manager
 {
     public void Copy(ComponentBehavior[] components, bool isCut = false)
     {
