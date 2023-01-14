@@ -14,9 +14,9 @@ public class ClipboardManager : Manager
 
         foreach (var component in components)
         {
-            ComponentBehavior copy = Instantiate(component, transform);
+            ComponentBehavior copy = mainManager.componentManager.ComponentInstantiate(component, transform);
             copy.transform.position -= transform.position;
-            copy.gameObject.SetActive(false);
+            copy.Disable();
 
             if (isCut) GameObject.Destroy(component);
         }
@@ -29,7 +29,7 @@ public class ClipboardManager : Manager
 
         foreach (var component in GetContent())
         {
-            component.gameObject.SetActive(true);
+            component.Enable();
             component.gameObject.transform.parent = null;
         }
 

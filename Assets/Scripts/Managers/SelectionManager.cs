@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -101,9 +102,10 @@ public class SelectionManager : Manager
         selectedGameObjects.Clear(); // just to make sure
     }
 
-    public List<ComponentBehavior> GetSelectedComponents()
+    public List<ComponentBehavior> GetSelectedComponents(bool includeDisabled = false)
     {
-        return new List<ComponentBehavior>(selectedGameObjects.Values);
+        if (includeDisabled) return new List<ComponentBehavior>(selectedGameObjects.Values); 
+        return selectedGameObjects.Values.Where(c => c.IsEnabled()).ToList();
     }
 
     public bool IsSelected(ComponentBehavior c) {

@@ -12,4 +12,18 @@ public class ComponentManager : Manager
     public Action<ComponentBehavior> componentMouseDown;
     public Action<ComponentBehavior> componentMouseUp;
     public Action<ComponentBehavior> componentDragged;
+
+
+    // Handle all that should happen when creating a new component.
+    public ComponentBehavior ComponentInstantiate(ComponentBehavior original, Transform parent)
+    {
+        ComponentBehavior copy = Instantiate(original, parent);
+        
+        var sm = mainManager.selectionManager;
+        bool selected = sm.IsSelected(original);  
+        copy.SetSelectedVisible(selected);
+        if (selected) sm.AddComponent(copy);
+
+        return copy;
+    }
 }
