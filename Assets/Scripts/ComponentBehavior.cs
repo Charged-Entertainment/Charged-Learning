@@ -76,6 +76,18 @@ public class ComponentBehavior : MonoBehaviour
         return bounds;
     }
 
+    public bool IsEnabled() {
+        return gameObject.activeSelf;
+    }
+
+    public void Enable() {
+        gameObject.SetActive(true);
+    }
+
+    public void Disable() {
+        gameObject.SetActive(false);
+    }
+
     // Events
     private void OnMouseDown()
     {
