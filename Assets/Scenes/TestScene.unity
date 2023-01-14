@@ -330,6 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1419752655}
+  - component: {fileID: 1419752656}
   m_Layer: 0
   m_Name: MainController
   m_TagString: Untagged
@@ -352,6 +353,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1419752656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419752654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 805ad534e195f6320b1cad6e356da61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756417689
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,8 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d494176cf596870a5b003d5a44f549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionAreaPrefab: {fileID: 2951339601913728463, guid: 40aad3bfb4c5c96d9943e49b4dd70410, type: 3}
-  clipboardPrefab: {fileID: 400865296270340955, guid: a8209900b56c5bb5eb378f263d933a22, type: 3}
 --- !u!4 &1756417691
 Transform:
   m_ObjectHideFlags: 0

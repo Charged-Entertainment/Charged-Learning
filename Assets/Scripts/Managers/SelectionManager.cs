@@ -12,103 +12,32 @@ public class SelectionManager : Manager
 
     private Dictionary<int, ComponentBehavior> selectedGameObjects;
 
-    public SelectionAreaManager selectionArea;
+    private SelectionAreaManager selectionArea;
 
-    private byte numberOfHovers = 0;
-
-    Vector3 mouseDownStartPosition;
-    bool handleOnMouseUp = false;
-    bool shiftWasClickedOnMouseDown = false;
+    
 
     private void Start()
     {
         selectedGameObjects = new Dictionary<int, ComponentBehavior>();
         
         selectionArea = Instantiate(((GameObject)Resources.Load("SelectionArea"))).GetComponent<SelectionAreaManager>();
-
-        var cm = mainManager.componentManager;
-        selectionArea.Disable();
-        cm.componentMouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
-        cm.componentMouseExited += (ComponentBehavior c) => { numberOfHovers--; };
-
-        // This should probably be moved somewhere else
-        cm.componentMouseDown += (ComponentBehavior c) =>
-        {
-            bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
-            bool isSelected = selectedGameObjects.ContainsKey(c.GetInstanceID());
-
-            mouseDownStartPosition = Utils.GetMouseWorldPosition();
-            if (shiftClicked)
-            {
-                if (!isSelected) AddComponent(c);
-                else { handleOnMouseUp = true; shiftWasClickedOnMouseDown = true; }
-            }
-            else
-            {
-                if (!isSelected) { Clear(); AddComponent(c); }
-                else if (selectedGameObjects.Count > 1) { handleOnMouseUp = true; }
-            }
-        };
-
-        cm.componentMouseUp += (ComponentBehavior c) =>
-        {
-            if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
-            {
-                if (shiftWasClickedOnMouseDown) { InvertComponent(c); }
-                else { Clear(); AddComponent(c); }
-            }
-            handleOnMouseUp = false;
-            shiftWasClickedOnMouseDown = false;
-        };
     }
 
-    bool onGoingMultiSelect = false;
+    public bool onGoingMultiSelect {get; private set;} = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && numberOfHovers == 0) //0=Left click
-        {
-            if (!Input.GetKey(KeyCode.LeftShift)) Clear();
-            StartMultiSelect();
-        }
-
-        if (Input.GetMouseButton(0) && onGoingMultiSelect)
-        {
-            MultiSelect();
-        }
-
-        if (Input.GetMouseButtonUp(0) && onGoingMultiSelect)
-        {
-            var selected = EndMultiSelect();
-
-            if (!Input.GetKey(KeyCode.LeftShift)) Clear();
-            InvertComponents(selected);
-        }
-        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
-        {
-            mainManager.clipboardManager.Copy(new List<ComponentBehavior>(selectedGameObjects.Values).ToArray());
-        }
-
-        else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
-        {
-            mainManager.clipboardManager.Paste(Utils.GetMouseWorldPosition());
-        }
-    }
-
-    void StartMultiSelect()
+    public void StartMultiSelect(Vector2 anchor)
     {
         onGoingMultiSelect = true;
         selectionArea.Enable();
-        selectionArea.SetAnchorPoint(Utils.GetMouseWorldPosition());
+        selectionArea.SetAnchorPoint(anchor);
     }
 
-    void MultiSelect()
+    public void AdjuctMultiSelect(Vector2 point)
     {
-        selectionArea.Adjust(Utils.GetMouseWorldPosition());
+        selectionArea.Adjust(point);
     }
 
-    List<ComponentBehavior> EndMultiSelect()
+    public List<ComponentBehavior> EndMultiSelect()
     {
         var t = selectionArea.GetSelection();
         selectionArea.Disable();
@@ -175,5 +104,9 @@ public class SelectionManager : Manager
     public List<ComponentBehavior> GetSelectedComponents()
     {
         return new List<ComponentBehavior>(selectedGameObjects.Values);
+    }
+
+    public bool IsSelected(ComponentBehavior c) {
+        return selectedGameObjects.ContainsKey(c.GetInstanceID());
     }
 }
