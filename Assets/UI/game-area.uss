@@ -1,0 +1,49 @@
+#game-area{
+    flex-grow: 1;
+    background-color: transparent;
+    align-items: flex-end;
+}
+
+
+#editor-controls{
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+
+.editor-control-btn{
+    background-color: rgba(255, 255, 255, 0.15);
+    border-width: 0;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+#mouse-btn Image{
+    background-image: resource("mouse-pointer");
+    width: 20px;
+    height: 20px;
+    align-self: center;
+}
+
+#zoom-in-btn Image{
+    background-image: resource("zoom-in");
+    width: 25px;
+    height: 25px;
+    align-self: center;
+}
+
+#zoom-out-btn Image{
+    background-image: resource("zoom-out");
+    width: 25px;
+    height: 25px;
+    align-self: center;
+}
+
+#wiring-btn Image{
+    background-image: resource("wiring");
+    width: 35px;
+    height: 10px;
+    align-self: center;
+}

@@ -1,0 +1,30 @@
+#main{
+    flex-grow: 1;
+    color: #fff;
+}
+
+
+#middle-section{
+    background-color: transparent;
+    flex-grow: 1;
+    justify-content: space-between;
+    
+}
+
+#components-bar{
+    background-color: #333;
+}
+
+.left-arrow{
+    align-self: center;
+    background-image: resource("left-arrow");
+    width: 7px;
+    height: 15px;
+}
+
+.right-arrow{
+    align-self: center;
+    background-image: resource("right-arrow");
+    width: 7px;
+    height: 15px;
+}

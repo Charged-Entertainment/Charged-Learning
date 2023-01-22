@@ -1,0 +1,139 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/editor.uss?fileID=7433441132597879392&amp;guid=4312f48eec6c58950a0ed79a3bd8b17a&amp;type=3#editor" />
+    <Style src="project://database/Assets/UI/utils.uss"/>
+    <Style src="project://database/Assets/UI/controls-bar.uss"/>
+    <Style src="project://database/Assets/UI/toolbar.uss"/>
+    <Style src="project://database/Assets/UI/game-area.uss"/>
+    <Style src="project://database/Assets/UI/bottom-bar.uss"/>
+    <ui:VisualElement name="main">
+
+        <ui:VisualElement name="controls-bar" class="row">
+
+            <ui:VisualElement name="pause-section" class="row">
+                <ui:Button name="pause-btn" />
+                <ui:Label text="Pause" name="pause-label" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="level-name" class="row">
+                <ui:Label text="Level 1: 5mm LED Circuit" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="controls-section" class="row">
+                <ui:Button name="play-btn" />
+                <ui:Button name="reset-btn" />
+                <ui:Button name="hint-btn" />
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <ui:VisualElement name="middle-section" class="row">
+            <ui:VisualElement name="toolbar" class="col">
+        
+                <ui:Label text="Tools" class="toolbar-header toolbar-row"/>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Calculator" class="toolbar-label pl-5"/>
+                    <ui:Image class="right-arrow"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Tips" class="toolbar-label pl-5"/>
+                    <ui:Image class="right-arrow"/>
+                </ui:VisualElement>
+                
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Links" class="toolbar-label pl-5"/>
+                    <ui:Image class="right-arrow"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Collection" class="toolbar-label pl-5"/>
+                    <ui:Image class="right-arrow"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="row toolbar-row">
+                    <ui:Label text="Help" class="toolbar-label pl-5"/>
+                    <ui:Image class="right-arrow"/>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+            
+            <ui:VisualElement name="game-area" class="row-reverse">
+                <ui:VisualElement name="editor-controls" class="row">
+                    <ui:VisualElement class="col px-1">
+
+                        <ui:Button name="mouse-btn" class="editor-control-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Label text="ctrl v"/>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="col px-1">
+
+                        <ui:Button name="zoom-in-btn" class="editor-control-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Label text="ctrl +"/>
+
+                    </ui:VisualElement>
+
+
+                    <ui:VisualElement class="col px-1">
+                        <ui:Button name="zoom-out-btn" class="editor-control-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Label text="ctrl -"/>
+                        
+
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="col px-1">
+                        <ui:Button name="wiring-btn" class="editor-control-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Label text="ctrl w"/>
+
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="components-bar" class="col">
+            
+                <ui:VisualElement class="row toolbar-header toolbar-row">
+                    <ui:Image class="left-arrow"/>
+                    <ui:Label text="Goals" class="pr-4"/>
+                </ui:VisualElement> 
+
+                <ui:VisualElement class="col">
+                    <ui:VisualElement class="justify-content-center">
+                        <ui:Label text="Components" class="text-center h1"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="col">
+                        <ui:Label text="5mm Red LED" class="text-center"/>
+                        <ui:Image class="self-center" style='background-image: resource("led"); width:50px; height:100px;'/>
+                        <ui:Label text="x0" class="text-center"/>
+
+                    </ui:VisualElement> 
+
+                    <ui:VisualElement class="col">
+                        <ui:Label text="5mm Red LED" class="text-center"/>
+                        <ui:Image class="self-center" style='background-image: resource("resistor"); width:100px; height:30px;'/>
+                        <ui:Label text="x0" class="text-center"/>
+
+                    </ui:VisualElement> 
+                </ui:VisualElement> 
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="bottom-bar" class="row">
+            <ui:Image name="logo-image" />
+            <ui:Label name="status-label" text="Running..." />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

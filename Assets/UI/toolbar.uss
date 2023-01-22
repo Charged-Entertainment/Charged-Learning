@@ -1,0 +1,27 @@
+#toolbar{
+    background-color: #333;
+}
+
+.toolbar-row{
+    width: 200px;
+    -unity-text-align: upper-center;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #707070;
+    padding: 0 10px;
+    
+}
+
+.toolbar-label{
+    font-size: 15px;
+}
+
+.toolbar-header{
+    font-size: 20px;
+    -unity-font-style: bold;
+    background-color: #1B1B1B;
+    margin: 0;
+    padding: 10px 20px;
+    align-self: center;
+}
+
