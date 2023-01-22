@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class MainController : Controller
 {
-    private void Awake() {
+    private void Awake()
+    {
         gameObject.AddComponent<ClipboardController>();
-        gameObject.AddComponent<SelectionController>();
+        // gameObject.AddComponent<SelectionController>();
         gameObject.AddComponent<TransformationController>();
+        gameObject.AddComponent<CameraController>();
     }
-    
-    // TODO: add public (generic?) methods to enable and disable managers.
-    // public void EnableManager<T>() {
-
-    // }
-
-    // public void DisableManager<T>() {
-
-    // }
 }
