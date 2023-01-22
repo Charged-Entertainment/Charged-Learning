@@ -6,7 +6,7 @@ abstract public class Manager : MonoBehaviour, IManager
 {
     protected MainManager mainManager;
 
-    private void Awake() {
+    protected virtual void Awake() {
         mainManager = GameObject.Find("MainManager").GetComponent<MainManager>();
     }
     public void Enable() {

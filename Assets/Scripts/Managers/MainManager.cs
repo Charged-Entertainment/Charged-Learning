@@ -8,7 +8,7 @@ public class MainManager : Manager
     public SelectionManager selectionManager { get; private set; }
     public ClipboardManager clipboardManager { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
         selectionManager = gameObject.AddComponent<SelectionManager>();
         componentManager = gameObject.AddComponent<ComponentManager>();

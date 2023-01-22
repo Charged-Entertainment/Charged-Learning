@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainController : Controller
 {
-    private void Awake()
+    protected override void Awake()
     {
         gameObject.AddComponent<ClipboardController>();
         // gameObject.AddComponent<SelectionController>();

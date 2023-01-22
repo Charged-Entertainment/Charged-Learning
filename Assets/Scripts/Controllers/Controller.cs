@@ -7,7 +7,7 @@ abstract public class Controller : MonoBehaviour, IController
     protected MainController mainController;
     protected MainManager mainManager;
 
-    private void Awake() {
+    virtual protected void Awake() {
         mainController = GameObject.Find("MainController").GetComponent<MainController>();
         mainManager = GameObject.Find("MainManager").GetComponent<MainManager>();
     }
