@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MainController : Controller
 {
-    ClipboardController clipboardController;
-    SelectionController selectionController;
-    TransformationController transformationController;
-    DragController dragController;
-    PanController panController;
-    ZoomController zoomController;
+    public ClipboardController clipboardController;
+    public SelectionController selectionController;
+    public TransformationController transformationController;
+    public DragController dragController;
+    public PanController panController;
+    public ZoomController zoomController;
 
     protected override void Awake()
     {
