@@ -17,9 +17,6 @@ public class MainController : Controller
         transformationController = gameObject.AddComponent<TransformationController>();
         zoomController = gameObject.AddComponent<ZoomController>();
         panController = gameObject.AddComponent<PanController>();
-        
-        // Temp
-        DisableController(panController);
     }
 
     public void EnableController(Controller controller)
