@@ -4,11 +4,31 @@ using UnityEngine;
 
 public class MainController : Controller
 {
+    ClipboardController clipboardController;
+    SelectionController selectionController;
+    TransformationController transformationController;
+    PanController panController;
+    ZoomController zoomController;
+
     protected override void Awake()
     {
-        gameObject.AddComponent<ClipboardController>();
-        // gameObject.AddComponent<SelectionController>();
-        gameObject.AddComponent<TransformationController>();
-        gameObject.AddComponent<CameraController>();
+        clipboardController = gameObject.AddComponent<ClipboardController>();
+        selectionController = gameObject.AddComponent<SelectionController>();
+        transformationController = gameObject.AddComponent<TransformationController>();
+        zoomController = gameObject.AddComponent<ZoomController>();
+        panController = gameObject.AddComponent<PanController>();
+        
+        // Temp
+        DisableController(panController);
+    }
+
+    public void EnableController(Controller controller)
+    {
+        controller.Enable();
+    }
+
+    public void DisableController(Controller controller)
+    {
+        controller.Disable();
     }
 }

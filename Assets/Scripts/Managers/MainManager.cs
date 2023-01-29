@@ -15,12 +15,11 @@ public class MainManager : Manager
         clipboardManager = Instantiate(((GameObject)Resources.Load("Clipboard"))).GetComponent<ClipboardManager>();
     }
 
-    // TODO: add public (generic?) methods to enable and disable managers.
-    // public void EnableManager<T>() {
+    public void EnableManager(Manager manager) {
+        manager.Enable();
+    }
 
-    // }
-
-    // public void DisableManager<T>() {
-
-    // }
+    public void DisableManager(Manager manager) {
+        manager.Disable();
+    }
 }

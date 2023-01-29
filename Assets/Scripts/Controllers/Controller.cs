@@ -13,10 +13,10 @@ abstract public class Controller : MonoBehaviour, IController
     }
 
     public void Enable() {
-        gameObject.SetActive(true);
+        enabled = true;
     }
 
     public void Disable() {
-        gameObject.SetActive(false);
+        enabled = false;
     }
 }
