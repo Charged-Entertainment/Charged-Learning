@@ -28,7 +28,6 @@ public class UiTerminal : MonoBehaviour
     void Start()
     {
         logs = new List<string> { "log1", "log2" };
-        testGoals = new List<string> { "measure whatever in whatever and so whatever", "measure whatever in whatever", "measure whatever in whatever" };
 
         windowState = WindowState.Normal;
         drawLogs = false;
@@ -38,6 +37,8 @@ public class UiTerminal : MonoBehaviour
 
     void OnEnable()
     {
+        testGoals = new List<string> { "measure whatever in whatever and so whatever", "measure whatever in whatever", "measure whatever in whatever" };
+        
         var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
         var terminalInstance = rootVisualElement.Q("terminal-instance");
 
