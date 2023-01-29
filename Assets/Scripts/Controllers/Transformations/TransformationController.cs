@@ -4,30 +4,6 @@ using UnityEngine;
 
 public class TransformationController : Controller
 {
-    private void Start()
-    {
-        mainManager.componentManager.componentMouseDown += SetCursorLastSeen;
-        mainManager.componentManager.componentDragged += MoveSelectedObjectsOnDrag;
-    }
-
-    Vector3 lastSeen;
-
-    void SetCursorLastSeen(ComponentBehavior component)
-    {
-        lastSeen = Utils.GetMouseWorldPosition();
-    }
-
-    void MoveSelectedObjectsOnDrag(ComponentBehavior component)
-    {
-        var currMousePos = Utils.GetMouseWorldPosition();
-
-        foreach (var obj in mainManager.selectionManager.GetSelectedComponents())
-        {
-            obj.transform.position += currMousePos - lastSeen;
-        }
-        lastSeen = currMousePos;
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftControl))
