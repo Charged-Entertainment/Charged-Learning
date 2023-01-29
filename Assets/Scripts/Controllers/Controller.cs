@@ -12,11 +12,11 @@ abstract public class Controller : MonoBehaviour, IController
         mainManager = GameObject.Find("MainManager").GetComponent<MainManager>();
     }
 
-    public void Enable() {
+    virtual public void Enable() {
         enabled = true;
     }
 
-    public void Disable() {
+    virtual public void Disable() {
         enabled = false;
     }
 }
