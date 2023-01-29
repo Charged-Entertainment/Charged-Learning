@@ -13,22 +13,16 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
-        <ui:VisualElement name="body" class="pl-2">
-            <ui:ScrollView>
+        <ui:VisualElement name="body" class="pl-2 mb-2 pb-2">
+            <ui:ScrollView name="scroll-view">
+                <ui:Label text="Goals" />
                 <ui:VisualElement name="goals">
-                    <ui:Label text="Goals" />
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
+
                 </ui:VisualElement>
 
+                <ui:Label text="Logs" />
                 <ui:VisualElement name="logs">
-                    <ui:Label text="Logs" />
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
-                    <ui:Label text="-Measure whatever component" class="ml-1"/>
+
                 </ui:VisualElement>
             </ui:ScrollView>
             

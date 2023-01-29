@@ -83,6 +83,25 @@
 }
 
 
+.pb-1{
+    padding-bottom: 10px;
+}
+.pb-2{
+    padding-bottom: 20px;
+}
+.pb-3{
+    padding-bottom: 30px;
+}
+.pb-4{
+    padding-bottom: 40px;
+}
+
+.pb-5{
+    padding-bottom: 50px;
+}
+
+
+
 .ml-1{
     
     margin-left: 10px;

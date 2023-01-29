@@ -62,9 +62,10 @@
 
             </ui:VisualElement>
 
-            <!-- <ui:Instance template="Terminal" name="terminal-instance"/> -->
+            
             
             <ui:VisualElement name="game-area" class="row-reverse">
+                <ui:Instance template="Terminal" name="terminal-instance"/>
                 <ui:VisualElement name="editor-controls" class="row">
                     <ui:VisualElement class="col px-1">
 
