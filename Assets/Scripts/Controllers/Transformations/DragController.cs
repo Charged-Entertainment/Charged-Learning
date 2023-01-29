@@ -23,7 +23,7 @@ public class DragController : Controller
 
         foreach (var obj in mainManager.selectionManager.GetSelectedComponents())
         {
-            obj.transform.position += currMousePos - lastSeen;
+            obj.Move(currMousePos - lastSeen);
         }
         lastSeen = currMousePos;
     }
