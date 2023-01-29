@@ -65,7 +65,6 @@
             
             
             <ui:VisualElement name="game-area" class="row-reverse">
-                <ui:Instance template="Terminal" name="terminal-instance"/>
                 <ui:VisualElement name="editor-controls" class="row">
                     <ui:VisualElement class="col px-1">
 
@@ -141,6 +140,9 @@
             <ui:Image name="logo-image" />
             <ui:Label name="status-label" text="Running..." />
         </ui:VisualElement>
+
+
+        <ui:Instance template="Terminal" name="terminal-instance"/>
 
     </ui:VisualElement>
 </ui:UXML>

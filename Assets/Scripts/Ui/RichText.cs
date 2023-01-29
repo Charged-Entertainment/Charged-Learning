@@ -35,19 +35,23 @@ public class RichText
         return t.HTML;
     }
 
-    public static RichText Italic<T>(T text){
+    public static implicit operator RichText(string str){
+        return new RichText(str);
+    }
+
+    public static RichText Italic(RichText text){
         return new RichText($"<i>{text}</i>");
     }
 
-    public static RichText Color<T>(T text, PaletteColor color){
+    public static RichText Color(RichText text, PaletteColor color){
         return new RichText($"<color={color}>{text}</color>");
     }
 
-    public static RichText Color<T>(T text, string color){
+    public static RichText Color(RichText text, string color){
         return new RichText($"<color={color}>{text}</color>");
     }
 
-    public static RichText Bold<T>(T text){
+    public static RichText Bold(RichText text){
         return new RichText($"<b>{text}</b>");
     }
     //... more tags can be added

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,7 +13,8 @@ enum WindowState
 
 public class UiTerminal : MonoBehaviour
 {
-    [SerializeField] private List<string> logs;
+    #region privates
+    [SerializeField] private List<Log> logs;
     [SerializeField] private List<string> testGoals;
     private VisualElement goalsVisualElement;
     private VisualElement logsVisualElement;
@@ -21,24 +22,23 @@ public class UiTerminal : MonoBehaviour
     private VisualElement terminalWindow;
     private bool mouseDown = false;
     private Vector2 dragStartPos;
-
     private WindowState windowState;
-    [SerializeField] private bool drawLogs;
+    #endregion
 
-    void Start()
-    {
-        logs = new List<string> { "log1", "log2" };
-
-        windowState = WindowState.Normal;
-        drawLogs = false;
-        mouseDown = false;
-
-    }
+    #region publics
+    public Action<LogType> LogWritten;
+    #endregion
 
     void OnEnable()
     {
         testGoals = new List<string> { "measure whatever in whatever and so whatever", "measure whatever in whatever", "measure whatever in whatever" };
-        
+        logs = new List<Log> {
+            new Log(RichText.Color("log1", PaletteColor.Green), LogType.Status),
+            new Log("log2", LogType.Status),
+            new Log(RichText.Color("log3", PaletteColor.Red), LogType.Error),
+            new Log(RichText.Italic(RichText.Bold("log4")), LogType.Error)
+            };
+
         var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
         var terminalInstance = rootVisualElement.Q("terminal-instance");
 
@@ -47,36 +47,32 @@ public class UiTerminal : MonoBehaviour
         bodyVisualElement = terminalInstance.Q("body");
         terminalWindow = terminalInstance.Q("window");
 
-        rootVisualElement.Q<Button>("maximize-btn").RegisterCallback<ClickEvent>(Maximize);
+        rootVisualElement.Q<Button>("maximize-btn").RegisterCallback<ClickEvent>(e => MaximizeToggle());
         rootVisualElement.Q<Button>("minimize-btn").RegisterCallback<ClickEvent>(Minimize);
 
         terminalWindow.RegisterCallback<MouseDownEvent>(ev => { mouseDown = true; dragStartPos = ev.mousePosition; });
         terminalWindow.RegisterCallback<MouseUpEvent>(ev => mouseDown = false);
         terminalWindow.RegisterCallback<MouseMoveEvent>(HandleMouseDrag);
         terminalWindow.RegisterCallback<MouseLeaveEvent>(ev => mouseDown = false);
-        terminalWindow.RegisterCallback<MouseEnterEvent>(ev => Debug.Log($"top:{terminalWindow.resolvedStyle.top} left:{terminalWindow.resolvedStyle.left}"));
+
+
         DrawGoals();
+
+        windowState = WindowState.Maximized;
+        MaximizeToggle();
+
     }
 
-    private void Update()
-    {
-        #region for testing
-        if (drawLogs)
-        {
-            DrawLogs();
-            drawLogs = false;
-        }
-        #endregion
-    }
     /// <summary>Writes logs to the terminal window</summary>
-    public void Write(string log)
+    public void Write(Log log)
     {
         logs.Add(log);
         DrawLogs();
+        LogWritten.Invoke(log.Type);
 
     }
     #region maximize minimize
-    private void Maximize(ClickEvent ev)
+    private void MaximizeToggle()
     {
         if (windowState != WindowState.Maximized)
         {
@@ -111,8 +107,7 @@ public class UiTerminal : MonoBehaviour
         if (windowState == WindowState.Normal)
         {
             logsVisualElement.Clear();
-            Debug.Log(logs.Count);
-            logsVisualElement.Add(new Label($"<indent=30em>-{logs.LastOrDefault()}</indent>"));
+            logsVisualElement.Add(new Label($"<indent=30em>-{logs.LastOrDefault().Message}</indent>"));
 
         }
         if (windowState == WindowState.Maximized)
@@ -120,7 +115,7 @@ public class UiTerminal : MonoBehaviour
             logsVisualElement.Clear();
             foreach (var log in logs)
             {
-                logsVisualElement.Add(new Label($"<indent=30em>-{RichText.Italic<RichText>(RichText.Color<string>(log, PaletteColor.Red))}</indent>"));
+                logsVisualElement.Add(new Label($"<indent=30em>-{log.Message}</indent>"));
             }
         }
     }
