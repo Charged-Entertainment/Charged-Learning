@@ -12,7 +12,7 @@ public class Utils : MonoBehaviour
     //TODO: generic version
     // public static Collider2D PhysicsOverlapAreaAll<T>(Vector2 PointA, Vector2 PointB)
 
-    public static Bounds GetBoundsOfComponentBehaviorArray(ComponentBehavior[] components)
+    public static Bounds GetBoundsOfComponentsArray(ComponentBehavior[] components)
     {
 
         if(components.Length == 0)
