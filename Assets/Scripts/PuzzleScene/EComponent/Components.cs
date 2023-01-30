@@ -17,7 +17,7 @@ public partial class EComponent : Singleton<EComponent>
     // Handle all that should happen when creating a new component.
     static public ComponentBehavior Instantiate(ComponentBehavior original, Transform parent)
     {
-        ComponentBehavior copy = Instantiate(original, parent);
+        ComponentBehavior copy = GameObject.Instantiate(original, parent);
         
         bool selected = Selection.IsSelected(original);  
         copy.SetSelectedVisible(selected);

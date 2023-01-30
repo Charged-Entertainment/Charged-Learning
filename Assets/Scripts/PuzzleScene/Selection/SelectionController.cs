@@ -7,44 +7,25 @@ public partial class Selection : Singleton<Selection>
     public class Controller : Singleton<Controller>
     {
         byte numberOfHovers = 0;
-
         Vector3 mouseDownStartPosition;
         bool handleOnMouseUp = false;
         bool shiftWasClickedOnMouseDown = false;
 
-        void Start()
+        void OnEnable()
         {
-            EComponent.mouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
-            EComponent.mouseExited += (ComponentBehavior c) => { numberOfHovers--; };
+            OnDisable();
+            EComponent.mouseEntered += HandleMouseEntered;
+            EComponent.mouseExited += HandleMouseExited;
+            EComponent.mouseDown += HandleMouseDown;
+            EComponent.mouseUp += HandleMouseUp;
+        }
 
-            EComponent.mouseDown += (ComponentBehavior c) =>
-            {
-                bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
-                bool isSelected = Selection.IsSelected(c);
-
-                mouseDownStartPosition = Utils.GetMouseWorldPosition();
-                if (shiftClicked)
-                {
-                    if (!isSelected) Selection.AddComponent(c);
-                    else { handleOnMouseUp = true; shiftWasClickedOnMouseDown = true; }
-                }
-                else
-                {
-                    if (!isSelected) { Selection.Clear(); Selection.AddComponent(c); }
-                    else if (Selection.GetSelectedComponents().Count > 1) { handleOnMouseUp = true; }
-                }
-            };
-
-            EComponent.mouseUp += (ComponentBehavior c) =>
-            {
-                if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
-                {
-                    if (shiftWasClickedOnMouseDown) { Selection.InvertComponent(c); }
-                    else { Selection.Clear(); Selection.AddComponent(c); }
-                }
-                handleOnMouseUp = false;
-                shiftWasClickedOnMouseDown = false;
-            };
+        void OnDisable()
+        {
+            EComponent.mouseEntered -= HandleMouseEntered;
+            EComponent.mouseExited -= HandleMouseExited;
+            EComponent.mouseDown -= HandleMouseDown;
+            EComponent.mouseUp -= HandleMouseUp;
         }
 
         void Update()
@@ -67,6 +48,36 @@ public partial class Selection : Singleton<Selection>
                 if (!Input.GetKey(KeyCode.LeftShift)) Selection.Clear();
                 Selection.InvertComponents(selected);
             }
+        }
+
+        void HandleMouseEntered(ComponentBehavior c) { numberOfHovers++; }
+        void HandleMouseExited(ComponentBehavior c) { numberOfHovers--; }
+        void HandleMouseDown(ComponentBehavior c)
+        {
+            bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
+            bool isSelected = Selection.IsSelected(c);
+
+            mouseDownStartPosition = Utils.GetMouseWorldPosition();
+            if (shiftClicked)
+            {
+                if (!isSelected) Selection.AddComponent(c);
+                else { handleOnMouseUp = true; shiftWasClickedOnMouseDown = true; }
+            }
+            else
+            {
+                if (!isSelected) { Selection.Clear(); Selection.AddComponent(c); }
+                else if (Selection.GetSelectedComponents().Count > 1) { handleOnMouseUp = true; }
+            }
+        }
+        void HandleMouseUp(ComponentBehavior c)
+        {
+            if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
+            {
+                if (shiftWasClickedOnMouseDown) { Selection.InvertComponent(c); }
+                else { Selection.Clear(); Selection.AddComponent(c); }
+            }
+            handleOnMouseUp = false;
+            shiftWasClickedOnMouseDown = false;
         }
     }
 }

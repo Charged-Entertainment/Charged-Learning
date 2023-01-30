@@ -11,9 +11,9 @@ public partial class Camera : Singleton<Camera>
             private Vector3 dragOrigin;
             void Update()
             {
-                var mousePosition = Utils.GetMouseWorldPosition();
-                if (Input.GetMouseButtonDown(2)) dragOrigin = mousePosition;
-                if (Input.GetMouseButton(2)) Camera.Pan(dragOrigin - mousePosition);
+                var pos = Utils.GetMouseWorldPosition();
+                if (Input.GetMouseButtonDown(2) || (GameMode.CurrentInteractionMode == GameMode.InteractionMode.Pan && Input.GetMouseButtonDown(0))) dragOrigin = pos;
+                if (Input.GetMouseButton(2) || (GameMode.CurrentInteractionMode == GameMode.InteractionMode.Pan && Input.GetMouseButton(0))) Camera.Pan(dragOrigin - pos);
             }
         }
     }
