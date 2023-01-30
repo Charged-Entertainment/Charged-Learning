@@ -21,6 +21,7 @@ public class SingletonLoader : MonoBehaviour
         {
             singletons.AddComponent(T);
         }
+        GameObject.Destroy(gameObject);
     }
 
     static bool IsSubclassOfRawGeneric(System.Type generic, System.Type toCheck)
