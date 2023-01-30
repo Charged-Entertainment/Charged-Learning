@@ -2,73 +2,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionController : Controller
+namespace Controllers
 {
-    byte numberOfHovers = 0;
-
-    Vector3 mouseDownStartPosition;
-    bool handleOnMouseUp = false;
-    bool shiftWasClickedOnMouseDown = false;
-
-    SelectionManager sm;
-
-    void Start()
+    public class SelectionController : Controller<SelectionController>
     {
-        sm = mainManager.selectionManager;
+        byte numberOfHovers = 0;
 
-        var cm = mainManager.componentManager;
-        cm.componentMouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
-        cm.componentMouseExited += (ComponentBehavior c) => { numberOfHovers--; };
+        Vector3 mouseDownStartPosition;
+        bool handleOnMouseUp = false;
+        bool shiftWasClickedOnMouseDown = false;
 
-        cm.componentMouseDown += (ComponentBehavior c) =>
+        void Start()
         {
-            bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
-            bool isSelected = sm.IsSelected(c);
+            ComponentManager.componentMouseEntered += (ComponentBehavior c) => { numberOfHovers++; };
+            ComponentManager.componentMouseExited += (ComponentBehavior c) => { numberOfHovers--; };
 
-            mouseDownStartPosition = Utils.GetMouseWorldPosition();
-            if (shiftClicked)
+            ComponentManager.componentMouseDown += (ComponentBehavior c) =>
             {
-                if (!isSelected) sm.AddComponent(c);
-                else { handleOnMouseUp = true; shiftWasClickedOnMouseDown = true; }
-            }
-            else
-            {
-                if (!isSelected) { sm.Clear(); sm.AddComponent(c); }
-                else if (sm.GetSelectedComponents().Count > 1) { handleOnMouseUp = true; }
-            }
-        };
+                bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
+                bool isSelected = Selection.IsSelected(c);
 
-        cm.componentMouseUp += (ComponentBehavior c) =>
-        {
-            if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
-            {
-                if (shiftWasClickedOnMouseDown) { sm.InvertComponent(c); }
-                else { sm.Clear(); sm.AddComponent(c); }
-            }
-            handleOnMouseUp = false;
-            shiftWasClickedOnMouseDown = false;
-        };
-    }
+                mouseDownStartPosition = Utils.GetMouseWorldPosition();
+                if (shiftClicked)
+                {
+                    if (!isSelected) Selection.AddComponent(c);
+                    else { handleOnMouseUp = true; shiftWasClickedOnMouseDown = true; }
+                }
+                else
+                {
+                    if (!isSelected) { Selection.Clear(); Selection.AddComponent(c); }
+                    else if (Selection.GetSelectedComponents().Count > 1) { handleOnMouseUp = true; }
+                }
+            };
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && numberOfHovers == 0) //0=Left click
-        {
-            if (!Input.GetKey(KeyCode.LeftShift)) sm.Clear();
-            sm.StartMultiSelect(Utils.GetMouseWorldPosition());
+            ComponentManager.componentMouseUp += (ComponentBehavior c) =>
+            {
+                if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
+                {
+                    if (shiftWasClickedOnMouseDown) { Selection.InvertComponent(c); }
+                    else { Selection.Clear(); Selection.AddComponent(c); }
+                }
+                handleOnMouseUp = false;
+                shiftWasClickedOnMouseDown = false;
+            };
         }
 
-        if (Input.GetMouseButton(0) && sm.onGoingMultiSelect)
+        void Update()
         {
-            sm.AdjuctMultiSelect(Utils.GetMouseWorldPosition());
-        }
+            if (Input.GetMouseButtonDown(0) && numberOfHovers == 0) //0=Left click
+            {
+                if (!Input.GetKey(KeyCode.LeftShift)) Selection.Clear();
+                Selection.StartMultiSelect(Utils.GetMouseWorldPosition());
+            }
 
-        if (Input.GetMouseButtonUp(0) && sm.onGoingMultiSelect)
-        {
-            var selected = sm.EndMultiSelect();
+            if (Input.GetMouseButton(0) && Selection.OnGoingMultiSelect)
+            {
+                Selection.AdjuctMultiSelect(Utils.GetMouseWorldPosition());
+            }
 
-            if (!Input.GetKey(KeyCode.LeftShift)) sm.Clear();
-            sm.InvertComponents(selected);
+            if (Input.GetMouseButtonUp(0) && Selection.OnGoingMultiSelect)
+            {
+                var selected = Selection.EndMultiSelect();
+
+                if (!Input.GetKey(KeyCode.LeftShift)) Selection.Clear();
+                Selection.InvertComponents(selected);
+            }
         }
     }
 }

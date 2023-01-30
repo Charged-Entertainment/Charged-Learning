@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ClipboardController : Controller
+namespace Controllers
 {
-    private void Update()
+    public class ClipboardController : Controller<ClipboardController>
     {
-        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
+        private void Update()
         {
-            mainManager.clipboardManager.Copy(new List<ComponentBehavior>(mainManager.selectionManager.GetSelectedComponents()).ToArray());
-        }
+            if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Clipboard.Copy(new List<ComponentBehavior>(Selection.GetSelectedComponents()).ToArray());
+            }
 
-        else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
-        {
-            mainManager.clipboardManager.Paste(Utils.GetMouseWorldPosition());
+            else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Clipboard.Paste(Utils.GetMouseWorldPosition());
+            }
         }
     }
 }

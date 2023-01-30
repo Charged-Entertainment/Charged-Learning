@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragController : Controller
+namespace Controllers
 {
-    private void Start()
+    public class DragController : Controller<DragController>
     {
-        mainManager.componentManager.componentMouseDown += SetCursorLastSeen;
-        mainManager.componentManager.componentDragged += MoveSelectedObjectsOnDrag;
-    }
-
-    Vector3 lastSeen;
-
-    void SetCursorLastSeen(ComponentBehavior component)
-    {
-        lastSeen = Utils.GetMouseWorldPosition();
-    }
-
-    void MoveSelectedObjectsOnDrag(ComponentBehavior component)
-    {
-        var currMousePos = Utils.GetMouseWorldPosition();
-
-        foreach (var obj in mainManager.selectionManager.GetSelectedComponents())
+        private void Start()
         {
-            obj.Move(currMousePos - lastSeen);
+            ComponentManager.componentMouseDown += SetCursorLastSeen;
+            ComponentManager.componentDragged += MoveSelectedObjectsOnDrag;
         }
-        lastSeen = currMousePos;
+
+        Vector3 lastSeen;
+
+        void SetCursorLastSeen(ComponentBehavior component)
+        {
+            lastSeen = Utils.GetMouseWorldPosition();
+        }
+
+        void MoveSelectedObjectsOnDrag(ComponentBehavior component)
+        {
+            var currMousePos = Utils.GetMouseWorldPosition();
+
+            foreach (var obj in Selection.GetSelectedComponents())
+            {
+                obj.Move(currMousePos - lastSeen);
+            }
+            lastSeen = currMousePos;
+        }
     }
 }

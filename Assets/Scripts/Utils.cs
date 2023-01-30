@@ -6,7 +6,7 @@ public class Utils : MonoBehaviour
 {
     public static Vector3 GetMouseWorldPosition()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     //TODO: generic version

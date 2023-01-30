@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionAreaManager : Manager
+[DisallowMultipleComponent]
+public class SelectionArea : MonoBehaviour
 {
 
     public void SetAnchorPoint(Vector2 point)

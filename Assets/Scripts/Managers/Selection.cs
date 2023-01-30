@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionManager : Manager
+public class Selection : Manager<Selection>
 {
     /*
     Any operations that should be performed on selected objects will first query
@@ -11,42 +11,39 @@ public class SelectionManager : Manager
     on them.
     */
 
-    private Dictionary<int, ComponentBehavior> selectedGameObjects;
+    static private Dictionary<int, ComponentBehavior> selectedGameObjects;
 
-    private SelectionAreaManager selectionArea;
-
-    
+    static private SelectionArea selectionArea = null;
 
     private void Start()
     {
         selectedGameObjects = new Dictionary<int, ComponentBehavior>();
-        
-        selectionArea = Instantiate(((GameObject)Resources.Load("SelectionArea"))).GetComponent<SelectionAreaManager>();
     }
 
-    public bool onGoingMultiSelect {get; private set;} = false;
+    static public bool OnGoingMultiSelect {get; private set;} = false;
 
-    public void StartMultiSelect(Vector2 anchor)
+    static public void StartMultiSelect(Vector2 anchor)
     {
-        onGoingMultiSelect = true;
-        selectionArea.Enable();
+        OnGoingMultiSelect = true;
+        if (selectionArea == null) selectionArea = Instantiate(((GameObject)Resources.Load("SelectionArea"))).AddComponent<SelectionArea>();
         selectionArea.SetAnchorPoint(anchor);
     }
 
-    public void AdjuctMultiSelect(Vector2 point)
+    static public void AdjuctMultiSelect(Vector2 point)
     {
         selectionArea.Adjust(point);
     }
 
-    public List<ComponentBehavior> EndMultiSelect()
+    static public List<ComponentBehavior> EndMultiSelect()
     {
         var t = selectionArea.GetSelection();
-        selectionArea.Disable();
-        onGoingMultiSelect = false;
+        GameObject.Destroy(selectionArea.gameObject);
+        selectionArea = null;
+        OnGoingMultiSelect = false;
         return t;
     }
 
-    public void InvertComponent(ComponentBehavior component)
+    static public void InvertComponent(ComponentBehavior component)
     {
         if (selectedGameObjects.ContainsKey(component.GetInstanceID())) RemoveComponent(component);
         else
@@ -56,7 +53,7 @@ public class SelectionManager : Manager
         }
     }
 
-    public void AddComponent(ComponentBehavior component)
+    static public void AddComponent(ComponentBehavior component)
     {
         if (selectedGameObjects.ContainsKey(component.GetInstanceID())) return;
         else
@@ -66,13 +63,13 @@ public class SelectionManager : Manager
         }
     }
 
-    public void RemoveComponent(ComponentBehavior component)
+    static public void RemoveComponent(ComponentBehavior component)
     {
         selectedGameObjects.Remove(component.GetInstanceID());
         component.SetSelectedVisible(false);
     }
 
-    public void InvertComponents(List<ComponentBehavior> components)
+    static public void InvertComponents(List<ComponentBehavior> components)
     {
         foreach (var component in components)
         {
@@ -80,7 +77,7 @@ public class SelectionManager : Manager
         }
     }
 
-    public void AddComponents(List<ComponentBehavior> components)
+    static public void AddComponents(List<ComponentBehavior> components)
     {
         foreach (var component in components)
         {
@@ -88,7 +85,7 @@ public class SelectionManager : Manager
         }
     }
 
-    public void RemoveComponents(List<ComponentBehavior> components)
+    static public void RemoveComponents(List<ComponentBehavior> components)
     {
         foreach (var component in components)
         {
@@ -96,19 +93,19 @@ public class SelectionManager : Manager
         }
     }
 
-    public void Clear()
+    static public void Clear()
     {
         RemoveComponents(new List<ComponentBehavior>(selectedGameObjects.Values));
         selectedGameObjects.Clear(); // just to make sure
     }
 
-    public List<ComponentBehavior> GetSelectedComponents(bool includeDisabled = false)
+    static public List<ComponentBehavior> GetSelectedComponents(bool includeDisabled = false)
     {
         if (includeDisabled) return new List<ComponentBehavior>(selectedGameObjects.Values); 
         return selectedGameObjects.Values.Where(c => c.IsEnabled()).ToList();
     }
 
-    public bool IsSelected(ComponentBehavior c) {
+    static public bool IsSelected(ComponentBehavior c) {
         return selectedGameObjects.ContainsKey(c.GetInstanceID());
     }
 }

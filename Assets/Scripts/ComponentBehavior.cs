@@ -5,12 +5,8 @@ using UnityEngine.Events;
 
 public class ComponentBehavior : MonoBehaviour
 {
-
-    private ComponentManager cm;
-
     private void Start()
     {
-        cm = GameObject.Find("MainManager").GetComponent<MainManager>().componentManager;
         gameObject.AddComponent<ObjectSnapping>();
     }
 
@@ -91,32 +87,32 @@ public class ComponentBehavior : MonoBehaviour
     // Events
     private void OnMouseDown()
     {
-        if (cm.componentMouseDown != null)
-            cm.componentMouseDown.Invoke(this);
+        if (ComponentManager.componentMouseDown != null)
+            ComponentManager.componentMouseDown.Invoke(this);
     }
 
     private void OnMouseUp()
     {
-        if (cm.componentMouseUp != null)
-            cm.componentMouseUp.Invoke(this);
+        if (ComponentManager.componentMouseUp != null)
+            ComponentManager.componentMouseUp.Invoke(this);
     }
 
     private void OnMouseDrag()
     {
-        if (cm.componentDragged != null)
-            cm.componentDragged.Invoke(this);
+        if (ComponentManager.componentDragged != null)
+            ComponentManager.componentDragged.Invoke(this);
     }
 
     private void OnMouseEnter()
     {
-        if (cm.componentMouseEntered != null)
-            cm.componentMouseEntered.Invoke(this);
+        if (ComponentManager.componentMouseEntered != null)
+            ComponentManager.componentMouseEntered.Invoke(this);
     }
 
     private void OnMouseExit()
     {
-        if (cm.componentMouseExited != null)
-            cm.componentMouseExited.Invoke(this);
+        if (ComponentManager.componentMouseExited != null)
+            ComponentManager.componentMouseExited.Invoke(this);
     }
 
 }

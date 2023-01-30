@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoomController : Controller
+namespace Controllers
 {
-    private void Update()
+    public class ZoomController : Controller<ZoomController>
     {
-        float scrollData;
-        scrollData = Input.GetAxis("Mouse ScrollWheel");
-        if (scrollData != 0) mainManager.cameraManager.Zoom(scrollData);
+        private void Update()
+        {
+            float scrollData;
+            scrollData = Input.GetAxis("Mouse ScrollWheel");
+            if (scrollData != 0) Camera.Zoom(scrollData);
+        }
     }
 }
