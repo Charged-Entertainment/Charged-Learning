@@ -32,31 +32,38 @@ public class TransformationController : Controller
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftControl))
         {
-            foreach (var selectedObject in mainManager.selectionManager.GetSelectedComponents())
-            {
-                selectedObject.Move(new Vector3(-1f, 0, 0));
-            }
+            var command = new MoveCommand(mainManager.selectionManager.GetSelectedComponents(), 
+                                            new Vector2(-1f, 0));
+            command.Execute();
+            mainManager.undoRedoManager.RegisterCommand(command);
+            // foreach (var selectedObject in mainManager.selectionManager.GetSelectedComponents())
+            // {
+            //     selectedObject.Move(new Vector3(-1f, 0, 0));
+            // }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftControl))
         {
-            foreach (var selectedObject in mainManager.selectionManager.GetSelectedComponents())
-            {
-                selectedObject.Move(new Vector3(1f, 0, 0));
-            }
+            var command = new MoveCommand(mainManager.selectionManager.GetSelectedComponents(), 
+                                            new Vector2(1f, 0));
+            command.Execute();
+            mainManager.undoRedoManager.RegisterCommand(command);
+
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftControl))
         {
-            foreach (var selectedObject in mainManager.selectionManager.GetSelectedComponents())
-            {
-                selectedObject.Move(new Vector3(0, 1, 0));
-            }
+            var command = new MoveCommand(mainManager.selectionManager.GetSelectedComponents(), 
+                                            new Vector2(0, 1));
+            command.Execute();
+            mainManager.undoRedoManager.RegisterCommand(command);
+
         }
         if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl))
         {
-            foreach (var selectedObject in mainManager.selectionManager.GetSelectedComponents())
-            {
-                selectedObject.Move(new Vector3(0, -1, 0));
-            }
+            var command = new MoveCommand(mainManager.selectionManager.GetSelectedComponents(), 
+                                            new Vector2(0, -1));
+            command.Execute();
+            mainManager.undoRedoManager.RegisterCommand(command);
+
         }
 
         if (Input.GetKeyDown(KeyCode.H) && Input.GetKey(KeyCode.LeftShift))

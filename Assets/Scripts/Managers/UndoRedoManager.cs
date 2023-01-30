@@ -12,10 +12,11 @@ public class UndoRedoManager : Manager
     }
 
     public void RegisterCommand(ICommand command){
-        commandLog.AddLast(command);
-        if(commandLog.Count == 0){
-            logIndex = commandLog.Last;
+        if(logIndex != commandLog.Last){
+            RemoveAllAfter(logIndex);
         }
+        commandLog.AddLast(command);
+        logIndex = commandLog.Last;
     }
 
     public void Undo(){
@@ -23,6 +24,7 @@ public class UndoRedoManager : Manager
             return;
         logIndex.Value.Undo();
         logIndex = logIndex.Previous;
+        Debug.Log($"Undo!{logIndex}");
     }
 
     public void Redo(){
@@ -30,6 +32,13 @@ public class UndoRedoManager : Manager
             return;
         logIndex.Value.Execute();
         logIndex = logIndex.Next;
+        Debug.Log($"Redo!{logIndex}");
 
+    }
+
+    private void RemoveAllAfter(LinkedListNode<ICommand> node){
+        while(node.Next != null){
+            commandLog.Remove(node.Next);
+        }
     }
 }

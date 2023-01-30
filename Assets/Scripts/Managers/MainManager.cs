@@ -7,11 +7,13 @@ public class MainManager : Manager
     public ComponentManager componentManager { get; private set; }
     public SelectionManager selectionManager { get; private set; }
     public ClipboardManager clipboardManager { get; private set; }
+    public UndoRedoManager undoRedoManager { get; private set; }
 
     protected override void Awake()
     {
         selectionManager = gameObject.AddComponent<SelectionManager>();
         componentManager = gameObject.AddComponent<ComponentManager>();
+        undoRedoManager = gameObject.AddComponent<UndoRedoManager>();
         clipboardManager = Instantiate(((GameObject)Resources.Load("Clipboard"))).GetComponent<ClipboardManager>();
     }
 
