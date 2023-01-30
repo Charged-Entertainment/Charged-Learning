@@ -68,7 +68,7 @@ public class UiTerminal : MonoBehaviour
     {
         logs.Add(log);
         DrawLogs();
-        LogWritten.Invoke(log.Type);
+        LogWritten?.Invoke(log.Type);
 
     }
     #region maximize minimize
