@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Clipboard : Singleton<Clipboard>
+public partial class Clipboard : Singleton<Clipboard>, IHasControls
 {
+    public List<Controller> Controllers { get; set; }
+    private void Start() {
+        Controllers = new List<Controller>();
+        Controllers.Add(gameObject.AddComponent<ClipboardController>());
+    }
+
     static public void Copy(ComponentBehavior[] components, bool isCut = false)
     {
         Clear();

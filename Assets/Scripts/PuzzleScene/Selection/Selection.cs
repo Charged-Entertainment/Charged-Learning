@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Selection : Singleton<Selection>
+public partial class Selection : Singleton<Selection>, IHasControls
 {
     /*
     Any operations that should be performed on selected objects will first query
@@ -15,12 +15,17 @@ public partial class Selection : Singleton<Selection>
 
     static private SelectionArea selectionArea = null;
 
+    public List<Controller> Controllers { get; set; }
+
     private void Start()
     {
         selectedGameObjects = new Dictionary<int, ComponentBehavior>();
+
+        Controllers = new List<Controller>();
+        Controllers.Add(gameObject.AddComponent<SelectionController>());
     }
 
-    static public bool OnGoingMultiSelect {get; private set;} = false;
+    static public bool OnGoingMultiSelect { get; private set; } = false;
 
     static public void StartMultiSelect(Vector2 anchor)
     {
@@ -101,11 +106,12 @@ public partial class Selection : Singleton<Selection>
 
     static public List<ComponentBehavior> GetSelectedComponents(bool includeDisabled = false)
     {
-        if (includeDisabled) return new List<ComponentBehavior>(selectedGameObjects.Values); 
+        if (includeDisabled) return new List<ComponentBehavior>(selectedGameObjects.Values);
         return selectedGameObjects.Values.Where(c => c.IsEnabled()).ToList();
     }
 
-    static public bool IsSelected(ComponentBehavior c) {
+    static public bool IsSelected(ComponentBehavior c)
+    {
         return selectedGameObjects.ContainsKey(c.GetInstanceID());
     }
 }

@@ -4,16 +4,14 @@ using UnityEngine;
 
 public partial class Camera : Singleton<Camera>
 {
-    public partial class Controller
+    private class ZoomController : Controller
     {
-        public class Zoom : Singleton<Zoom>
+        private void Update()
         {
-            private void Update()
-            {
-                float scrollData;
-                scrollData = Input.GetAxis("Mouse ScrollWheel");
-                if (scrollData != 0) Camera.Zoom(scrollData);
-            }
+            float scrollData;
+            scrollData = Input.GetAxis("Mouse ScrollWheel");
+            if (scrollData != 0) Camera.Zoom(scrollData);
         }
     }
+
 }

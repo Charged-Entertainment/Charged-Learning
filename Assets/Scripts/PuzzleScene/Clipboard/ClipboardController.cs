@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public partial class Clipboard : Singleton<Clipboard>
 {
-    public class Controller : Singleton<Controller>
+    private class ClipboardController : Controller
     {
         private void Update()
         {

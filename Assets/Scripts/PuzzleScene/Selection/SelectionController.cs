@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class Selection : Singleton<Selection>
 {
-    public class Controller : Singleton<Controller>
+    private class SelectionController : Controller
     {
         byte numberOfHovers = 0;
         Vector3 mouseDownStartPosition;

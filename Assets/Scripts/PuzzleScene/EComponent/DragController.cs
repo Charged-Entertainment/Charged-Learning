@@ -4,33 +4,30 @@ using UnityEngine;
 
 public partial class EComponent
 {
-    public partial class Controller
+    private class DragController : Controller
     {
-        public class Drag : Singleton<Drag>
+        private void Start()
         {
-            private void Start()
+            EComponent.mouseDown += SetCursorLastSeen;
+            EComponent.dragged += MoveSelectedObjectsOnDrag;
+        }
+
+        Vector3 lastSeen;
+
+        void SetCursorLastSeen(ComponentBehavior component)
+        {
+            lastSeen = Utils.GetMouseWorldPosition();
+        }
+
+        void MoveSelectedObjectsOnDrag(ComponentBehavior component)
+        {
+            var currMousePos = Utils.GetMouseWorldPosition();
+
+            foreach (var obj in Selection.GetSelectedComponents())
             {
-                EComponent.mouseDown += SetCursorLastSeen;
-                EComponent.dragged += MoveSelectedObjectsOnDrag;
+                obj.Move(currMousePos - lastSeen);
             }
-
-            Vector3 lastSeen;
-
-            void SetCursorLastSeen(ComponentBehavior component)
-            {
-                lastSeen = Utils.GetMouseWorldPosition();
-            }
-
-            void MoveSelectedObjectsOnDrag(ComponentBehavior component)
-            {
-                var currMousePos = Utils.GetMouseWorldPosition();
-
-                foreach (var obj in Selection.GetSelectedComponents())
-                {
-                    obj.Move(currMousePos - lastSeen);
-                }
-                lastSeen = currMousePos;
-            }
+            lastSeen = currMousePos;
         }
     }
 }

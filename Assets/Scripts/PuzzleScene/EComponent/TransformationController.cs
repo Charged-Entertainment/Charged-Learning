@@ -2,76 +2,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Components : Singleton<Components>
+public partial class EComponent
 {
-    public partial class Controller
+    private class TransformationController : Controller
     {
-        public class Transformation : Singleton<Transformation>
+        private void Update()
         {
-            private void Update()
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftControl))
             {
-                if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftControl))
+                foreach (var selectedObject in Selection.GetSelectedComponents())
                 {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.Move(new Vector3(-1f, 0, 0));
-                    }
+                    selectedObject.Move(new Vector3(-1f, 0, 0));
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftControl))
-                {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.Move(new Vector3(1f, 0, 0));
-                    }
-                }
-                if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftControl))
-                {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.Move(new Vector3(0, 1, 0));
-                    }
-                }
-                if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl))
-                {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.Move(new Vector3(0, -1, 0));
-                    }
-                }
-
-                if (Input.GetKeyDown(KeyCode.H) && Input.GetKey(KeyCode.LeftShift))
-                {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.FlipH();
-                    }
-                }
-
-                if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
-                {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.FlipV();
-                    }
-                }
-
-                if (Input.GetKeyDown(KeyCode.E) && Input.GetKey(KeyCode.LeftControl))
-                {
-                    foreach (var selectedObject in Selection.GetSelectedComponents())
-                    {
-                        selectedObject.Rotate(45);
-                    }
-                }
-
-                // TODO: fix this, it crashes Unity...
-                // if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.LeftControl))
-                // {
-                //     foreach (var selectedObject in SelectionManager.GetSelectedComponents())
-                //     {
-                //         selectedObject.Rotate(-45);
-                //     }
-                // }
             }
+            if (Input.GetKeyDown(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftControl))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.Move(new Vector3(1f, 0, 0));
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftControl))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.Move(new Vector3(0, 1, 0));
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.Move(new Vector3(0, -1, 0));
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.H) && Input.GetKey(KeyCode.LeftShift))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.FlipH();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.FlipV();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && Input.GetKey(KeyCode.LeftControl))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.Rotate(45);
+                }
+            }
+
+            // TODO: fix this, it crashes Unity...
+            // if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.LeftControl))
+            // {
+            //     foreach (var selectedObject in SelectionManager.GetSelectedComponents())
+            //     {
+            //         selectedObject.Rotate(-45);
+            //     }
+            // }
         }
     }
 }
