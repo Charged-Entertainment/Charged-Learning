@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class Camera : Singleton<Camera>
 {
     private UnityEngine.Camera cam;
-    static private float targetZoom;
+    static private float targetZoom = 5f;
     static private float zoomFactor = 6f;
     static private float zoomLerpSpeed = 10;
 

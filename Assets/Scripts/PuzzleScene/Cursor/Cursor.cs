@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameManagement;
 
 public class Cursor : Singleton<Cursor>
 {
@@ -20,7 +21,7 @@ public class Cursor : Singleton<Cursor>
         wireCursor = (Texture2D)Resources.Load("Cursors/live");
         dragCursor = (Texture2D)Resources.Load("Cursors/drag");
 
-        GameMode.InteractionModeChanged += HandleInteractionModeChange;
+        InteractionMode.changed += HandleInteractionModeChange;
         EComponent.mouseDown += HandleMouseDown;
         EComponent.mouseUp += HandleMouseUp;
 
@@ -38,12 +39,12 @@ public class Cursor : Singleton<Cursor>
         ChangeCursor(lastSeenCursorBeforeDrag);
     }
 
-    static void HandleInteractionModeChange(GameMode.InteractionMode mode)
+    static void HandleInteractionModeChange(InteractionModes im)
     {
-        if (mode == GameMode.InteractionMode.Normal) ChangeCursor(normalCursor);
-        else if (mode == GameMode.InteractionMode.Pan) ChangeCursor(panCursor);
-        else if (mode == GameMode.InteractionMode.Wire) ChangeCursor(wireCursor);
-        else if (mode == GameMode.InteractionMode.Tweak) ChangeCursor(wireCursor);
+        if (im == InteractionModes.Normal) ChangeCursor(normalCursor);
+        else if (im == InteractionModes.Pan) ChangeCursor(panCursor);
+        else if (im == InteractionModes.Wire) ChangeCursor(wireCursor);
+        else if (im == InteractionModes.Tweak) ChangeCursor(wireCursor);
         else Debug.Log("Error.");
     }
 
