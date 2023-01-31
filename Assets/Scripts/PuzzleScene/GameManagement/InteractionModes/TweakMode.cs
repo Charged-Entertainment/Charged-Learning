@@ -8,17 +8,17 @@ namespace GameManagement
     {
         public override void HandleEdit()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Cannot tweak in edit mode.");
         }
 
         public override void HandleEvaluate()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Cannot tweak in evaluate mode.");
         }
 
         public override void HandleLive()
         {
-            throw new System.NotImplementedException();
+            InteractionMode.ChangeTo(InteractionModes.Tweak);
         }
     }
 }
