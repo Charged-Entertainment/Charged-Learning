@@ -9,12 +9,19 @@ namespace GameManagement
         public override void HandleNormal()
         {
             InteractionMode.ChangeTo(InteractionModes.Normal);
-            // Do rest of edit mode stuff here.
+            
+            Clipboard.SetContollerEnabled(true);
+            EComponent.SetControllersEnabled(true);
+            Selection.SetContollerEnabled(true);
         }
 
         public override void HandlePan()
         {
             InteractionMode.ChangeTo(InteractionModes.Pan);
+            
+            Clipboard.SetContollerEnabled(false);
+            EComponent.SetControllersEnabled(false);
+            Selection.SetContollerEnabled(false);
         }
 
         public override void HandleTweak()
@@ -25,6 +32,10 @@ namespace GameManagement
         public override void HandleWire()
         {
             InteractionMode.ChangeTo(InteractionModes.Wire);
+
+            Clipboard.SetContollerEnabled(false);
+            EComponent.SetControllersEnabled(false);
+            Selection.SetContollerEnabled(false);
         }
     }
 }

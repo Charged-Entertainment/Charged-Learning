@@ -23,7 +23,7 @@ abstract public class StateMachine<State> : Singleton<StateMachine<State>>
         // CurrentState.SetContext(this);
         
         changed?.Invoke(state);
-        Console.WriteLine($"Context: Transition to {state.GetType().Name}.");
+        Debug.Log($"Context: Transition to {state.GetType().Name}.");
     }
     public static implicit operator State(StateMachine<State> s) {return Current;}
 }
