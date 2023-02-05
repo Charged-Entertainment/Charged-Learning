@@ -19,7 +19,9 @@ public class SingletonLoader : MonoBehaviour
         if (singletons == null) singletons = new GameObject("Singletons");
         foreach (var T in types)
         {
-            singletons.AddComponent(T);
+            var go = new GameObject(T.Name);
+            go.AddComponent(T);
+            go.transform.parent = singletons.transform;
         }
         GameObject.Destroy(gameObject);
     }
