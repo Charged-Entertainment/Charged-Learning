@@ -68,11 +68,9 @@
                 <ui:VisualElement name="editor-controls" class="row">
                     <ui:VisualElement class="col px-1">
 
-                        <ui:Button name="mouse-btn" class="editor-control-btn">
+                        <ui:Button name="normal-btn" class="editor-control-btn">
                             <ui:Image />
                         </ui:Button>
-
-                        <ui:Label text="ctrl v"/>
                     </ui:VisualElement>
 
                     <ui:VisualElement class="col px-1">
@@ -80,19 +78,13 @@
                         <ui:Button name="zoom-in-btn" class="editor-control-btn">
                             <ui:Image />
                         </ui:Button>
-
-                        <ui:Label text="ctrl +"/>
-
                     </ui:VisualElement>
 
 
                     <ui:VisualElement class="col px-1">
                         <ui:Button name="zoom-out-btn" class="editor-control-btn">
                             <ui:Image />
-                        </ui:Button>
-
-                        <ui:Label text="ctrl -"/>
-                        
+                        </ui:Button>                        
 
                     </ui:VisualElement>
 
@@ -100,10 +92,14 @@
                         <ui:Button name="wiring-btn" class="editor-control-btn">
                             <ui:Image />
                         </ui:Button>
-
-                        <ui:Label text="ctrl w"/>
-
                     </ui:VisualElement>
+
+                    <ui:VisualElement class="col px-1">
+                        <ui:Button name="pan-btn" class="editor-control-btn">
+                            <ui:Image />
+                        </ui:Button>
+                    </ui:VisualElement>
+
                 </ui:VisualElement>
             </ui:VisualElement>
 

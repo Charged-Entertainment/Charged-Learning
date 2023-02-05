@@ -20,7 +20,7 @@
     justify-content: center;
 }
 
-#mouse-btn Image{
+#normal-btn Image{
     background-image: resource("mouse-pointer");
     width: 20px;
     height: 20px;
@@ -47,3 +47,12 @@
     height: 10px;
     align-self: center;
 }
+
+
+#pan-btn Image{
+    background-image: resource("pan");
+    width: 30px;
+    height: 20px;
+    align-self: center;
+}
+
