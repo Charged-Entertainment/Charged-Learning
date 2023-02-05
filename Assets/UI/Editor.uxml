@@ -132,7 +132,10 @@
 
                     </ui:VisualElement> 
                 </ui:VisualElement> 
-
+                
+                <ui:Button name="random-component-test">
+                    
+                </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
 

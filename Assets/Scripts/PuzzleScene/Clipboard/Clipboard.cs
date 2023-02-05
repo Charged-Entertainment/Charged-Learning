@@ -22,7 +22,7 @@ public partial class Clipboard : Singleton<Clipboard>
 
         foreach (var component in components)
         {
-            ComponentBehavior copy = EComponent.Instantiate(component, Instance.transform);
+            ComponentBehavior copy = ComponentManager.Instantiate(component, Instance.transform);
             copy.transform.position -= Instance.transform.position;
             copy.Disable();
 

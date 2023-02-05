@@ -22,8 +22,8 @@ public class Cursor : Singleton<Cursor>
         dragCursor = (Texture2D)Resources.Load("Cursors/drag");
 
         InteractionMode.changed += HandleInteractionModeChange;
-        EComponent.mouseDown += HandleMouseDown;
-        EComponent.mouseUp += HandleMouseUp;
+        ComponentManager.mouseDown += HandleMouseDown;
+        ComponentManager.mouseUp += HandleMouseUp;
 
         ChangeCursor(normalCursor);
     }

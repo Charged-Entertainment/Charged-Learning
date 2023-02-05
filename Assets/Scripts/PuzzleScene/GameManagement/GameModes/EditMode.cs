@@ -11,7 +11,7 @@ namespace GameManagement
             InteractionMode.ChangeTo(InteractionModes.Normal);
             
             Clipboard.SetContollerEnabled(true);
-            EComponent.SetControllersEnabled(true);
+            ComponentManager.SetControllersEnabled(true);
             Selection.SetContollerEnabled(true);
         }
 
@@ -20,7 +20,7 @@ namespace GameManagement
             InteractionMode.ChangeTo(InteractionModes.Pan);
             
             Clipboard.SetContollerEnabled(false);
-            EComponent.SetControllersEnabled(false);
+            ComponentManager.SetControllersEnabled(false);
             Selection.SetContollerEnabled(false);
         }
 
@@ -34,7 +34,7 @@ namespace GameManagement
             InteractionMode.ChangeTo(InteractionModes.Wire);
 
             Clipboard.SetContollerEnabled(false);
-            EComponent.SetControllersEnabled(false);
+            ComponentManager.SetControllersEnabled(false);
             Selection.SetContollerEnabled(false);
         }
     }

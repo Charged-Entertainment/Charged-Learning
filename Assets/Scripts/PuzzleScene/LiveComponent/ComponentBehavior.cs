@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class ComponentBehavior : MonoBehaviour
 {
+    public Components.LevelComponent levelComponent;
+
     private void Start()
     {
         gameObject.AddComponent<ObjectSnapping>();
@@ -92,32 +94,32 @@ public class ComponentBehavior : MonoBehaviour
     // Events
     private void OnMouseDown()
     {
-        if (EComponent.mouseDown != null)
-            EComponent.mouseDown.Invoke(this);
+        if (ComponentManager.mouseDown != null)
+            ComponentManager.mouseDown.Invoke(this);
     }
 
     private void OnMouseUp()
     {
-        if (EComponent.mouseUp != null)
-            EComponent.mouseUp.Invoke(this);
+        if (ComponentManager.mouseUp != null)
+            ComponentManager.mouseUp.Invoke(this);
     }
 
     private void OnMouseDrag()
     {
-        if (EComponent.dragged != null)
-            EComponent.dragged.Invoke(this);
+        if (ComponentManager.dragged != null)
+            ComponentManager.dragged.Invoke(this);
     }
 
     private void OnMouseEnter()
     {
-        if (EComponent.mouseEntered != null)
-            EComponent.mouseEntered.Invoke(this);
+        if (ComponentManager.mouseEntered != null)
+            ComponentManager.mouseEntered.Invoke(this);
     }
 
     private void OnMouseExit()
     {
-        if (EComponent.mouseExited != null)
-            EComponent.mouseExited.Invoke(this);
+        if (ComponentManager.mouseExited != null)
+            ComponentManager.mouseExited.Invoke(this);
     }
 
 }

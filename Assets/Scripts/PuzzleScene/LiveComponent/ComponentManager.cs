@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public partial class EComponent : Singleton<EComponent>
+public partial class ComponentManager : Singleton<ComponentManager>
 {
     // Possible change: use UnityEvents (https://www.jacksondunstan.com/articles/3335#comment-713798).
     static public Action<ComponentBehavior> mouseEntered;
@@ -12,6 +12,7 @@ public partial class EComponent : Singleton<EComponent>
     static public Action<ComponentBehavior> mouseDown;
     static public Action<ComponentBehavior> mouseUp;
     static public Action<ComponentBehavior> dragged;
+    static public Action<ComponentBehavior> componentCreated;
 
     private DragController dragController;
     private TransformationController transformationController;
@@ -49,5 +50,18 @@ public partial class EComponent : Singleton<EComponent>
         if (selected) Selection.AddComponent(copy);
 
         return copy;
+    }
+
+    static public ComponentBehavior Instantiate(Components.LevelComponent comp)
+    {
+        if(comp.Quantity.Used < comp.Quantity.Total){
+            ComponentBehavior copy = new GameObject().AddComponent<ComponentBehavior>();
+            copy.levelComponent = comp;
+            componentCreated?.Invoke(copy);
+            return copy;
+        }else{
+            //TODO: emit error event
+            throw new Exception("Quantity ");
+        }
     }
 }

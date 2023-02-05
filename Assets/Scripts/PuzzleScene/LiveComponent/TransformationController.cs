@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class EComponent
+public partial class ComponentManager
 {
     private class TransformationController : Controller
     {

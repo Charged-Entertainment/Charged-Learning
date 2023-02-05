@@ -14,18 +14,18 @@ public partial class Selection : Singleton<Selection>
         void OnEnable()
         {
             OnDisable();
-            EComponent.mouseEntered += HandleMouseEntered;
-            EComponent.mouseExited += HandleMouseExited;
-            EComponent.mouseDown += HandleMouseDown;
-            EComponent.mouseUp += HandleMouseUp;
+            ComponentManager.mouseEntered += HandleMouseEntered;
+            ComponentManager.mouseExited += HandleMouseExited;
+            ComponentManager.mouseDown += HandleMouseDown;
+            ComponentManager.mouseUp += HandleMouseUp;
         }
 
         void OnDisable()
         {
-            EComponent.mouseEntered -= HandleMouseEntered;
-            EComponent.mouseExited -= HandleMouseExited;
-            EComponent.mouseDown -= HandleMouseDown;
-            EComponent.mouseUp -= HandleMouseUp;
+            ComponentManager.mouseEntered -= HandleMouseEntered;
+            ComponentManager.mouseExited -= HandleMouseExited;
+            ComponentManager.mouseDown -= HandleMouseDown;
+            ComponentManager.mouseUp -= HandleMouseUp;
         }
 
         void Update()

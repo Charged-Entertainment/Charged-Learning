@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class EComponent
+public partial class ComponentManager
 {
     private class DragController : Controller
     {
         private void OnEnable()
         {
             OnDisable();
-            EComponent.mouseDown += SetCursorLastSeen;
-            EComponent.dragged += MoveSelectedObjectsOnDrag;
+            ComponentManager.mouseDown += SetCursorLastSeen;
+            ComponentManager.dragged += MoveSelectedObjectsOnDrag;
         }
 
         private void OnDisable() {
-            EComponent.mouseDown -= SetCursorLastSeen;
-            EComponent.dragged -= MoveSelectedObjectsOnDrag;
+            ComponentManager.mouseDown -= SetCursorLastSeen;
+            ComponentManager.dragged -= MoveSelectedObjectsOnDrag;
         }
 
         Vector3 lastSeen;
