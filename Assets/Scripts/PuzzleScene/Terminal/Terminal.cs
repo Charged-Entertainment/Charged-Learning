@@ -2,17 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 using System.Linq;
-enum WindowState
-{
-    Normal,
-    Maximized,
-    Minimized
-}
 
-public class UiTerminal : MonoBehaviour
+public class Terminal : Singleton<Terminal>
 {
+
+    enum WindowState { Normal, Maximized, Minimized }
+
+
     #region privates
     [SerializeField] private List<Log> logs;
     [SerializeField] private List<string> testGoals;
@@ -26,7 +23,7 @@ public class UiTerminal : MonoBehaviour
     #endregion
 
     #region publics
-    public Action<LogType> LogWritten;
+    public static Action<LogType> LogWritten;
     #endregion
 
     void OnEnable()
@@ -64,10 +61,10 @@ public class UiTerminal : MonoBehaviour
     }
 
     /// <summary>Writes logs to the terminal window</summary>
-    public void Write(Log log)
+    public static void Write(Log log)
     {
-        logs.Add(log);
-        DrawLogs();
+        Instance.logs.Add(log);
+        Instance.DrawLogs();
         LogWritten?.Invoke(log.Type);
 
     }
@@ -141,6 +138,4 @@ public class UiTerminal : MonoBehaviour
             dragStartPos = ev.mousePosition;
         }
     }
-
 }
-
