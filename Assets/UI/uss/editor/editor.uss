@@ -28,3 +28,9 @@
     width: 7px;
     height: 15px;
 }
+
+#terminal-instance{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}

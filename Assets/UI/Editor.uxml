@@ -1,10 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/editor.uss?fileID=7433441132597879392&amp;guid=4312f48eec6c58950a0ed79a3bd8b17a&amp;type=3#editor" />
-    <Style src="project://database/Assets/UI/utils.uss"/>
-    <Style src="project://database/Assets/UI/controls-bar.uss"/>
-    <Style src="project://database/Assets/UI/toolbar.uss"/>
-    <Style src="project://database/Assets/UI/game-area.uss"/>
-    <Style src="project://database/Assets/UI/bottom-bar.uss"/>
+    <Style src="uss/utils.uss"/>
+
+    <Style src="uss/editor/editor.uss" />
+    <Style src="uss/editor/controls-bar.uss"/>
+    <Style src="uss/editor/toolbar.uss"/>
+    <Style src="uss/editor/game-area.uss"/>
+    <Style src="uss/editor/bottom-bar.uss"/>
+
+    <Template src="Terminal.uxml" name="Terminal"/>
+
     <ui:VisualElement name="main">
 
         <ui:VisualElement name="controls-bar" class="row">
@@ -57,6 +61,8 @@
                 </ui:VisualElement>
 
             </ui:VisualElement>
+
+            
             
             <ui:VisualElement name="game-area" class="row-reverse">
                 <ui:VisualElement name="editor-controls" class="row">
@@ -134,6 +140,9 @@
             <ui:Image name="logo-image" />
             <ui:Label name="status-label" text="Running..." />
         </ui:VisualElement>
+
+
+        <ui:Instance template="Terminal" name="terminal-instance"/>
 
     </ui:VisualElement>
 </ui:UXML>
