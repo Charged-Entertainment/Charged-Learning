@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class GameManager : Singleton<GameManager>, IHasControls
+public partial class GameManager : Singleton<GameManager>
 {
-    public List<Controller> Controllers { get; set; }
+    private GameController gameController;
 
     void Start()
     {
-        Controllers = new List<Controller>();
-        Controllers.Add(gameObject.AddComponent<GameController>());
+        gameController = gameObject.AddComponent<GameController>();
+    }
+
+    static public void SetContollerEnabled(bool enabled) {
+        Instance.gameController.enabled = enabled;
     }
 }

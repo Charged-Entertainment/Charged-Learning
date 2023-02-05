@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Clipboard : Singleton<Clipboard>, IHasControls
+public partial class Clipboard : Singleton<Clipboard>
 {
-    public List<Controller> Controllers { get; set; }
+    private ClipboardController controller;
     private void Start() {
-        Controllers = new List<Controller>();
-        Controllers.Add(gameObject.AddComponent<ClipboardController>());
+        controller = gameObject.AddComponent<ClipboardController>();
+    }
+
+    static public void SetContollerEnabled(bool enabled) {
+        Instance.controller.enabled = enabled;
     }
 
     static public void Copy(ComponentBehavior[] components, bool isCut = false)

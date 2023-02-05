@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Selection : Singleton<Selection>, IHasControls
+public partial class Selection : Singleton<Selection>
 {
     /*
     Any operations that should be performed on selected objects will first query
@@ -15,14 +15,16 @@ public partial class Selection : Singleton<Selection>, IHasControls
 
     static private SelectionArea selectionArea = null;
 
-    public List<Controller> Controllers { get; set; }
+    private SelectionController selectionController;
 
     private void Start()
     {
         selectedGameObjects = new Dictionary<int, ComponentBehavior>();
+        selectionController = gameObject.AddComponent<SelectionController>();
+    }
 
-        Controllers = new List<Controller>();
-        Controllers.Add(gameObject.AddComponent<SelectionController>());
+    static public void SetContollerEnabled(bool enabled) {
+        Instance.selectionController.enabled = enabled;
     }
 
     static public bool OnGoingMultiSelect { get; private set; } = false;

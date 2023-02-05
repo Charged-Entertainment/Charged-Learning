@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public partial class EComponent : Singleton<EComponent>, IHasControls
+public partial class EComponent : Singleton<EComponent>
 {
     // Possible change: use UnityEvents (https://www.jacksondunstan.com/articles/3335#comment-713798).
     static public Action<ComponentBehavior> mouseEntered;
@@ -13,13 +13,29 @@ public partial class EComponent : Singleton<EComponent>, IHasControls
     static public Action<ComponentBehavior> mouseUp;
     static public Action<ComponentBehavior> dragged;
 
-    public List<Controller> Controllers { get; set; }
+    private DragController dragController;
+    private TransformationController transformationController;
 
     void Start()
     {
-        Controllers = new List<Controller>();
-        Controllers.Add(gameObject.AddComponent<DragController>());
-        Controllers.Add(gameObject.AddComponent<TransformationController>());
+        dragController = gameObject.AddComponent<DragController>();
+        transformationController = gameObject.AddComponent<TransformationController>();
+    }
+
+    static public void SetControllersEnabled(bool enabled)
+    {
+        Instance.dragController.enabled = enabled;
+        Instance.transformationController.enabled = enabled;
+    }
+
+    static public void SetDragControllerEnabled(bool enabled)
+    {
+        Instance.dragController.enabled = enabled;
+    }
+
+    static public void SetTransformationControllerEnabled(bool enabled)
+    {
+        Instance.transformationController.enabled = enabled;
     }
 
 
@@ -27,8 +43,8 @@ public partial class EComponent : Singleton<EComponent>, IHasControls
     static public ComponentBehavior Instantiate(ComponentBehavior original, Transform parent)
     {
         ComponentBehavior copy = GameObject.Instantiate(original, parent);
-        
-        bool selected = Selection.IsSelected(original);  
+
+        bool selected = Selection.IsSelected(original);
         copy.SetSelectedVisible(selected);
         if (selected) Selection.AddComponent(copy);
 

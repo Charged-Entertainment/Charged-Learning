@@ -5,7 +5,7 @@ using GameManagement;
 
 public partial class GameManager : Singleton<GameManager>
 {
-    public partial class GameController : Controller
+    private partial class GameController : Controller
     {
         private void Update()
         {

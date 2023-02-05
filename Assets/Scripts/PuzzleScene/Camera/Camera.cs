@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Camera : Singleton<Camera>, IHasControls
+public partial class Camera : Singleton<Camera>
 {
     private UnityEngine.Camera cam;
     static private float targetZoom = 5f;
     static private float zoomFactor = 6f;
     static private float zoomLerpSpeed = 10;
 
-    public List<Controller> Controllers { get; set; }
+    private ZoomController zoomController;
+    private PanController panController;
 
     void Start()
     {
         cam = UnityEngine.Camera.main;
         targetZoom = cam.orthographicSize;
 
-        Controllers = new List<Controller>();
-        Controllers.Add(gameObject.AddComponent<PanController>());
-        Controllers.Add(gameObject.AddComponent<ZoomController>());
+        zoomController = gameObject.AddComponent<ZoomController>();
+        panController = gameObject.AddComponent<PanController>();
     }
 
     static public void Pan(Vector3 value, bool isOffset = true)
@@ -29,6 +29,20 @@ public partial class Camera : Singleton<Camera>, IHasControls
     static public void Zoom(float change)
     {
         targetZoom -= change * zoomFactor;
+    }
+
+    static public void SetControllersEnabled(bool enabled)
+    {
+        Instance.zoomController.enabled = enabled;
+        Instance.panController.enabled = enabled;
+    }
+
+    static public void SetPanControllerEnabled(bool enabled) {
+        Instance.panController.enabled = enabled;
+    }
+
+    static public void SetZoomControllerEnabled(bool enabled) {
+        Instance.zoomController.enabled = enabled;
     }
 
     private void Update()

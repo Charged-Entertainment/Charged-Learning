@@ -6,10 +6,16 @@ public partial class EComponent
 {
     private class DragController : Controller
     {
-        private void Start()
+        private void OnEnable()
         {
+            OnDisable();
             EComponent.mouseDown += SetCursorLastSeen;
             EComponent.dragged += MoveSelectedObjectsOnDrag;
+        }
+
+        private void OnDisable() {
+            EComponent.mouseDown -= SetCursorLastSeen;
+            EComponent.dragged -= MoveSelectedObjectsOnDrag;
         }
 
         Vector3 lastSeen;
