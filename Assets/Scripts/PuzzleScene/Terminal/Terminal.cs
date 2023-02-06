@@ -47,7 +47,7 @@ public class Terminal : Singleton<Terminal>
         rootVisualElement.Q<Button>("maximize-btn").RegisterCallback<ClickEvent>(e => MaximizeToggle());
         rootVisualElement.Q<Button>("minimize-btn").RegisterCallback<ClickEvent>(Minimize);
 
-        terminalWindow.RegisterCallback<MouseDownEvent>(ev => { mouseDown = true; dragStartPos = ev.mousePosition; });
+        terminalWindow.RegisterCallback<MouseDownEvent>(ev => {if(ev.button != 0)return;mouseDown = true; dragStartPos = ev.mousePosition; });
         terminalWindow.RegisterCallback<MouseUpEvent>(ev => mouseDown = false);
         terminalWindow.RegisterCallback<MouseMoveEvent>(HandleMouseDrag);
         terminalWindow.RegisterCallback<MouseLeaveEvent>(ev => mouseDown = false);
