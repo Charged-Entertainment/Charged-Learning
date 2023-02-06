@@ -1,13 +1,7 @@
 #window{
-    width: 30%;
-    height: 20%;
     opacity: 0.6;
     left: 500px;
     top: 200px;
-    position: absolute;
-
-    max-height: 50%;
-    max-width: 60%;
 }
 
 #title-bar{
@@ -15,14 +9,12 @@
     background-color: #282828;
     border-radius: 21.025px 21.025px 0px 0px;
     align-items: center;
+
 }
 
 #body{
     background-color: #1F0101;
-    /* min-height: 10%; */
-    height: 100%;
-    /* max-height: 200px; */
-    
+    height: 100%;    
 
     border-radius: 0px 0px 21.025px 21.025px;
 
