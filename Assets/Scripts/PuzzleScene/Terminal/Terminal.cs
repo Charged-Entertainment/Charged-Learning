@@ -73,15 +73,14 @@ public class Terminal : Singleton<Terminal>
     {
         if (windowState != WindowState.Maximized)
         {
-            terminalWindow.style.height = Length.Percent(70);
-            terminalWindow.style.width = Length.Percent(70);
+            terminalWindow.style.height = Length.Percent(40);
 
             windowState = WindowState.Maximized;
         }
         else
         {
-            terminalWindow.style.height = Length.Percent(50);
-            terminalWindow.style.width = Length.Percent(70);
+            terminalWindow.style.height = Length.Percent(30);
+            // terminalWindow.style.width = Length.Percent(30);
             windowState = WindowState.Normal;
         }
         bodyVisualElement.style.display = DisplayStyle.Flex;
