@@ -13,10 +13,7 @@ public class Terminal : Singleton<Terminal>
     #region privates
     [SerializeField] private List<Log> logs;
     [SerializeField] private List<string> testGoals;
-    private VisualElement goalsVisualElement;
-    private VisualElement logsVisualElement;
-    private VisualElement bodyVisualElement;
-    private VisualElement terminalWindow;
+    private VisualElement goalsVisualElement, logsVisualElement, bodyVisualElement, terminalWindow, terminalInstance;
     private bool mouseDown = false;
     private Vector2 dragStartPos;
     private WindowState windowState;
@@ -37,7 +34,7 @@ public class Terminal : Singleton<Terminal>
             };
 
         var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
-        var terminalInstance = rootVisualElement.Q("terminal-instance");
+        terminalInstance = rootVisualElement.Q("terminal-instance");
 
         goalsVisualElement = terminalInstance.Q("goals");
         logsVisualElement = terminalInstance.Q("logs");
@@ -71,16 +68,18 @@ public class Terminal : Singleton<Terminal>
     #region maximize minimize
     private void MaximizeToggle()
     {
+        terminalInstance.style.height = Length.Percent(50);
+        terminalWindow.style.width = Length.Percent(70);
+
         if (windowState != WindowState.Maximized)
         {
-            terminalWindow.style.height = Length.Percent(40);
+            terminalWindow.style.height = Length.Percent(70);
 
             windowState = WindowState.Maximized;
         }
         else
         {
-            terminalWindow.style.height = Length.Percent(30);
-            // terminalWindow.style.width = Length.Percent(30);
+            terminalWindow.style.height = Length.Percent(50);
             windowState = WindowState.Normal;
         }
         bodyVisualElement.style.display = DisplayStyle.Flex;
@@ -92,6 +91,7 @@ public class Terminal : Singleton<Terminal>
     {
         bodyVisualElement.style.display = DisplayStyle.None;
         windowState = WindowState.Minimized;
+        terminalInstance.style.height = Length.Percent(10);
     }
     #endregion
 
