@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using GameManagement;
 
 public partial class Selection : Singleton<Selection>
 {
@@ -23,8 +24,31 @@ public partial class Selection : Singleton<Selection>
         selectionController = gameObject.AddComponent<SelectionController>();
     }
 
-    static public void SetContollerEnabled(bool enabled) {
-        Instance.selectionController.enabled = enabled;
+    private void OnEnable()
+    {
+        OnDisable();
+        GameMode.changed += HandleGameModeChange;
+        InteractionMode.changed += HandleInteractionModeChange;
+    }
+
+    private void OnDisable()
+    {
+        GameMode.changed -= HandleGameModeChange;
+        InteractionMode.changed -= HandleInteractionModeChange;
+    }
+
+    private void HandleGameModeChange(GameModes mode)
+    {
+        if (GameMode.Current == GameModes.Edit && InteractionMode.Current == InteractionModes.Normal)
+            selectionController.enabled = true;
+        else selectionController.enabled = false;
+    }
+
+    private void HandleInteractionModeChange(InteractionModes mode)
+    {
+        if (GameMode.Current == GameModes.Edit && InteractionMode.Current == InteractionModes.Normal)
+            selectionController.enabled = true;
+        else selectionController.enabled = false;
     }
 
     static public bool OnGoingMultiSelect { get; private set; } = false;

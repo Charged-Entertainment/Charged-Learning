@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using GameManagement;
 
 public partial class ComponentManager : Singleton<ComponentManager>
 {
@@ -23,22 +24,54 @@ public partial class ComponentManager : Singleton<ComponentManager>
         transformationController = gameObject.AddComponent<TransformationController>();
     }
 
-    static public void SetControllersEnabled(bool enabled)
+    private void OnEnable()
     {
-        Instance.dragController.enabled = enabled;
-        Instance.transformationController.enabled = enabled;
+        OnDisable();
+        GameMode.changed += HandleGameModeChange;
+        InteractionMode.changed += HandleInteractionModeChange;
     }
 
-    static public void SetDragControllerEnabled(bool enabled)
+    private void OnDisable()
     {
-        Instance.dragController.enabled = enabled;
+        GameMode.changed -= HandleGameModeChange;
+        InteractionMode.changed -= HandleInteractionModeChange;
     }
 
-    static public void SetTransformationControllerEnabled(bool enabled)
+    private void HandleGameModeChange(GameModes mode)
     {
-        Instance.transformationController.enabled = enabled;
+        HandleGameModeOrInteractionModeChange();
     }
 
+    private void HandleInteractionModeChange(InteractionModes mode)
+    {
+        HandleGameModeOrInteractionModeChange();
+    }
+
+    private void HandleGameModeOrInteractionModeChange()
+    {
+        if (GameMode.Current != GameModes.Edit)
+        {
+            dragController.enabled = false;
+            transformationController.enabled = false;
+            return;
+        }
+
+        if (InteractionMode.Current == InteractionModes.Normal)
+        {
+            dragController.enabled = true;
+            transformationController.enabled = true;
+        }
+        else if (InteractionMode.Current == InteractionModes.Pan)
+        {
+            dragController.enabled = false;
+            transformationController.enabled = true;
+        }
+        else
+        {
+            dragController.enabled = false;
+            transformationController.enabled = false;
+        }
+    }
 
     // Handle all that should happen when creating a new component.
     static public ComponentBehavior Instantiate(ComponentBehavior original, Transform parent)
@@ -54,12 +87,15 @@ public partial class ComponentManager : Singleton<ComponentManager>
 
     static public ComponentBehavior Instantiate(Components.LevelComponent comp)
     {
-        if(comp.Quantity.Used < comp.Quantity.Total){
+        if (comp.Quantity.Used < comp.Quantity.Total)
+        {
             ComponentBehavior copy = new GameObject().AddComponent<ComponentBehavior>();
             copy.levelComponent = comp;
             componentCreated?.Invoke(copy);
             return copy;
-        }else{
+        }
+        else
+        {
             //TODO: emit error event
             throw new Exception("Quantity ");
         }

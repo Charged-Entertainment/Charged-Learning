@@ -31,20 +31,6 @@ public partial class Camera : Singleton<Camera>
         targetZoom -= change * zoomFactor;
     }
 
-    static public void SetControllersEnabled(bool enabled)
-    {
-        Instance.zoomController.enabled = enabled;
-        Instance.panController.enabled = enabled;
-    }
-
-    static public void SetPanControllerEnabled(bool enabled) {
-        Instance.panController.enabled = enabled;
-    }
-
-    static public void SetZoomControllerEnabled(bool enabled) {
-        Instance.zoomController.enabled = enabled;
-    }
-
     private void Update()
     {
         if (cam.orthographicSize != targetZoom)

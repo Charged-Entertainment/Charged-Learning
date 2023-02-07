@@ -1,16 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameManagement;
 
 public partial class Clipboard : Singleton<Clipboard>
 {
     private ClipboardController controller;
-    private void Start() {
+    private void Start()
+    {
         controller = gameObject.AddComponent<ClipboardController>();
     }
 
-    static public void SetContollerEnabled(bool enabled) {
-        Instance.controller.enabled = enabled;
+    private void OnEnable()
+    {
+        OnDisable();
+        GameMode.changed += HandleGameModeChange;
+        InteractionMode.changed += HandleInteractionModeChange;
+    }
+
+    private void OnDisable()
+    {
+        GameMode.changed -= HandleGameModeChange;
+        InteractionMode.changed -= HandleInteractionModeChange;
+    }
+
+    private void HandleGameModeChange(GameModes mode)
+    {
+        if (GameMode.Current == GameModes.Edit && InteractionMode.Current == InteractionModes.Normal)
+            controller.enabled = true;
+        else controller.enabled = false;
+    }
+
+    private void HandleInteractionModeChange(InteractionModes mode)
+    {
+        if (GameMode.Current == GameModes.Edit && InteractionMode.Current == InteractionModes.Normal)
+            controller.enabled = true;
+        else controller.enabled = false;
     }
 
     static public void Copy(ComponentBehavior[] components, bool isCut = false)
@@ -43,11 +68,13 @@ public partial class Clipboard : Singleton<Clipboard>
         Instance.transform.position = Vector3.zero;
     }
 
-    static public ComponentBehavior[] GetContent() {
+    static public ComponentBehavior[] GetContent()
+    {
         return Instance.GetComponentsInChildren<ComponentBehavior>(true);
     }
 
-    static public void Clear() {
+    static public void Clear()
+    {
         foreach (var component in GetContent())
         {
             component.Destroy();
