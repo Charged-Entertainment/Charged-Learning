@@ -11,19 +11,21 @@ public partial class Selection : Singleton<Selection>
         bool handleOnMouseUp = false;
         bool shiftWasClickedOnMouseDown = false;
 
+        private void Awake() {
+            // Never disabled.
+            ComponentManager.mouseEntered += HandleMouseEntered;
+            ComponentManager.mouseExited += HandleMouseExited;
+        }
+
         void OnEnable()
         {
             OnDisable();
-            ComponentManager.mouseEntered += HandleMouseEntered;
-            ComponentManager.mouseExited += HandleMouseExited;
             ComponentManager.mouseDown += HandleMouseDown;
             ComponentManager.mouseUp += HandleMouseUp;
         }
 
         void OnDisable()
         {
-            ComponentManager.mouseEntered -= HandleMouseEntered;
-            ComponentManager.mouseExited -= HandleMouseExited;
             ComponentManager.mouseDown -= HandleMouseDown;
             ComponentManager.mouseUp -= HandleMouseUp;
         }
