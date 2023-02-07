@@ -16,6 +16,7 @@ public partial class ComponentManager : Singleton<ComponentManager>
     static public Action<ComponentBehavior> dragged;
     static public Action<ComponentBehavior> moved;
     static public Action<ComponentBehavior> componentCreated;
+    static public Action<ComponentBehavior> componentDestroyed;
 
     static public Action<Terminal, Terminal> connected;
     static public Action<Terminal, Terminal> disconnected;
@@ -100,8 +101,27 @@ public partial class ComponentManager : Singleton<ComponentManager>
     {
         if (comp.Quantity.Used < comp.Quantity.Total)
         {
-            ComponentBehavior copy = new GameObject().AddComponent<ComponentBehavior>();
+            var prefab = Resources.Load<GameObject>(comp.Name);
+            ComponentBehavior copy = GameObject.Instantiate(prefab).GetComponent<ComponentBehavior>();
             copy.levelComponent = comp;
+            componentCreated?.Invoke(copy);
+            return copy;
+        }
+        else
+        {
+            //TODO: emit error event
+            throw new Exception("Quantity ");
+        }
+    }
+
+    static public ComponentBehavior Instantiate(Components.LevelComponent comp, Vector2 pos)
+    {
+        if (comp.Quantity.Used < comp.Quantity.Total)
+        {
+            var prefab = Resources.Load<GameObject>($"Components/{comp.Name}");
+            ComponentBehavior copy = GameObject.Instantiate(prefab).GetComponent<ComponentBehavior>();
+            copy.levelComponent = comp;
+            copy.transform.position = pos;
             componentCreated?.Invoke(copy);
             return copy;
         }

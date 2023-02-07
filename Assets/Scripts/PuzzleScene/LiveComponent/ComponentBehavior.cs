@@ -75,6 +75,7 @@ public class ComponentBehavior : MonoBehaviour
 
     public void Destroy()
     {
+        ComponentManager.componentDestroyed.Invoke(this);
         GameObject.Destroy(gameObject);
     }
 

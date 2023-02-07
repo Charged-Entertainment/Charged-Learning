@@ -61,6 +61,14 @@ public partial class ComponentManager
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                foreach (var selectedObject in Selection.GetSelectedComponents())
+                {
+                    selectedObject.Destroy();
+                }
+            }
+
             // TODO: fix this, it crashes Unity...
             // if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.LeftControl))
             // {

@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6759850112147314619}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.92, y: 0.059, z: 0}
+  m_LocalPosition: {x: -0.33, y: -1.48, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -141,7 +141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7674653814010335148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.67, y: 0.059, z: 0}
+  m_LocalPosition: {x: 0.31, y: -1.1, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 4500835737716417129}
   - component: {fileID: 5268489511488267215}
   m_Layer: 0
-  m_Name: 5_Ohm_Resistor
+  m_Name: led
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -305,7 +305,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 36ae9fa3ba8be8cd58746bce8eae3e9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54efcbdf78876467ba906ff61bcd6b62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -341,6 +341,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07, y: 0.03}
-  m_Size: {x: 2.82, y: 1.13}
-  m_Direction: 1
+  m_Offset: {x: -0.025440693, y: 0.4578266}
+  m_Size: {x: 1.2863221, y: 2.2030091}
+  m_Direction: 0

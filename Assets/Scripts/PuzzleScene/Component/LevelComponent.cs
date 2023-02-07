@@ -8,8 +8,8 @@ namespace Components
 
     public class Quantity
     {
-        public int Total{get; private set;}
-        public int Used{get;set;}
+        public int Total { get; private set; }
+        public int Used { get; set; }
 
         public Quantity(int total, int used = 0)
         {
@@ -33,13 +33,15 @@ namespace Components
     {
         public Component Component { get; private set; }
 
+        public static Action<LevelComponent> quantityChanged;
+
         public Dictionary<string, Property> Properties { get; private set; }
 
         // public Dictionary<string, Terminal> Terminals { get; private set; }
 
         public Quantity Quantity { get; private set; }
 
-        public string Name {get; set;}
+        public string Name { get; set; }
 
 
 
@@ -53,21 +55,43 @@ namespace Components
             {
                 Properties.Add(prop.Value.name, new Property(prop.Value));
             }
-            ComponentManager.componentCreated += HandleQuantityChange;
+            ComponentManager.componentCreated += HandleComponentCreated;
+            ComponentManager.componentDestroyed += HandleComponentDestroyed;
         }
 
-
-
         // TODO: handle reveal event and qunatity change event
-        private void HandleQuantityChange(ComponentBehavior comp){
-            if(comp.levelComponent == Puzzle.testComp){
-                if(Quantity.Used < Quantity.Total){
+        private void HandleComponentCreated(ComponentBehavior comp)
+        {
+            if (comp.levelComponent == this)
+            {
+                if (Quantity.Used < Quantity.Total)
+                {
                     Quantity.Used++;
+                    quantityChanged.Invoke(this);
                 }
-                else{
+                else
+                {
                     throw new Exception("error");
                 }
-                    
+
+            }
+        }
+
+        // TODO: handle reveal event and qunatity change event
+        private void HandleComponentDestroyed(ComponentBehavior comp)
+        {
+            if (comp.levelComponent == this)
+            {
+                if (Quantity.Used >= 1)
+                {
+                    Quantity.Used--;
+                    quantityChanged.Invoke(this);
+                }
+                else
+                {
+                    throw new Exception("error");
+                }
+
             }
         }
 

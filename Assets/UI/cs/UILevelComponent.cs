@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Components;
 
-public class UILevelComponent: VisualElement
+public class UILevelComponent : VisualElement
 {
-    VisualElement instance;
+    VisualElement visualElement;
     Label label;
     Image image;
     Label qty;
@@ -16,33 +16,58 @@ public class UILevelComponent: VisualElement
     public UILevelComponent(LevelComponent c)
     {
         levelComponent = c;
-        var document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        var container = document.Q("level-components");
-        VisualTreeAsset template = Resources.Load<VisualTreeAsset>("LevelComponent.uxml");
-        instance = template.Instantiate();
-        label = instance.Q<Label>("name");
-        image = instance.Q<Image>();
-        qty = instance.Q<Label>("qty");
+        VisualTreeAsset template = Resources.Load<VisualTreeAsset>("LevelComponent");
+        visualElement = template.Instantiate();
 
-        label.text = c.Component.Name;
-        qty.text = c.Quantity.ToString();
-        image.style.backgroundImage = new StyleBackground(Resources.Load<Sprite>("led"));
+        label = visualElement.Q<Label>("name");
+        image = visualElement.Q<Image>();
+        qty = visualElement.Q<Label>("qty");
+
+        label.text = c.Name;
+        qty.text = "x" + c.Quantity.Total.ToString();
+
+        var sprite = Resources.Load<Sprite>(c.Name);
+        image.style.backgroundImage = new StyleBackground(sprite);
+
+        OnEnable();
     }
 
     private void OnEnable()
     {
-        OnDisable();
-        Puzzle.quantityChanged += HandleQtyChange;
-    }
+        LevelComponent.quantityChanged += HandleQtyChange;
+        image.RegisterCallback<MouseEnterEvent>(e =>
+        {
+            image.style.opacity = 0.8f;
+        });
 
-    private void OnDisable()
-    {
-        Puzzle.quantityChanged -= HandleQtyChange;
+        image.RegisterCallback<MouseLeaveEvent>(e =>
+        {
+            image.style.opacity = 1f;
+        });
+
+        image.RegisterCallback<MouseDownEvent>(e =>
+        {
+            image.style.opacity = 0.5f;
+        });
+
+        image.RegisterCallback<MouseUpEvent>(e =>
+        {
+            image.style.opacity = 1f;
+            ComponentManager.Instantiate(levelComponent, Vector2.zero);
+
+            // TODO: fix this
+            // ComponentManager.Instantiate(levelComponent, Utils.GetMouseWorldPosition());
+        });
     }
 
     private void HandleQtyChange(LevelComponent c)
     {
-        qty.text = c.Quantity.ToString();
+        if (c == levelComponent)
+        {
+            visualElement.Q<Label>("qty").text = "x" + (c.Quantity.Total - c.Quantity.Used).ToString();
+            if (c.Quantity.Used == c.Quantity.Total) visualElement.style.opacity = 0.3f;
+            else visualElement.style.opacity = 1f;
+        }
     }
 
     private class UILevelComponentLoader : Singleton<UILevelComponentLoader>
@@ -51,10 +76,7 @@ public class UILevelComponent: VisualElement
         {
             var document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
             var container = document.Q("level-components");
-            foreach (var c in Puzzle.Components)
-            {
-                container.Insert(1, new UILevelComponent(c));
-            }
+            foreach (var c in Puzzle.Components) container.Add(new UILevelComponent(c).visualElement);
         }
     }
 }
