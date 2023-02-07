@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <Style src="uss/utils.uss" />
+    <ui:VisualElement class="col">
+        <ui:Label name="name" text="some text" class="text-center" />
+        <ui:Image class="self-center"
+            style='background-image: resource("led"); width:50px; height:100px;' />
+        <ui:Label name="qty" text="x0" class="text-center" />
+    </ui:VisualElement>
+</ui:UXML>
