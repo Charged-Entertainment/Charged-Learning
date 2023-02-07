@@ -16,8 +16,6 @@ public class UIGameModes : MonoBehaviour
         pan = document.Q("pan-btn");
         normal = document.Q("normal-btn");
         wire = document.Q("wiring-btn");
-
-        Debug.Log(zoomIn);
     }
 
     private void OnEnable() {

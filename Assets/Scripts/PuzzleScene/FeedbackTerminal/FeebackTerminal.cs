@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Linq;
 
-public class Terminal : Singleton<Terminal>
+public class FeebackTerminal : Singleton<FeebackTerminal>
 {
 
     enum WindowState { Normal, Maximized, Minimized }

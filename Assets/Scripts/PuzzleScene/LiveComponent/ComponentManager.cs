@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using GameManagement;
+using Components;
 
 public partial class ComponentManager : Singleton<ComponentManager>
 {
@@ -13,7 +14,11 @@ public partial class ComponentManager : Singleton<ComponentManager>
     static public Action<ComponentBehavior> mouseDown;
     static public Action<ComponentBehavior> mouseUp;
     static public Action<ComponentBehavior> dragged;
+    static public Action<ComponentBehavior> moved;
     static public Action<ComponentBehavior> componentCreated;
+
+    static public Action<Terminal, Terminal> connected;
+    static public Action<Terminal, Terminal> disconnected;
 
     private DragController dragController;
     private TransformationController transformationController;
@@ -47,6 +52,8 @@ public partial class ComponentManager : Singleton<ComponentManager>
         HandleGameModeOrInteractionModeChange();
     }
 
+    
+
     private void HandleGameModeOrInteractionModeChange()
     {
         if (GameMode.Current != GameModes.Edit)
@@ -66,10 +73,14 @@ public partial class ComponentManager : Singleton<ComponentManager>
             dragController.enabled = false;
             transformationController.enabled = true;
         }
-        else
+        else if (InteractionMode.Current == InteractionModes.Wire)
         {
             dragController.enabled = false;
             transformationController.enabled = false;
+        }
+        else
+        {
+            Debug.Log("Error: unknown InteractionMode: " + InteractionMode.Current);
         }
     }
 

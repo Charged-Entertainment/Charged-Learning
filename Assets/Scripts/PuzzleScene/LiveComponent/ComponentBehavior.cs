@@ -2,14 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Components;
+using GameManagement;
 
 public class ComponentBehavior : MonoBehaviour
 {
     public Components.LevelComponent levelComponent;
 
+    private Terminal[] terminals;
+
+
     private void Start()
     {
+        terminals = gameObject.GetComponentsInChildren<Terminal>(true);
         gameObject.AddComponent<ObjectSnapping>();
+    }
+
+    private void SetTerminalsActive(bool enabled)
+    {
+        foreach (var t in terminals) t.gameObject.SetActive(enabled);
+    }
+
+    private void OnEnable()
+    {
+        OnDisable();
+        InteractionMode.changed += HandleInteractionModeChange;
+    }
+
+    private void OnDisable()
+    {
+        InteractionMode.changed -= HandleInteractionModeChange;
+    }
+
+    private void HandleInteractionModeChange(InteractionModes mode)
+    {
+        SetTerminalsActive(mode == InteractionModes.Wire);
     }
 
     public void FlipH()
@@ -31,6 +58,7 @@ public class ComponentBehavior : MonoBehaviour
             transform.position += value;
         }
         else transform.position = value;
+        ComponentManager.moved?.Invoke(this);
     }
 
     public void Rotate(float value, bool isOffset = true)

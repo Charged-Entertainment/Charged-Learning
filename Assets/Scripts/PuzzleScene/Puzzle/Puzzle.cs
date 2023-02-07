@@ -23,6 +23,7 @@ public class Puzzle : Singleton<Puzzle>
         resistor.Properties.Add(p1.name, p1);
         var levelResistorQty = new Components.Quantity(3);
         testComp = new LevelComponent(resistor, levelResistorQty);
+        testComp.Name = "Resistor_5_Ohm";
         Components.Add(testComp);
     }
 }

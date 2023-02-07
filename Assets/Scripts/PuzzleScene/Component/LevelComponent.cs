@@ -39,6 +39,8 @@ namespace Components
 
         public Quantity Quantity { get; private set; }
 
+        public string Name {get; set;}
+
 
 
         public LevelComponent(Component component, Quantity quantity)
