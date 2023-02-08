@@ -7,7 +7,6 @@ public abstract class Device : MonoBehaviour
     protected DeviceMode deviceMode;
     [SerializeField]protected Probe negativeProbe;
     [SerializeField]protected Probe positiveProbe;
-    //TODO: private DeviceDisplay 
 
     void Start()
     {

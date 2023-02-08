@@ -35,7 +35,7 @@ public class Knob : MonoBehaviour
     
     private DeviceMode GetAngleMode(int angle){
         if(angle==0)
-            throw new System.Exception("off mode");
+            return new OffMode();
         if(angle is > 0 and <= 18*5)
             return new VoltageMode(false, "200");
         if(angle is > 18*5 and <= 18*11)

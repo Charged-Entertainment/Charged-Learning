@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ResistanceMode : DeviceMode
+public class ResistanceMode : MultimeterMode
 {
     string measurementRange;
 
@@ -12,17 +12,8 @@ public class ResistanceMode : DeviceMode
         this.measurementRange = measurementRange;
     }
 
-    public void OnEnter()
+    protected override void OnSimulationResults()
     {
-        Debug.Log("Entered Resistance Mode");
-        //Subscribe to simulation results
+        throw new System.NotImplementedException();
     }
-
-    public void OnExit()
-    {
-        Debug.Log("Exited from Resistance Mode");
-        //Unsubscribe from simulation results
-    }
-
-    //TODO: OnSimulationResults subscribe to results and display them
 }

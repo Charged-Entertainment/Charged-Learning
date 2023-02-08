@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class VoltageMode : DeviceMode
+public class VoltageMode : MultimeterMode
 {
     bool ac;
     string measurementRange;
@@ -15,17 +15,11 @@ public class VoltageMode : DeviceMode
         this.measurementRange = measurementRange;
     }
 
-    public void OnEnter()
-    {
-        Debug.Log($"Entered Voltage ({(ac?'A':'D')}) Mode");
-        //Subscribe to simulation results
-    }
 
-    public void OnExit()
+    protected override void OnSimulationResults()
     {
-        Debug.Log("Exited from Voltage Mode");
-        //Unsubscribe from simulation results
+        //something
+        //then terminal.DisplayMeasurement(some value)
+        throw new System.NotImplementedException();
     }
-
-    //TODO: OnSimulationResults subscribe to results and display them
 }

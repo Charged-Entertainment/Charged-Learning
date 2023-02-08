@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface DeviceMode
 {
-    public void OnEnter();
+    public void OnEnter(Device device);
     public void OnExit();
 }

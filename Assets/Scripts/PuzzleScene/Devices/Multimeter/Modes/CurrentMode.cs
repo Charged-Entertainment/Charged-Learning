@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CurrentMode : DeviceMode
+public class CurrentMode : MultimeterMode
 {
     bool ac;
     string measurementRange;
@@ -15,17 +15,9 @@ public class CurrentMode : DeviceMode
         this.measurementRange = measurementRange;
     }
 
-    public void OnEnter()
-    {
-        Debug.Log($"Entered Current ({(ac?'A':'D')}) Mode");
-        //Subscribe to simulation results
-    }
 
-    public void OnExit()
+    protected override void OnSimulationResults()
     {
-        Debug.Log($"Exited from Current ({(ac?'A':'D')}) Mode");
-        //Unsubscribe from simulation results
+        throw new System.NotImplementedException();
     }
-
-    //TODO: OnSimulationResults subscribe to results and display them
 }
