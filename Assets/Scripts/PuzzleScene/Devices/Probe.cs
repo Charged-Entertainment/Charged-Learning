@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Probe : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log($"Collided with{other}");
+    [field: SerializeField]public ComponentBehavior propedComponent{get; private set;}
+    private void OnTriggerEnter2D(Collider2D other) {
+        var component = other.GetComponent<ComponentBehavior>();
+        if(component){
+            Debug.Log($"Trigger2d with{other}");
+            propedComponent = component;
+        }
+            
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        propedComponent = null;
     }
 }
