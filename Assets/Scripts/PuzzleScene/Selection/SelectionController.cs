@@ -6,15 +6,18 @@ public partial class Selection : Singleton<Selection>
 {
     private class SelectionController : Controller
     {
-        byte numberOfHovers = 0;
+        HashSet<ComponentBehavior> hovers;
         Vector3 mouseDownStartPosition;
         bool handleOnMouseUp = false;
         bool shiftWasClickedOnMouseDown = false;
 
         private void Awake() {
+            hovers = new HashSet<ComponentBehavior>();
+
             // Never disabled.
             ComponentManager.mouseEntered += HandleMouseEntered;
             ComponentManager.mouseExited += HandleMouseExited;
+            ComponentManager.destroyed += HandleMouseExited; //same handler due to same effect
         }
 
         void OnEnable()
@@ -32,7 +35,7 @@ public partial class Selection : Singleton<Selection>
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && numberOfHovers == 0) //0=Left click
+            if (Input.GetMouseButtonDown(0) && hovers.Count == 0) //0=Left click
             {
                 if (!Input.GetKey(KeyCode.LeftShift)) Selection.Clear();
                 Selection.StartMultiSelect(Utils.GetMouseWorldPosition());
@@ -52,8 +55,8 @@ public partial class Selection : Singleton<Selection>
             }
         }
 
-        void HandleMouseEntered(ComponentBehavior c) { numberOfHovers++; }
-        void HandleMouseExited(ComponentBehavior c) { numberOfHovers--; }
+        void HandleMouseEntered(ComponentBehavior c) { hovers.Add(c); }
+        void HandleMouseExited(ComponentBehavior c) { hovers.Remove(c); }
         void HandleMouseDown(ComponentBehavior c)
         {
             bool shiftClicked = Input.GetKey(KeyCode.LeftShift);

@@ -55,8 +55,8 @@ namespace Components
             {
                 Properties.Add(prop.Value.name, new Property(prop.Value));
             }
-            ComponentManager.componentCreated += HandleComponentCreated;
-            ComponentManager.componentDestroyed += HandleComponentDestroyed;
+            ComponentManager.created += HandleComponentCreated;
+            ComponentManager.destroyed += HandleComponentDestroyed;
         }
 
         // TODO: handle reveal event and qunatity change event
@@ -89,6 +89,8 @@ namespace Components
                 }
                 else
                 {
+                    Debug.Log(Quantity);
+                    Debug.Log(Quantity.Used);
                     throw new Exception("error");
                 }
 

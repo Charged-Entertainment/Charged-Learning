@@ -29,12 +29,20 @@ public partial class Selection : Singleton<Selection>
         OnDisable();
         GameMode.changed += HandleGameModeChange;
         InteractionMode.changed += HandleInteractionModeChange;
+        ComponentManager.destroyed += HandleComponentDestroyed;
     }
 
     private void OnDisable()
     {
         GameMode.changed -= HandleGameModeChange;
         InteractionMode.changed -= HandleInteractionModeChange;
+        ComponentManager.destroyed -= HandleComponentDestroyed;
+    }
+
+    private void HandleComponentDestroyed(ComponentBehavior c)
+    {
+        int key = c.GetInstanceID();
+        if (selectedGameObjects.ContainsKey(key)) selectedGameObjects.Remove(key);
     }
 
     private void HandleGameModeChange(GameModes mode)
