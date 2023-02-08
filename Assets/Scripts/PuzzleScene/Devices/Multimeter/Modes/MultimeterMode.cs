@@ -20,5 +20,6 @@ public abstract class MultimeterMode : DeviceMode
         //Unsubscribe from simulation results
     }
 
+    ///<summary>Used to subscribe to SimulationResults events</summary>
     protected abstract void OnSimulationResults();
 }

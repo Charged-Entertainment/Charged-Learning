@@ -10,12 +10,15 @@ public class Knob : MonoBehaviour
 
     private void Start() {
         multiMeter = transform.parent.parent.GetComponent<Multimeter>();
-        // turn = Vector2.zero;
         numberOfModes = 20;
         degreePerMode = 360/numberOfModes;
     }
     private void Update() {
     }
+
+    ///<summary>Calculates the angle that the knob should be rotated at 
+    ///when the mouse is dragging it.
+    ///</summary>
     private void OnMouseDrag() {
         var diff = Utils.GetMouseWorldPosition() - transform.position;
         diff.Normalize();
@@ -33,6 +36,7 @@ public class Knob : MonoBehaviour
 
     }
     
+    ///<summary>Takes an angle and return the appropriate mode for it.</summary>
     private DeviceMode GetAngleMode(int angle){
         if(angle==0)
             return new OffMode();
@@ -45,7 +49,6 @@ public class Knob : MonoBehaviour
         if(angle is > 18*14 and <= 18*17)
             return new CurrentMode(true, "200");
         return new VoltageMode(true, "200");
-        
     }
 
     private void OnMouseDown() {
