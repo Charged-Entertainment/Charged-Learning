@@ -15,8 +15,8 @@ public partial class ComponentManager : Singleton<ComponentManager>
     static public Action<ComponentBehavior> mouseUp;
     static public Action<ComponentBehavior> dragged;
     static public Action<ComponentBehavior> moved;
-    static public Action<ComponentBehavior> componentCreated;
-    static public Action<ComponentBehavior> componentDestroyed;
+    static public Action<ComponentBehavior> created;
+    static public Action<ComponentBehavior> destroyed;
 
     static public Action<Terminal, Terminal> connected;
     static public Action<Terminal, Terminal> disconnected;
@@ -104,7 +104,7 @@ public partial class ComponentManager : Singleton<ComponentManager>
             var prefab = Resources.Load<GameObject>(comp.Name);
             ComponentBehavior copy = GameObject.Instantiate(prefab).GetComponent<ComponentBehavior>();
             copy.levelComponent = comp;
-            componentCreated?.Invoke(copy);
+            created?.Invoke(copy);
             return copy;
         }
         else
@@ -122,7 +122,7 @@ public partial class ComponentManager : Singleton<ComponentManager>
             ComponentBehavior copy = GameObject.Instantiate(prefab).GetComponent<ComponentBehavior>();
             copy.levelComponent = comp;
             copy.transform.position = pos;
-            componentCreated?.Invoke(copy);
+            created?.Invoke(copy);
             return copy;
         }
         else

@@ -33,6 +33,7 @@ public class WireRenderer : Singleton<WireRenderer>
     {
         OnDisable();
         ComponentManager.moved += HandleComponentMoved;
+        ComponentManager.destroyed += HandleComponentDestroyed;
         Terminal.connected += HandleConnected;
         Terminal.disconnected += HandleDisconnected;
         Terminal.mouseDown += HandleTerminalMouseDown;
@@ -42,6 +43,7 @@ public class WireRenderer : Singleton<WireRenderer>
     private void OnDisable()
     {
         ComponentManager.moved -= HandleComponentMoved;
+        ComponentManager.destroyed -= HandleComponentDestroyed;
         Terminal.connected -= HandleConnected;
         Terminal.disconnected -= HandleDisconnected;
         Terminal.mouseDown -= HandleTerminalMouseDown;
@@ -73,6 +75,12 @@ public class WireRenderer : Singleton<WireRenderer>
     private void HandleTerminalMouseUp(Terminal t)
     {
         StopIndicator();
+    }
+
+    private void HandleComponentDestroyed(ComponentBehavior c)
+    {
+        foreach (var t in c.gameObject.GetComponentsInChildren<Terminal>(true)) terminals.Remove(t);
+        WriteToLineRenderer();
     }
 
     private static void WriteToLineRenderer()
