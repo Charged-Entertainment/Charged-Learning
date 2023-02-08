@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface DeviceMode
 {
-    public void Update();
+    public void OnEnter();
+    public void OnExit();
 }

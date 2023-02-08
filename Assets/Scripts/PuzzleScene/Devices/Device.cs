@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Device : MonoBehaviour
 {
-    private DeviceMode deviceMode;
+    protected DeviceMode deviceMode;
     [SerializeField]protected Probe negativeProbe;
     [SerializeField]protected Probe positiveProbe;
     //TODO: private DeviceDisplay 
@@ -17,13 +17,6 @@ public abstract class Device : MonoBehaviour
         Debug.Log($"PositiveProbe: {positiveProbe}");
     }
 
-    void Update()
-    {
-        deviceMode?.Update();
-    }
-
-    public void ChangeMode(DeviceMode newMode){
-        deviceMode = newMode;
-    }
+    public abstract void ChangeMode(DeviceMode newMode);
 }
 
