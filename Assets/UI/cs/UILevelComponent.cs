@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,14 @@ using Components;
 
 public class UILevelComponent : VisualElement
 {
-    VisualElement visualElement;
+    public static Action<UILevelComponent> created;
+
+    public VisualElement visualElement {get; private set;}
     Label label;
     Image image;
     Label qty;
 
-    LevelComponent levelComponent;
+    public LevelComponent levelComponent {get; private set;}
 
     public UILevelComponent(LevelComponent c)
     {
@@ -76,7 +79,12 @@ public class UILevelComponent : VisualElement
         {
             var document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
             var container = document.Q("level-components");
-            foreach (var c in Puzzle.Components) container.Add(new UILevelComponent(c).visualElement);
+            foreach (var c in Puzzle.Components)
+            {
+                var t = new UILevelComponent(c);
+                container.Add(t.visualElement);
+                UILevelComponent.created?.Invoke(t);
+            }
         }
     }
 }

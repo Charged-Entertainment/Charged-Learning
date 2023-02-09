@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <Style src="../uss/tooltip.uss" />
+    <Style src="../uss/utils.uss" />
+    <ui:VisualElement name="tooltip" class="col">
+        <!-- Add tooltip modules here -->
+        <!-- Example -->
+        <!-- TooltipHeading -->
+        <!-- TooltipText -->
+        <!-- TooltipTable -->
+        <!-- TooltipText -->
+        <!-- End -->
+    </ui:VisualElement>
+</ui:UXML>
