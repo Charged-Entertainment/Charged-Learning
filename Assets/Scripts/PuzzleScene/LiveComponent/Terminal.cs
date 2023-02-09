@@ -68,10 +68,7 @@ namespace Components
         static public Action<Terminal> mouseExited;
         static public Action<Terminal> mouseDown;
         static public Action<Terminal> mouseUp;
-        static public Action<Terminal> dragged;
-        static public Action<Terminal> moved;
-        static public Action<Terminal> componentCreated;
-
+        static public Action<Terminal> destroyed;
         static public Action<Terminal, Terminal> connected;
         static public Action<Terminal, Terminal> disconnected;
 
@@ -142,5 +139,6 @@ namespace Components
             else Disable();
         }
 
+        private void OnDestroy() { destroyed?.Invoke(this); }
     }
 }

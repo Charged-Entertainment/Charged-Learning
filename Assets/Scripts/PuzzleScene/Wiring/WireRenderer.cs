@@ -1,125 +1,174 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Components;
 
-public class WireRenderer : Singleton<WireRenderer>
+public class WireManager : Singleton<WireManager>
 {
-
-    public static LineRenderer LineRenderer { get; private set; }
-    private static LineRenderer IndicatorLineRenderer;
-
-
-    private static HashSet<Terminal> terminals;
+    private static Dictionary<Terminal, HashSet<Wire>> TerminalToWires;
+    private static Dictionary<string, Wire> TerminalPairToWire;
 
     private void Start()
     {
-        terminals = new HashSet<Terminal>();
-        LineRenderer = Instantiate((GameObject)Resources.Load("LineRenderer")).GetComponent<LineRenderer>();
-
-        IndicatorLineRenderer = Instantiate((GameObject)Resources.Load("LineRenderer")).GetComponent<LineRenderer>();
-        // var g = new Gradient();
-        // g = IndicatorLineRenderer.colorGradient;
-        // for (int i = 0; i < g.alphaKeys.Length; i++)
-        // {
-        //     g.alphaKeys[i].alpha = 0.3f;
-        // }
-        // IndicatorLineRenderer.colorGradient = g;
-        IndicatorLineRenderer.positionCount = 2;
-        IndicatorLineRenderer.gameObject.SetActive(false);
+        TerminalPairToWire = new Dictionary<string, Wire>();
+        TerminalToWires = new Dictionary<Terminal, HashSet<Wire>>();
+        gameObject.AddComponent<WireDragPreview>();
     }
 
     private void OnEnable()
     {
         OnDisable();
-        ComponentManager.moved += HandleComponentMoved;
-        ComponentManager.destroyed += HandleComponentDestroyed;
-        Terminal.connected += HandleConnected;
-        Terminal.disconnected += HandleDisconnected;
-        Terminal.mouseDown += HandleTerminalMouseDown;
-        Terminal.mouseUp += HandleTerminalMouseUp;
+        Terminal.connected += Create;
+        Terminal.disconnected += Remove;
+        Terminal.destroyed += Remove;
     }
 
     private void OnDisable()
     {
-        ComponentManager.moved -= HandleComponentMoved;
-        ComponentManager.destroyed -= HandleComponentDestroyed;
-        Terminal.connected -= HandleConnected;
-        Terminal.disconnected -= HandleDisconnected;
-        Terminal.mouseDown -= HandleTerminalMouseDown;
-        Terminal.mouseUp -= HandleTerminalMouseUp;
+        Terminal.connected -= Create;
+        Terminal.disconnected -= Remove;
+        Terminal.destroyed -= Remove;
     }
 
-    private void HandleComponentMoved(MonoBehaviour c)
+    private string TerminalPairID(Terminal a, Terminal b)
     {
-        WriteToLineRenderer();
+        // needs to sort the 2 objects to be agnostic of order. ie. (a,b)<=>(b,a)
+        int id1 = a.GetInstanceID();
+        int id2 = b.GetInstanceID();
+        return (id1 < id2 ? id1 : id2).ToString() + (id1 < id2 ? id2 : id1).ToString();
     }
 
-    private void HandleConnected(Terminal a, Terminal b)
+    private void Remove(Terminal t)
     {
-        AddTerminal(a);
-        AddTerminal(b);
-    }
-
-    private void HandleDisconnected(Terminal a, Terminal b)
-    {
-        RemoveTerminal(a);
-        RemoveTerminal(b);
-    }
-
-    private void HandleTerminalMouseDown(Terminal t)
-    {
-        StartIndicator();
-    }
-
-    private void HandleTerminalMouseUp(Terminal t)
-    {
-        StopIndicator();
-    }
-
-    private void HandleComponentDestroyed(ComponentBehavior c)
-    {
-        foreach (var t in c.gameObject.GetComponentsInChildren<Terminal>(true)) terminals.Remove(t);
-        WriteToLineRenderer();
-    }
-
-    private static void WriteToLineRenderer()
-    {
-        LineRenderer.positionCount = terminals.Count;
-        int i = 0;
-        foreach (var t in terminals)
+        HashSet<Wire> wires;
+        bool exists = TerminalToWires.TryGetValue(t, out wires);
+        if (exists)
         {
-            LineRenderer.SetPosition(i, t.transform.position);
-            i++;
+            var temp = new List<Wire>();
+            foreach (var wire in wires) temp.Add(wire);
+            foreach (var wire in temp) Remove(wire);
         }
     }
-    private void Update()
+    private void Remove(Terminal a, Terminal b)
     {
-        if (IndicatorLineRenderer.gameObject.activeSelf)
+        Wire wire;
+        bool exists = TerminalPairToWire.TryGetValue(TerminalPairID(a, b), out wire);
+        if (exists) Remove(wire);
+    }
+    private void Remove(Wire w)
+    {
+        GameObject.Destroy(w.gameObject);
+
+        HashSet<Wire> h1, h2;
+        bool exists1 = TerminalToWires.TryGetValue(w.t1, out h1);
+        bool exists2 = TerminalToWires.TryGetValue(w.t2, out h2);
+
+        if (!exists1 || !exists2)
         {
-            IndicatorLineRenderer.SetPosition(1, (Vector2)Utils.GetMouseWorldPosition());
+            Debug.Log("Error!");
+            return;
+        }
+
+        TerminalPairToWire.Remove(TerminalPairID(w.t1, w.t2));
+        h1.Remove(w);
+        h2.Remove(w);
+        if (h1.Count == 0) TerminalToWires.Remove(w.t1);
+        if (h2.Count == 0) TerminalToWires.Remove(w.t2);
+    }
+
+    private void Create(Terminal t1, Terminal t2)
+    {
+        var w = new GameObject("Wire").AddComponent<Wire>();
+        w.transform.parent = transform;
+        w.t1 = t1;
+        w.t2 = t2;
+
+        HashSet<Wire> h1, h2;
+        bool exists1 = TerminalToWires.TryGetValue(t1, out h1);
+        bool exists2 = TerminalToWires.TryGetValue(t2, out h2);
+
+        if (!exists1)
+        {
+            h1 = new HashSet<Wire>();
+            TerminalToWires.Add(t1, h1);
+        }
+
+        if (!exists2)
+        {
+            h2 = new HashSet<Wire>();
+            TerminalToWires.Add(t2, h2);
+        }
+
+        TerminalPairToWire.Add(TerminalPairID(t1, t2), w);
+        h1.Add(w);
+        h2.Add(w);
+    }
+
+    private class Wire : MonoBehaviour
+    {
+        public LineRenderer lineRenderer;
+        public Terminal t1, t2;
+
+        private void Awake()
+        {
+            lineRenderer = Instantiate((GameObject)Resources.Load("LineRenderer"), transform).GetComponent<LineRenderer>();
+            lineRenderer.positionCount = 2;
+        }
+
+        // Optimization possible: do this only on Component.moved instead of every frame.
+        private void Update()
+        {
+            lineRenderer.SetPosition(0, t1.transform.position);
+            lineRenderer.SetPosition(1, t2.transform.position);
         }
     }
-    public static void StartIndicator()
-    {
-        IndicatorLineRenderer.gameObject.SetActive(true);
-        IndicatorLineRenderer.SetPosition(0, (Vector2)Utils.GetMouseWorldPosition());
-    }
 
-    public static void StopIndicator()
+    private class WireDragPreview : MonoBehaviour
     {
-        IndicatorLineRenderer.gameObject.SetActive(false);
-    }
+        private LineRenderer lineRenderer;
 
-    public static void AddTerminal(Terminal terminal)
-    {
-        terminals.Add(terminal);
-        WriteToLineRenderer();
-    }
-    public static void RemoveTerminal(Terminal terminal)
-    {
-        bool removed = terminals.Remove(terminal);
-        if (!removed) { Debug.Log("Error"); return; }
-        WriteToLineRenderer();
+        private void OnEnable()
+        {
+            OnDisable();
+            Terminal.mouseDown += HandleTerminalMouseDown;
+            Terminal.mouseUp += HandleTerminalMouseUp;
+        }
+
+        private void OnDisable()
+        {
+            Terminal.mouseDown -= HandleTerminalMouseDown;
+            Terminal.mouseUp -= HandleTerminalMouseUp;
+        }
+
+        private void HandleTerminalMouseDown(Terminal t)
+        {
+            StartIndicator();
+        }
+
+        private void HandleTerminalMouseUp(Terminal t)
+        {
+            StopIndicator();
+        }
+
+        public void StartIndicator()
+        {
+            lineRenderer = Instantiate((GameObject)Resources.Load("LineRenderer")).GetComponent<LineRenderer>();
+            lineRenderer.name = "WirePreview";
+
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, (Vector2)Utils.GetMouseWorldPosition());
+        }
+
+        public void StopIndicator()
+        {
+            GameObject.Destroy(lineRenderer.gameObject);
+            lineRenderer = null;
+        }
+
+        private void Update()
+        {
+            if (lineRenderer != null) lineRenderer.SetPosition(1, (Vector2)Utils.GetMouseWorldPosition());
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Components;
 
 public class Utils : MonoBehaviour
 {
@@ -23,5 +24,9 @@ public class Utils : MonoBehaviour
             bounds.Encapsulate(cmp.GetBounds());
         }
         return bounds;
+    }
+
+    public static Terminal[] GetTerminals(ComponentBehavior c) {
+        return c.gameObject.GetComponentsInChildren<Terminal>(true);
     }
 }
