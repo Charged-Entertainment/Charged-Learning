@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Components;
 
 public class Probe : MonoBehaviour
 {
-    [field: SerializeField]public ComponentBehavior propedComponent{get; private set;}
-    private void OnTriggerEnter2D(Collider2D other) {
-        var component = other.GetComponent<ComponentBehavior>();
-        if(component){
-            Debug.Log($"Trigger2d with{other}");
-            propedComponent = component;
+    public Terminal propedTerminal { get; private set; }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var gameObject = other.gameObject;
+        if (other.gameObject.tag == "Terminal")
+        {
+            propedTerminal = other.GetComponent<Terminal>();
+            // Debug.Log($"Trigger2d with {propedTerminal} on {propedTerminal.gameObject.transform.parent}");
         }
-            
+
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
-        propedComponent = null;
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        propedTerminal = null;
     }
 }
