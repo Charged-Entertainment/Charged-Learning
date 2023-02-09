@@ -37,7 +37,7 @@ public class Utils : MonoBehaviour
     public static bool IsMouseOverGameObject()
     {
         var colliders = Physics2D.RaycastAll(Utils.GetMouseWorldPosition(), Vector2.zero);
-        print($"Mouse is over the following gameobjects [{colliders.Length}]: ");
+        // print($"Mouse is over the following gameobjects [{colliders.Length}]: ");
         foreach (var collider in colliders) print(collider.transform.gameObject);
         return colliders.Length != 0;
     }
@@ -65,7 +65,7 @@ public class Utils : MonoBehaviour
 
             VisualElement picked = panel.Pick(RuntimePanelUtils.ScreenToPanel(panel, pointerUiPos));
 
-            print($"Picked the following [1]: {picked}");
+            // print($"Picked the following [1]: {picked}");
             return picked;
         }
 
@@ -81,8 +81,8 @@ public class Utils : MonoBehaviour
 
             panel.PickAll(RuntimePanelUtils.ScreenToPanel(panel, pointerUiPos), picked);
 
-            print($"Picked the following [{picked.Count}]: ");
-            foreach (var p in picked) print(p);
+            // print($"Picked the following [{picked.Count}]: ");
+            // foreach (var p in picked) print(p);
 
             return picked;
         }
