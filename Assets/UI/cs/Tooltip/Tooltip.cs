@@ -97,13 +97,10 @@ public class DefaultTooltipCB : DefaultTooltip
     public DefaultTooltipCB(ComponentBehavior visualElement, string title, string subtitle = null, string description = null) : base(title, subtitle, description)
     {
         component = visualElement;
-        OnEnable();
-    }
-
-    private void OnEnable()
-    {
         ComponentManager.mouseEntered += c => { if (c == component) document.Add(root); };
         ComponentManager.mouseExited += c => { if (c == component) document.Remove(root); };
+        // TODO: this object will remain in memory, find a way for it to be garbage collected.
+        ComponentManager.destroyed += c => { if (c == component) document.Remove(root); };
     }
 }
 
