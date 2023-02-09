@@ -11,7 +11,7 @@
 
     <Template src="Terminal.uxml" name="Terminal" />
 
-    <ui:VisualElement name="main">
+    <ui:VisualElement name="main" picking-mode="Ignore">
 
         <ui:VisualElement name="controls-bar" class="row">
 
@@ -32,7 +32,7 @@
 
         </ui:VisualElement>
 
-        <ui:VisualElement name="middle-section" class="row">
+        <ui:VisualElement name="middle-section" class="row" picking-mode="Ignore">
             <ui:VisualElement name="toolbar" class="col">
 
                 <ui:Label text="Tools" class="toolbar-header toolbar-row" />
