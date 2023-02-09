@@ -35,7 +35,7 @@ public partial class Selection : Singleton<Selection>
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && hovers.Count == 0) //0=Left click
+            if (Input.GetMouseButtonDown(0) && hovers.Count == 0 && !Utils.IsMouseOverAnything())
             {
                 if (!Input.GetKey(KeyCode.LeftShift)) Selection.Clear();
                 Selection.StartMultiSelect(Utils.GetMouseWorldPosition());
