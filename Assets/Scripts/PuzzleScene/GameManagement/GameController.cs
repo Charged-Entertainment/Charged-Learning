@@ -10,9 +10,9 @@ public partial class GameManager : Singleton<GameManager>
         private void Update()
         {
             // handle game modes
-            if (Input.GetKeyDown(KeyCode.Z)) GameMode.ChangeTo(GameModes.Edit);
-            else if (Input.GetKeyDown(KeyCode.X)) GameMode.ChangeTo(GameModes.Live);
-            else if (Input.GetKeyDown(KeyCode.C)) GameMode.ChangeTo(GameModes.Evaluate);
+            if (Input.GetKeyDown(KeyCode.Alpha1)) GameMode.ChangeTo(GameModes.Edit);
+            else if (Input.GetKeyDown(KeyCode.Alpha2)) GameMode.ChangeTo(GameModes.Live);
+            else if (Input.GetKeyDown(KeyCode.Alpha3)) GameMode.ChangeTo(GameModes.Evaluate);
             
             // handle interaction modes
             else if (Input.GetKeyDown(KeyCode.Q)) GameMode.Normal();
