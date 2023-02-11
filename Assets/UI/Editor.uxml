@@ -33,38 +33,6 @@
         </ui:VisualElement>
 
         <ui:VisualElement name="middle-section" class="row" picking-mode="Ignore">
-            <ui:VisualElement name="toolbar" class="col">
-
-                <ui:Label text="Tools" class="toolbar-header toolbar-row" />
-
-                <ui:VisualElement class="row toolbar-row">
-                    <ui:Label text="Calculator" class="toolbar-label pl-5" />
-                    <ui:Image class="right-arrow" />
-                </ui:VisualElement>
-
-                <ui:VisualElement class="row toolbar-row">
-                    <ui:Label text="Tips" class="toolbar-label pl-5" />
-                    <ui:Image class="right-arrow" />
-                </ui:VisualElement>
-
-                <ui:VisualElement class="row toolbar-row">
-                    <ui:Label text="Links" class="toolbar-label pl-5" />
-                    <ui:Image class="right-arrow" />
-                </ui:VisualElement>
-
-                <ui:VisualElement class="row toolbar-row">
-                    <ui:Label text="Collection" class="toolbar-label pl-5" />
-                    <ui:Image class="right-arrow" />
-                </ui:VisualElement>
-
-                <ui:VisualElement class="row toolbar-row">
-                    <ui:Label text="Help" class="toolbar-label pl-5" />
-                    <ui:Image class="right-arrow" />
-                </ui:VisualElement>
-
-            </ui:VisualElement>
-
-
             <ui:VisualElement name="game-area" class="row-reverse">
                 <ui:VisualElement name="editor-controls" class="row">
                     <ui:VisualElement class="col px-1">
