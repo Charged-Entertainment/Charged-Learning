@@ -7,25 +7,26 @@
         <ui:VisualElement name="title-bar" class="row">
             <ui:Label text="Terminal" class="ml-3 text-center self-center"/>
 
-            <ui:VisualElement class="row mr-2 mt-1 mb-1">
+            <ui:VisualElement class="row mr-2">
                 <ui:Button name="maximize-btn"/>
                 <ui:Button name="minimize-btn"/>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="main">
+            <ui:VisualElement name="body" class="pl-2 mb-2 pb-2">
+                <ui:ScrollView name="scroll-view">
+                    <ui:Label text="Goals" />
+                    <ui:VisualElement name="goals">
 
-        <ui:VisualElement name="body" class="pl-2 mb-2 pb-2">
-            <ui:ScrollView name="scroll-view">
-                <ui:Label text="Goals" />
-                <ui:VisualElement name="goals">
+                    </ui:VisualElement>
 
-                </ui:VisualElement>
+                    <ui:Label text="Logs" />
+                    <ui:VisualElement name="logs">
 
-                <ui:Label text="Logs" />
-                <ui:VisualElement name="logs">
-
-                </ui:VisualElement>
-            </ui:ScrollView>
-            
+                    </ui:VisualElement>
+                </ui:ScrollView>
+                
+            </ui:VisualElement>
         </ui:VisualElement>
         
     </ui:VisualElement>

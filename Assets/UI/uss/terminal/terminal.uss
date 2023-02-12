@@ -9,14 +9,14 @@
     background-color: #282828;
     border-radius: 21.025px 21.025px 0px 0px;
     align-items: center;
-
+    /* height: 30%; */
 }
 
-#body{
+#main{
     background-color: #1F0101;
     height: 100%;    
-
     border-radius: 0px 0px 21.025px 21.025px;
+
 
 }
 

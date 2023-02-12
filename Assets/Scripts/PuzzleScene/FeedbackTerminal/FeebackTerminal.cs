@@ -114,7 +114,7 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
     {
         bodyVisualElement.style.display = DisplayStyle.None;
         windowState = WindowState.Minimized;
-        terminalInstance.style.height = Length.Percent(10);
+        terminalInstance.style.height = Length.Percent(20);
     }
     #endregion
 
