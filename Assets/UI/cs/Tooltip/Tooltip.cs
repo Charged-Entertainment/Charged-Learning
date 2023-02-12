@@ -81,12 +81,24 @@ public class DefaultTooltipVE : DefaultTooltip
     public DefaultTooltipVE(VisualElement visualElement, string title, string subtitle = null, string description = null) : base(title, subtitle, description)
     {
         VisualElement = visualElement;
+
+        // For some reason, VisualElement's worldBound is zero here.
+        // root.style.left = VisualElement.worldBound.x;
+        // root.style.top = VisualElement.worldBound.y;
+
         OnEnable();
     }
 
     private void OnEnable()
     {
-        VisualElement.RegisterCallback<MouseEnterEvent>(e => document.Add(root));
+        VisualElement.RegisterCallback<MouseEnterEvent>(e =>
+        {
+            // TODO: fix this: it should happen only once not on every mouse enter
+            root.style.left = VisualElement.worldBound.x - VisualElement.worldBound.width/2;
+            root.style.top = VisualElement.worldBound.y;
+            document.Add(root);
+
+        });
         VisualElement.RegisterCallback<MouseLeaveEvent>(e => document.Remove(root));
     }
 }
