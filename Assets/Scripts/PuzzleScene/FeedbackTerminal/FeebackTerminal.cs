@@ -13,7 +13,7 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
     #region privates
     [SerializeField] private List<Log> logs;
     [SerializeField] private List<string> testGoals;
-    private VisualElement goalsVisualElement, logsVisualElement, bodyVisualElement, terminalWindow, terminalInstance;
+    private VisualElement rootVisualElement, goalsVisualElement, logsVisualElement, bodyVisualElement, terminalWindow, terminalInstance;
     private bool mouseDown = false;
     private Vector2 dragStartPos;
     private WindowState windowState;
@@ -33,7 +33,7 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
             new Log(RichText.Italic(RichText.Bold("log4")), LogType.Error)
             };
 
-        var rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
+        rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
         terminalInstance = rootVisualElement.Q("terminal-instance");
 
         goalsVisualElement = terminalInstance.Q("goals");
@@ -44,16 +44,39 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
         rootVisualElement.Q<Button>("maximize-btn").RegisterCallback<ClickEvent>(e => MaximizeToggle());
         rootVisualElement.Q<Button>("minimize-btn").RegisterCallback<ClickEvent>(Minimize);
 
-        terminalWindow.RegisterCallback<MouseDownEvent>(ev => {if(ev.button != 0)return;mouseDown = true; dragStartPos = ev.mousePosition; });
+        terminalWindow.RegisterCallback<MouseDownEvent>(ev =>
+        {
+            if (ev.button != 0) return;
+            mouseDown = true;
+            dragStartPos = Utils.ScreenToPanelPosition(rootVisualElement.panel,
+                                                Input.mousePosition);
+        });
         terminalWindow.RegisterCallback<MouseUpEvent>(ev => mouseDown = false);
-        terminalWindow.RegisterCallback<MouseMoveEvent>(HandleMouseDrag);
-        terminalWindow.RegisterCallback<MouseLeaveEvent>(ev => mouseDown = false);
-
 
         DrawGoals();
 
         windowState = WindowState.Maximized;
         MaximizeToggle();
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            mouseDown = false;
+        }
+
+        if (mouseDown)
+        {
+            HandleMouseDrag(Utils.ScreenToPanelPosition(rootVisualElement.panel,
+                                                    Input.mousePosition));
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
 
     }
 
@@ -129,13 +152,15 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
         }
     }
 
-    private void HandleMouseDrag(MouseMoveEvent ev)
+
+
+    private void HandleMouseDrag(Vector2 mousePosition)
     {
         if (mouseDown)
         {
-            terminalWindow.style.top = terminalWindow.resolvedStyle.top + (ev.mousePosition.y - dragStartPos.y);
-            terminalWindow.style.left = terminalWindow.resolvedStyle.left + (ev.mousePosition.x - dragStartPos.x);
-            dragStartPos = ev.mousePosition;
+            terminalWindow.style.top = terminalWindow.resolvedStyle.top + (mousePosition.y - dragStartPos.y);
+            terminalWindow.style.left = terminalWindow.resolvedStyle.left + (mousePosition.x - dragStartPos.x);
+            dragStartPos = mousePosition;
         }
     }
 }

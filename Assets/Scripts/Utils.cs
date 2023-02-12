@@ -47,6 +47,13 @@ public class Utils : MonoBehaviour
         return IsMouseOverGameObject() || UI.IsMouseOverUI();
     }
 
+    public static Vector2 ScreenToPanelPosition(IPanel panel, Vector2 screenPosition){
+        Vector2 mousePositionCorrected = new Vector2(screenPosition.x, Screen.height - screenPosition.y);
+        mousePositionCorrected = RuntimePanelUtils.ScreenToPanel(panel, mousePositionCorrected);
+
+        return mousePositionCorrected;
+    }
+
     public class UI
     {
         public static bool IsMouseOverUI()
@@ -86,5 +93,6 @@ public class Utils : MonoBehaviour
 
             return picked;
         }
+
     }
 }
