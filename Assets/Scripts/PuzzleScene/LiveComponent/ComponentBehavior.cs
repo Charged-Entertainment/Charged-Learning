@@ -79,25 +79,6 @@ public class ComponentBehavior : MonoBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    public void SetSelectedVisible(bool selected)
-    {
-        if (selected)
-        {
-            foreach (Transform t in transform)
-            {
-                t.GetComponent<SpriteRenderer>().color = Color.red;
-            }
-        }
-        else
-        {
-            foreach (Transform t in transform)
-            {
-                t.GetComponent<SpriteRenderer>().color = Color.white;
-            }
-        }
-
-    }
-
     public Bounds GetBounds()
     {
 

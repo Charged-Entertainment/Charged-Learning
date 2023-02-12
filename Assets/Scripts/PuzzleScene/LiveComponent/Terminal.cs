@@ -15,7 +15,6 @@ namespace Components
             Vector3 mouseDownStartPosition;
 
             private static Terminal currentlyHovered;
-            private bool mouseDown = false;
 
             private void Awake()
             {
@@ -26,8 +25,6 @@ namespace Components
             {
                 Terminal.mouseDown?.Invoke(terminal);
                 mouseDownStartPosition = Utils.GetMouseWorldPosition();
-                mouseDown = true;
-                terminal.GetComponent<SpriteRenderer>().color = Color.red;
             }
 
             private void OnMouseUp()
@@ -40,29 +37,22 @@ namespace Components
                     if (currentlyHovered != null) terminal.Connect(currentlyHovered);
                     else terminal.Disconnect();
                 }
-
-                mouseDown = false;
-                terminal.GetComponent<SpriteRenderer>().color = terminal.connection ? Color.green : Color.white;
             }
 
             private void OnMouseEnter()
             {
                 Terminal.mouseEntered?.Invoke(terminal);
                 currentlyHovered = terminal;
-                terminal.GetComponent<SpriteRenderer>().color = Color.gray;
             }
 
             private void OnMouseExit()
             {
                 Terminal.mouseExited?.Invoke(terminal);
-                if (!mouseDown) terminal.GetComponent<SpriteRenderer>().color = terminal.connection ? Color.green : Color.white;
                 currentlyHovered = null;
             }
 
         }
-
-
-        public Terminal connection { get; private set; }
+        public HashSet<Terminal> connectedTerminals { get; private set; }
 
         static public Action<Terminal> mouseEntered;
         static public Action<Terminal> mouseExited;
@@ -76,20 +66,34 @@ namespace Components
 
         private void Awake()
         {
+            connectedTerminals = new HashSet<Terminal>();
             controller = gameObject.AddComponent<TerminalController>();
         }
 
-        public void Disconnect(bool silent = false)
+        ///<summary> 
+        /// If otherTerminal is null, will disconnect all terminals connected to this.
+        ///</summary>
+        public void Disconnect(Terminal otherTerminal = null, bool silent = false)
         {
-            if (connection != null)
+            // disconnect only one terminal
+            if (otherTerminal != null)
             {
-                var t = connection;
-                connection = null;
-                if (!silent)
+                if (connectedTerminals.Contains(otherTerminal))
                 {
-                    Terminal.disconnected?.Invoke(this, t);
-                    if (t.connection == this) t.Disconnect(true);
+                    var t = otherTerminal;
+                    connectedTerminals.Remove(otherTerminal);
+                    if (!silent)
+                    {
+                        Terminal.disconnected?.Invoke(this, t);
+                        if (otherTerminal.connectedTerminals.Contains(this)) t.Disconnect(this, true);
+                    }
                 }
+            }
+            else
+            {
+                List<Terminal> ts = new List<Terminal>();
+                foreach (var t in connectedTerminals) ts.Add(t);
+                foreach (var t in ts) Disconnect(t);
             }
         }
 
@@ -98,8 +102,7 @@ namespace Components
             if (terminal != this)
             {
                 if (terminal.transform.parent == transform.parent) Debug.Log("Warning: connecting terminals on the same component!");
-                if (connection != null) Disconnect();
-                connection = terminal;
+                connectedTerminals.Add(terminal);
                 if (!silent)
                 {
                     Terminal.connected?.Invoke(this, terminal);
@@ -123,20 +126,16 @@ namespace Components
             InteractionMode.changed -= HandleInteractionModeChange;
         }
 
-        private void Enable()
-        {
-            controller.enabled = true;
-        }
-
-        private void Disable()
-        {
-            controller.enabled = false;
-        }
-
         private void HandleInteractionModeChange(InteractionModes mode)
         {
-            if (InteractionMode.Current == InteractionModes.Wire) Enable();
-            else Disable();
+            if (InteractionMode.Current == InteractionModes.Wire)
+            {
+                // show red dot
+            }
+            else
+            {
+                // remove red dot
+            }
         }
 
         private void OnDestroy() { destroyed?.Invoke(this); }

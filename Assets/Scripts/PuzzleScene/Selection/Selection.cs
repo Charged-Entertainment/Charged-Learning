@@ -88,7 +88,6 @@ public partial class Selection : Singleton<Selection>
         else
         {
             selectedGameObjects.Add(component.GetInstanceID(), component);
-            component.SetSelectedVisible(true);
         }
     }
 
@@ -98,14 +97,12 @@ public partial class Selection : Singleton<Selection>
         else
         {
             selectedGameObjects.Add(component.GetInstanceID(), component);
-            component.SetSelectedVisible(true);
         }
     }
 
     static public void RemoveComponent(ComponentBehavior component)
     {
         selectedGameObjects.Remove(component.GetInstanceID());
-        component.SetSelectedVisible(false);
     }
 
     static public void InvertComponents(List<ComponentBehavior> components)

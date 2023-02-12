@@ -91,7 +91,6 @@ public partial class ComponentManager : Singleton<ComponentManager>
         ComponentBehavior copy = GameObject.Instantiate(original, parent);
 
         bool selected = Selection.IsSelected(original);
-        copy.SetSelectedVisible(selected);
         if (selected) Selection.AddComponent(copy);
 
         return copy;
