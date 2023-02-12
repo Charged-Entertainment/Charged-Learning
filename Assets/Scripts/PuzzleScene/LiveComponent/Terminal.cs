@@ -35,7 +35,6 @@ namespace Components
                 else
                 {
                     if (currentlyHovered != null) terminal.Connect(currentlyHovered);
-                    else terminal.Disconnect();
                 }
             }
 
@@ -101,6 +100,7 @@ namespace Components
         {
             if (terminal != this)
             {
+                if (connectedTerminals.Contains(terminal)) { Debug.Log("Already connected."); return; }
                 if (terminal.transform.parent == transform.parent) Debug.Log("Warning: connecting terminals on the same component!");
                 connectedTerminals.Add(terminal);
                 if (!silent)
@@ -136,6 +136,12 @@ namespace Components
             {
                 // remove red dot
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            var t = other.gameObject.GetComponent<Terminal>();
+            if (t != null) Connect(t);
         }
 
         private void OnDestroy() { destroyed?.Invoke(this); }

@@ -17,28 +17,6 @@ public class ComponentBehavior : MonoBehaviour
         terminals = gameObject.GetComponentsInChildren<Terminal>(true);
         gameObject.AddComponent<ObjectSnapping>();
     }
-
-    private void SetTerminalsActive(bool enabled)
-    {
-        foreach (var t in terminals) t.gameObject.SetActive(enabled);
-    }
-
-    private void OnEnable()
-    {
-        OnDisable();
-        InteractionMode.changed += HandleInteractionModeChange;
-    }
-
-    private void OnDisable()
-    {
-        InteractionMode.changed -= HandleInteractionModeChange;
-    }
-
-    private void HandleInteractionModeChange(InteractionModes mode)
-    {
-        SetTerminalsActive(mode == InteractionModes.Wire);
-    }
-
     public void FlipH()
     {
         var current_scale = transform.localScale;

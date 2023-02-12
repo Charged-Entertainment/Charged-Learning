@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5375972284058445379}
   - component: {fileID: 653974564899767155}
   - component: {fileID: 6122195357580691380}
+  - component: {fileID: 3725914592534681100}
   m_Layer: 0
   m_Name: left_terminal
   m_TagString: Terminal
@@ -55,7 +56,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.013039082, y: 0.92161024}
@@ -71,6 +72,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.42628342, y: 2.1912682}
   m_EdgeRadius: 0
+--- !u!50 &3725914592534681100
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759850112147314619}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7674653814010335148
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,6 +104,7 @@ GameObject:
   - component: {fileID: 870491055674695479}
   - component: {fileID: 6817870733053178531}
   - component: {fileID: 2686429794828147765}
+  - component: {fileID: 7440994691679166975}
   m_Layer: 0
   m_Name: right_terminal
   m_TagString: Terminal
@@ -126,7 +149,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.016418576, y: 0.4816121}
@@ -142,6 +165,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4199741, y: 1.5472867}
   m_EdgeRadius: 0
+--- !u!50 &7440994691679166975
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7674653814010335148}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8709667344526782541
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +198,7 @@ GameObject:
   - component: {fileID: 6131326932788305771}
   - component: {fileID: 4500835737716417129}
   - component: {fileID: 5268489511488267215}
+  - component: {fileID: 1206765479464582037}
   m_Layer: 0
   m_Name: led
   m_TagString: Untagged
@@ -258,3 +303,24 @@ CapsuleCollider2D:
   m_Offset: {x: -0.025440693, y: 0.4578266}
   m_Size: {x: 1.2863221, y: 2.2030091}
   m_Direction: 0
+--- !u!50 &1206765479464582037
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8709667344526782541}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
