@@ -90,7 +90,7 @@
 
         <ui:Image name="corner-logo " />
 
-        <ui:Instance template="Terminal" name="terminal-instance" />
+        <ui:Instance template="Terminal" name="terminal-instance" picking-mode="Ignore"/>
 
     </ui:VisualElement>
 </ui:UXML>
