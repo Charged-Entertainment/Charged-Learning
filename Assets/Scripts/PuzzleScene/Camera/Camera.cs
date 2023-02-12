@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class Camera : Singleton<Camera>
 {
     private UnityEngine.Camera cam;
+    static private float minZoom = 10f, maxZoom = 2f;
     static private float targetZoom = 5f;
     static private float zoomFactor = 6f;
     static private float zoomLerpSpeed = 10;
@@ -29,6 +30,7 @@ public partial class Camera : Singleton<Camera>
     static public void Zoom(float change)
     {
         targetZoom -= change * zoomFactor;
+        targetZoom = Mathf.Clamp(targetZoom, maxZoom, minZoom);
     }
 
     private void Update()
