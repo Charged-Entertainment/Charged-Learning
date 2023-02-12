@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 218297356460668989}
   - component: {fileID: 2739155110754671304}
   - component: {fileID: 5169353463643657296}
-  - component: {fileID: 5321346007106688085}
   - component: {fileID: 8133843568038090692}
+  - component: {fileID: 4189925745853317367}
   m_Layer: 0
   m_Name: Multimeter
   m_TagString: Untagged
@@ -114,18 +114,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.658273, y: 1.309941}
   m_EdgeRadius: 0
---- !u!114 &5321346007106688085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424499014267039656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0e57027db7403c0493e9899a5cfe5bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8133843568038090692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +127,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textElement: {fileID: 0}
+--- !u!114 &4189925745853317367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424499014267039656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1df2dd029743b92abd65c7f8a3dd2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6721833413625201778
 GameObject:
   m_ObjectHideFlags: 0

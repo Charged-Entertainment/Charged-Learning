@@ -62,7 +62,7 @@ namespace Components
         // TODO: handle reveal event and qunatity change event
         private void HandleComponentCreated(ComponentBehavior comp)
         {
-            if (comp.levelComponent == this)
+            if (comp.GetComponent<LiveComponent>().levelComponent == this)
             {
                 if (Quantity.Used < Quantity.Total)
                 {
@@ -80,7 +80,7 @@ namespace Components
         // TODO: handle reveal event and qunatity change event
         private void HandleComponentDestroyed(ComponentBehavior comp)
         {
-            if (comp.levelComponent == this)
+            if (comp.GetComponent<LiveComponent>().levelComponent == this)
             {
                 if (Quantity.Used >= 1)
                 {

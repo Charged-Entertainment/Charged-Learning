@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3142920759825454618}
   - component: {fileID: 1837253562504077269}
   - component: {fileID: 5122600089273960285}
-  - component: {fileID: 4861916784730717921}
   - component: {fileID: 945815236399391904}
   - component: {fileID: 5109177571858158276}
+  - component: {fileID: 5967973247088881015}
   m_Layer: 0
   m_Name: multimeter-wire-red
   m_TagString: Untagged
@@ -104,18 +104,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.00000011920929, y: 0}
   m_Size: {x: 0.5781882, y: 1.93}
   m_Direction: 0
---- !u!114 &4861916784730717921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4137343801367332334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0e57027db7403c0493e9899a5cfe5bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &945815236399391904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf8881069f8c827294336a117b406aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <propedTerminal>k__BackingField: {fileID: 0}
 --- !u!50 &5109177571858158276
 Rigidbody2D:
   serializedVersion: 4
@@ -150,3 +137,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5967973247088881015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137343801367332334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1df2dd029743b92abd65c7f8a3dd2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

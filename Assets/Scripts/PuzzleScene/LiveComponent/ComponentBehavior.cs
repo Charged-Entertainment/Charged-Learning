@@ -7,14 +7,10 @@ using GameManagement;
 
 public class ComponentBehavior : MonoBehaviour
 {
-    public Components.LevelComponent levelComponent;
-
-    private Terminal[] terminals;
 
 
     private void Start()
     {
-        terminals = gameObject.GetComponentsInChildren<Terminal>(true);
         gameObject.AddComponent<ObjectSnapping>();
     }
     public void FlipH()

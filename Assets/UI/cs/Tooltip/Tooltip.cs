@@ -37,7 +37,7 @@ abstract public class Tooltip
 
         private static void HandleLiveComponentCreated(ComponentBehavior c)
         {
-            var t = new DefaultTooltipCB(c, c.levelComponent.Name, "ctrl +", "Testo besto");
+            var t = new DefaultTooltipCB(c, c.GetComponent<LiveComponent>().levelComponent.Name, "ctrl +", "Testo besto");
             // TODO: set the position of t.root to somewhere near c.gameObject.transform.position
         }
     }

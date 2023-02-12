@@ -102,7 +102,8 @@ public partial class ComponentManager : Singleton<ComponentManager>
         {
             var prefab = Resources.Load<GameObject>(comp.Name);
             ComponentBehavior copy = GameObject.Instantiate(prefab).GetComponent<ComponentBehavior>();
-            copy.levelComponent = comp;
+            var liveComp=copy.gameObject.AddComponent<LiveComponent>();
+            liveComp.levelComponent = comp;
             created?.Invoke(copy);
             return copy;
         }
@@ -119,7 +120,8 @@ public partial class ComponentManager : Singleton<ComponentManager>
         {
             var prefab = Resources.Load<GameObject>($"Components/{comp.Name}");
             ComponentBehavior copy = GameObject.Instantiate(prefab).GetComponent<ComponentBehavior>();
-            copy.levelComponent = comp;
+            var liveComp=copy.gameObject.AddComponent<LiveComponent>();
+            liveComp.levelComponent = comp;
             copy.transform.position = pos;
             created?.Invoke(copy);
             return copy;
