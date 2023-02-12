@@ -49,6 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   negativeProbe: {fileID: 0}
   positiveProbe: {fileID: 0}
+  testDisplayValue: 0
+  display: {fileID: 0}
+  turnedOn: 0
 --- !u!1 &5540145639047958074
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,8 +363,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5169353463643657296, guid: 780932062d5ee634a977a77748883aed, type: 3}
+      propertyPath: m_Size.y
+      value: 3.9366455
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169353463643657296, guid: 780932062d5ee634a977a77748883aed, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.36537313
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169353463643657296, guid: 780932062d5ee634a977a77748883aed, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
       value: 5.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721833413625201778, guid: 780932062d5ee634a977a77748883aed, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 780932062d5ee634a977a77748883aed, type: 3}
