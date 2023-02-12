@@ -89,11 +89,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
-        <ui:VisualElement name="bottom-bar" class="row">
-            <ui:Image name="logo-image" />
-            <ui:Label name="status-label" text="Running..." />
-        </ui:VisualElement>
-
+        <ui:Image name="corner-logo " />
 
         <ui:Instance template="Terminal" name="terminal-instance" />
 

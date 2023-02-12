@@ -8,6 +8,7 @@
 #editor-controls{
     justify-content: space-between;
     padding: 0px 20px;
+    margin-bottom: 35px;
 }
 
 .editor-control-btn{
