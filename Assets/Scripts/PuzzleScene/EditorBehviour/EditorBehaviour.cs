@@ -76,10 +76,6 @@ public partial class EditorBehaviour : MonoBehaviour
 
     static public Action<EditorBehaviour> dragged;
     static public Action<EditorBehaviour> moved;
-    private void Start()
-    {
-        gameObject.AddComponent<ObjectSnapping>();
-    }
     public void FlipH()
     {
         var current_scale = transform.localScale;
