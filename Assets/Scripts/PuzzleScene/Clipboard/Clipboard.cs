@@ -38,16 +38,16 @@ public partial class Clipboard : Singleton<Clipboard>
         else controller.enabled = false;
     }
 
-    static public void Copy(ComponentBehavior[] components, bool isCut = false)
+    static public void Copy(IList<LiveComponent> components, bool isCut = false)
     {
         Clear();
-        Bounds bounds = Utils.GetBoundsOfComponentsArray(components);
+        Bounds bounds = Utils.GetBounds<LiveComponent>(components);
 
         Instance.transform.position = bounds.center;
 
         foreach (var component in components)
         {
-            ComponentBehavior copy = ComponentManager.Instantiate(component, Instance.transform);
+            LiveComponent copy = LiveComponent.Instantiate(component, Instance.transform);
             copy.transform.position -= Instance.transform.position;
             copy.Disable();
 
@@ -68,9 +68,9 @@ public partial class Clipboard : Singleton<Clipboard>
         Instance.transform.position = Vector3.zero;
     }
 
-    static public ComponentBehavior[] GetContent()
+    static public LiveComponent[] GetContent()
     {
-        return Instance.GetComponentsInChildren<ComponentBehavior>(true);
+        return Instance.GetComponentsInChildren<LiveComponent>(true);
     }
 
     static public void Clear()

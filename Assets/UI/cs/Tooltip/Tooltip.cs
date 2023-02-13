@@ -24,7 +24,7 @@ abstract public class Tooltip
             document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
 
             UILevelComponent.created += HandleUILevelComponentCreated;
-            ComponentManager.created += HandleLiveComponentCreated;
+            LiveComponent.created += HandleLiveComponentCreated;
 
             // TODO: load DefaultTooltipVE's for static UI elements like menus, editor controls buttons, etc...
         }
@@ -35,9 +35,9 @@ abstract public class Tooltip
             // TODO: set the position of t.root to somewhere near c.visualElement
         }
 
-        private static void HandleLiveComponentCreated(ComponentBehavior c)
+        private static void HandleLiveComponentCreated(LiveComponent c)
         {
-            var t = new DefaultTooltipCB(c, c.GetComponent<LiveComponent>().levelComponent.Name, "ctrl +", "Testo besto");
+            var t = new DefaultTooltipCB(c, c.levelComponent.Name, "ctrl +", "Testo besto");
             // TODO: set the position of t.root to somewhere near c.gameObject.transform.position
         }
     }
@@ -105,14 +105,14 @@ public class DefaultTooltipVE : DefaultTooltip
 
 public class DefaultTooltipCB : DefaultTooltip
 {
-    ComponentBehavior component;
-    public DefaultTooltipCB(ComponentBehavior visualElement, string title, string subtitle = null, string description = null) : base(title, subtitle, description)
+    EditorBehaviour component;
+    public DefaultTooltipCB(EditorBehaviour visualElement, string title, string subtitle = null, string description = null) : base(title, subtitle, description)
     {
         component = visualElement;
-        ComponentManager.mouseEntered += c => { if (c == component) document.Add(root); };
-        ComponentManager.mouseExited += c => { if (c == component) document.Remove(root); };
+        LiveComponent.mouseEntered += c => { if (c == component) document.Add(root); };
+        LiveComponent.mouseExited += c => { if (c == component) document.Remove(root); };
         // TODO: this object will remain in memory, find a way for it to be garbage collected.
-        ComponentManager.destroyed += c => { if (c == component) document.Remove(root); };
+        LiveComponent.destroyed += c => { if (c == component) document.Remove(root); };
     }
 }
 

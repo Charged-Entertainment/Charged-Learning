@@ -22,19 +22,19 @@ public class Cursor : Singleton<Cursor>
         dragCursor = (Texture2D)Resources.Load("Cursors/drag");
 
         InteractionMode.changed += HandleInteractionModeChange;
-        ComponentManager.mouseDown += HandleMouseDown;
-        ComponentManager.mouseUp += HandleMouseUp;
+        LiveComponent.mouseDown += HandleMouseDown;
+        LiveComponent.mouseUp += HandleMouseUp;
 
         ChangeCursor(normalCursor);
     }
 
-    static void HandleMouseDown(ComponentBehavior c)
+    static void HandleMouseDown(EditorBehaviour c)
     {
         lastSeenCursorBeforeDrag = currentCursor;
         ChangeCursor(dragCursor);
     }
 
-    static void HandleMouseUp(ComponentBehavior c)
+    static void HandleMouseUp(EditorBehaviour c)
     {
         ChangeCursor(lastSeenCursorBeforeDrag);
     }

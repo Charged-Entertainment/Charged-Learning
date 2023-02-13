@@ -55,12 +55,12 @@ namespace Components
             {
                 Properties.Add(prop.Value.name, new Property(prop.Value));
             }
-            ComponentManager.created += HandleComponentCreated;
-            ComponentManager.destroyed += HandleComponentDestroyed;
+            LiveComponent.created += HandleComponentCreated;
+            LiveComponent.destroyed += HandleComponentDestroyed;
         }
 
         // TODO: handle reveal event and qunatity change event
-        private void HandleComponentCreated(ComponentBehavior comp)
+        private void HandleComponentCreated(EditorBehaviour comp)
         {
             if (comp.GetComponent<LiveComponent>().levelComponent == this)
             {
@@ -78,7 +78,7 @@ namespace Components
         }
 
         // TODO: handle reveal event and qunatity change event
-        private void HandleComponentDestroyed(ComponentBehavior comp)
+        private void HandleComponentDestroyed(EditorBehaviour comp)
         {
             if (comp.GetComponent<LiveComponent>().levelComponent == this)
             {

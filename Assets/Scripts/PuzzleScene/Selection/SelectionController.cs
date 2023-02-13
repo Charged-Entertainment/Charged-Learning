@@ -6,31 +6,31 @@ public partial class Selection : Singleton<Selection>
 {
     private class SelectionController : Controller
     {
-        HashSet<ComponentBehavior> hovers;
+        HashSet<EditorBehaviour> hovers;
         Vector3 mouseDownStartPosition;
         bool handleOnMouseUp = false;
         bool shiftWasClickedOnMouseDown = false;
 
         private void Awake() {
-            hovers = new HashSet<ComponentBehavior>();
+            hovers = new HashSet<EditorBehaviour>();
 
             // Never disabled.
-            ComponentManager.mouseEntered += HandleMouseEntered;
-            ComponentManager.mouseExited += HandleMouseExited;
-            ComponentManager.destroyed += HandleMouseExited; //same handler due to same effect
+            LiveComponent.mouseEntered += HandleMouseEntered;
+            LiveComponent.mouseExited += HandleMouseExited;
+            LiveComponent.destroyed += HandleMouseExited; //same handler due to same effect
         }
 
         void OnEnable()
         {
             OnDisable();
-            ComponentManager.mouseDown += HandleMouseDown;
-            ComponentManager.mouseUp += HandleMouseUp;
+            LiveComponent.mouseDown += HandleMouseDown;
+            LiveComponent.mouseUp += HandleMouseUp;
         }
 
         void OnDisable()
         {
-            ComponentManager.mouseDown -= HandleMouseDown;
-            ComponentManager.mouseUp -= HandleMouseUp;
+            LiveComponent.mouseDown -= HandleMouseDown;
+            LiveComponent.mouseUp -= HandleMouseUp;
         }
 
         void Update()
@@ -55,9 +55,9 @@ public partial class Selection : Singleton<Selection>
             }
         }
 
-        void HandleMouseEntered(ComponentBehavior c) { hovers.Add(c); }
-        void HandleMouseExited(ComponentBehavior c) { hovers.Remove(c); }
-        void HandleMouseDown(ComponentBehavior c)
+        void HandleMouseEntered(EditorBehaviour c) { hovers.Add(c); }
+        void HandleMouseExited(EditorBehaviour c) { hovers.Remove(c); }
+        void HandleMouseDown(EditorBehaviour c)
         {
             bool shiftClicked = Input.GetKey(KeyCode.LeftShift);
             bool isSelected = Selection.IsSelected(c);
@@ -71,10 +71,10 @@ public partial class Selection : Singleton<Selection>
             else
             {
                 if (!isSelected) { Selection.Clear(); Selection.AddComponent(c); }
-                else if (Selection.GetSelectedComponents().Count > 1) { handleOnMouseUp = true; }
+                else if (Selection.GetSelectedComponents<EditorBehaviour>().Count > 1) { handleOnMouseUp = true; }
             }
         }
-        void HandleMouseUp(ComponentBehavior c)
+        void HandleMouseUp(EditorBehaviour c)
         {
             if (handleOnMouseUp && mouseDownStartPosition == Utils.GetMouseWorldPosition())
             {

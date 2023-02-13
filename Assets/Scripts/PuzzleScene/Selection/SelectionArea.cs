@@ -16,14 +16,14 @@ public partial class Selection : Singleton<Selection>
             transform.localScale = currentPosition - (Vector2)transform.position;
         }
 
-        public List<ComponentBehavior> GetSelection()
+        public List<EditorBehaviour> GetSelection()
         {
-            List<ComponentBehavior> matches = new List<ComponentBehavior>();
+            List<EditorBehaviour> matches = new List<EditorBehaviour>();
 
             Collider2D[] collidedObjectsArray = Physics2D.OverlapAreaAll(transform.position, transform.position + transform.localScale);
             foreach (var collidedObject in collidedObjectsArray)
             {
-                ComponentBehavior componentObject = collidedObject.GetComponent<ComponentBehavior>();
+                EditorBehaviour componentObject = collidedObject.GetComponent<EditorBehaviour>();
                 if (componentObject)
                 {
                     matches.Add(componentObject);
