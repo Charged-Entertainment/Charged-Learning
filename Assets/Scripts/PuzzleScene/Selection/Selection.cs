@@ -85,10 +85,8 @@ public partial class Selection : Singleton<Selection>
     static public void InvertComponent(ComponentBehavior component)
     {
         if (selectedGameObjects.ContainsKey(component.GetInstanceID())) RemoveComponent(component);
-        else
-        {
-            selectedGameObjects.Add(component.GetInstanceID(), component);
-        }
+        else AddComponent(component);
+
     }
 
     static public void AddComponent(ComponentBehavior component)
@@ -97,12 +95,14 @@ public partial class Selection : Singleton<Selection>
         else
         {
             selectedGameObjects.Add(component.GetInstanceID(), component);
+            component.gameObject.AddComponent<SelectedObjectOverlay>();
         }
     }
 
     static public void RemoveComponent(ComponentBehavior component)
     {
         selectedGameObjects.Remove(component.GetInstanceID());
+        GameObject.Destroy(component.gameObject.GetComponent<SelectedObjectOverlay>());
     }
 
     static public void InvertComponents(List<ComponentBehavior> components)
