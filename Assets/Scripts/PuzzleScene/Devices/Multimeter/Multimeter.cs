@@ -10,6 +10,7 @@ public class Multimeter : Device
     private void Start() {
         display = transform.Find("Multimeter").GetComponent<Display>();
         deviceMode = new OffMode();
+        turnedOn = false;
         deviceMode.OnEnter(this);
     }
     public override void ChangeMode(DeviceMode newMode)

@@ -6,7 +6,7 @@ public class Knob : MonoBehaviour
 {
     [SerializeField]private Multimeter multiMeter;
     private Vector2 turn;
-    private int currentRotationAngle, numberOfModes, degreePerMode;
+    private int currentRotationAngle = 18, numberOfModes, degreePerMode;
 
     private void Start() {
         multiMeter = transform.parent.parent.GetComponent<Multimeter>();

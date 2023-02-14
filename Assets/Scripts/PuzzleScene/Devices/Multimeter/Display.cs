@@ -6,7 +6,7 @@ public class Display : MonoBehaviour
 {
     [SerializeField]private Text textElement;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         textElement = transform.Find("Canvas").GetChild(0).GetComponent<Text>();
     }
