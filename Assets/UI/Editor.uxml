@@ -92,7 +92,7 @@
                         <ui:Button name="devices-btn" class="tools-btn">
                             <ui:Image />
                         </ui:Button>
-                        
+
 
                         <ui:Button name="multimeter-btn" class="tools-sub-btn">
                             <ui:Image />
@@ -109,6 +109,11 @@
                             <ui:Image />
                         </ui:Button>
                     </ui:VisualElement>
+
+                    <ui:Button name="terminal-btn" class="px-1 tools-btn">
+                        <ui:Image />
+                    </ui:Button>
+
                 </ui:VisualElement>
 
             </ui:VisualElement>

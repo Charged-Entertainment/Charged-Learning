@@ -43,11 +43,26 @@ public class UIDevices : MonoBehaviour
             }
         });
 
-        multimeterBtn.RegisterCallback<ClickEvent>(ev => {
+        multimeterBtn.RegisterCallback<ClickEvent>(ev =>
+        {
             multimeterBtn.SetEnabled(!multimeterBtn.enabledSelf);
             if (multimeterBtn.enabledSelf) Multimeter.Spawn();
             else Multimeter.Destroy();
         });
+
+        var terminal = document.Q("terminal-instance");
+        var terminalButton = document.Q<Button>("terminal-btn");
+        FeebackTerminal.disabled += () => {
+            terminalButton.SetEnabled(true);
+        };
+
+        FeebackTerminal.enabled += () => {
+            terminalButton.SetEnabled(false);
+        };
+        terminalButton.RegisterCallback<ClickEvent>(e => {
+            FeebackTerminal.Enable();
+        });
+        terminalButton.SetEnabled(false);
     }
 
     int currButtonIdx = 0;

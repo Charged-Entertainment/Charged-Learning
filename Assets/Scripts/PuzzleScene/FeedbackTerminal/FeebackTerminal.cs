@@ -9,6 +9,8 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
 
     enum WindowState { Normal, Maximized, Minimized }
 
+    public static Action enabled, disabled;
+
 
     #region privates
     [SerializeField] private List<Log> logs;
@@ -25,6 +27,7 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
 
     void OnEnable()
     {
+        enabled?.Invoke();
         testGoals = new List<string> { "measure whatever in whatever and so whatever", "measure whatever in whatever", "measure whatever in whatever" };
         logs = new List<Log> {
             new Log(RichText.Color("log1", PaletteColor.Green), LogType.Status),
@@ -88,6 +91,17 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
         LogWritten?.Invoke(log.Type);
 
     }
+
+    public new static void Enable() {
+        enabled?.Invoke();
+        Instance.terminalInstance.visible = true;
+    }
+
+    public new static void Disable() {
+        disabled?.Invoke();
+        Instance.terminalInstance.visible = false;
+    }
+
     #region maximize minimize
     private void MaximizeToggle()
     {
@@ -112,9 +126,10 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
 
     private void Minimize(ClickEvent ev)
     {
-        bodyVisualElement.style.display = DisplayStyle.None;
-        windowState = WindowState.Minimized;
-        terminalInstance.style.height = Length.Percent(20);
+        // bodyVisualElement.style.display = DisplayStyle.None;
+        // windowState = WindowState.Minimized;
+        // terminalInstance.style.height = Length.Percent(20);
+        Disable();
     }
     #endregion
 
@@ -151,8 +166,6 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
             }
         }
     }
-
-
 
     private void HandleMouseDrag(Vector2 mousePosition)
     {

@@ -62,3 +62,14 @@
   width: 92px;
   height: 86px;
 }
+
+#tools #terminal-btn {
+  top: 200px;
+}
+
+#tools #terminal-btn Image {
+  background-image: resource("terminal");
+  align-self: center;
+  width: 81px;
+  height: 51px;
+}
