@@ -38,15 +38,13 @@ public class SimulationManager : Singleton<SimulationManager>
         catch (SpiceSharp.Simulations.ValidationFailedException e)
         {
             Debug.Log("exception");
-            FeebackTerminal.Write(new Log(e.Message, LogType.Error));
+            FeebackTerminal.Write(new Log(RichText.Color(e.Message, PaletteColor.Red), LogType.Error));
             var violations = circuit.Validate();
             foreach(var violation in violations.Violations){
                 Debug.Log(violation.Rule);
                 Debug.Log(violation.Subject);
             }
         }
-
-        op.AfterExecute += (sender, args) => {Debug.Log("Executed");};
     }
 
     private static void HandleSimulationResults(object sender, SpiceSharp.Simulations.ExportDataEventArgs args){
