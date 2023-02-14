@@ -1,0 +1,18 @@
+#tooltip {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    background-color: #10484C;
+}
+
+#tooltip .title {
+    color: red;
+}
+
+#tooltip .subtitle {
+    color: green;
+}
+
+#tooltip .description {
+    color: pink;
+}
