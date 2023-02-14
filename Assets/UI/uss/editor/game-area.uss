@@ -25,11 +25,6 @@
   margin-right: 20px;
 }
 
-#book-btn {
-  background-color: black;
-  width: 160px;
-  height: 160px;
-}
 #book-btn Image {
   background-image: resource("book");
   align-self: center;

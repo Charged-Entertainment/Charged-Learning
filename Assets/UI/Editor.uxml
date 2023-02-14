@@ -6,6 +6,7 @@
     <Style src="uss/editor/editor.uss" />
     <Style src="uss/editor/controls-bar.uss" />
     <Style src="uss/editor/game-area.uss" />
+    <Style src="uss/editor/tools.uss" />
     <Style src="uss/tooltip.uss" />
     <Style src="uss/dialog.uss" />
 
@@ -45,7 +46,7 @@
 
                 <ui:VisualElement name="editor-controls" class="row">
                     <ui:VisualElement class="px-1">
-                        <ui:Button name="book-btn" class="editor-control-btn">
+                        <ui:Button name="book-btn" class="tools-btn">
                             <ui:Image />
                         </ui:Button>
                     </ui:VisualElement>
@@ -85,6 +86,31 @@
                     </ui:VisualElement>
 
                 </ui:VisualElement>
+
+                <ui:VisualElement name="tools">
+                    <ui:VisualElement name="devices" class="px-1">
+                        <ui:Button name="devices-btn" class="tools-btn">
+                            <ui:Image />
+                        </ui:Button>
+                        
+
+                        <ui:Button name="multimeter-btn" class="tools-sub-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Button name="unknown1-btn" class="tools-sub-btn unknown">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Button name="unknown2-btn" class="tools-sub-btn unknown">
+                            <ui:Image />
+                        </ui:Button>
+                        <ui:Button name="unknown3-btn" class="tools-sub-btn unknown">
+                            <ui:Image />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
             </ui:VisualElement>
 
             <ui:VisualElement name="components-bar" class="col">
