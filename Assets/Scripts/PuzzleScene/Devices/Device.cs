@@ -8,7 +8,7 @@ public abstract class Device : MonoBehaviour
     [SerializeField]protected Probe negativeProbe;
     [SerializeField]protected Probe positiveProbe;
 
-    void Start()
+    protected virtual void Start()
     {
         negativeProbe = transform.GetChild(0).GetComponent<Probe>();
         positiveProbe = transform.GetChild(1).GetComponent<Probe>();

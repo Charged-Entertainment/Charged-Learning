@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   negativeProbe: {fileID: 0}
   positiveProbe: {fileID: 0}
-  testDisplayValue: 0
+  testDisplayValue: 4.46
   display: {fileID: 0}
   turnedOn: 0
 --- !u!1 &5540145639047958074
@@ -373,6 +373,10 @@ PrefabInstance:
     - target: {fileID: 5169353463643657296, guid: 780932062d5ee634a977a77748883aed, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
       value: 5.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635555707316928878, guid: 780932062d5ee634a977a77748883aed, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6721833413625201778, guid: 780932062d5ee634a977a77748883aed, type: 3}
       propertyPath: m_Layer

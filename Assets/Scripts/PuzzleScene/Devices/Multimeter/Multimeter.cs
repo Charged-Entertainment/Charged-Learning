@@ -11,7 +11,8 @@ public class Multimeter : Device
     private static string prefabName = "Multimeter Device";
 
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         display = transform.Find("Multimeter").GetComponent<Display>();
         deviceMode = new OffMode();
         turnedOn = false;
