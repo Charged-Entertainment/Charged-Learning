@@ -22,13 +22,13 @@ public class UIDevices : MonoBehaviour
 
         Button multimeterBtn = container.Q<Button>("multimeter-btn");
         buttons.Add(multimeterBtn);
-        SetButtonEnabled(multimeterBtn, false);
+        SetButtonVisable(multimeterBtn, false);
 
         List<Button> unknowns = container.Query<Button>(className: "unknown").ToList();
         foreach (var b in unknowns)
         {
             buttons.Add(b);
-            SetButtonEnabled(b, false);
+            SetButtonVisable(b, false);
         }
 
         InitButtonPositions();
@@ -42,6 +42,12 @@ public class UIDevices : MonoBehaviour
                 Play();
             }
         });
+
+        multimeterBtn.RegisterCallback<ClickEvent>(ev => {
+            multimeterBtn.SetEnabled(!multimeterBtn.enabledSelf);
+            if (multimeterBtn.enabledSelf) Multimeter.Spawn();
+            else Multimeter.Destroy();
+        });
     }
 
     int currButtonIdx = 0;
@@ -50,7 +56,7 @@ public class UIDevices : MonoBehaviour
     private void Play()
     {
         var b = buttons[currButtonIdx];
-        SetButtonEnabled(buttons[currButtonIdx], !reverse);
+        SetButtonVisable(buttons[currButtonIdx], !reverse);
 
         if (reverse && currButtonIdx != 0)
         {
@@ -79,9 +85,8 @@ public class UIDevices : MonoBehaviour
 
     // how many steps to skip in the beginning
     private static float offset = 0f;
-    private void SetButtonEnabled(Button b, bool enabled)
+    private void SetButtonVisable(Button b, bool enabled)
     {
-        b.SetEnabled(enabled);
         b.visible = enabled;
         b.style.opacity = enabled ? 1 : 0;
     }

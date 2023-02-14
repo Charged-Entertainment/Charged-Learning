@@ -35,4 +35,18 @@ public class Multimeter : Device
     public void TurnOn(){
         turnedOn = true;
     }
+
+    public static void Spawn()
+    {
+        var inScene = GameObject.Find("Multimeter Device");
+        if (inScene != null) Debug.Log("Multimeter already in scene, cannot spawn.");
+        else GameObject.Instantiate(Resources.Load<GameObject>("Devices/Multimeter Device"));
+    }
+
+    public static void Destroy()
+    {
+        var inScene = GameObject.Find("Multimeter Device");
+        if (inScene == null) Debug.Log("Multimeter not in scene, cannot destroy.");
+        else GameObject.Destroy(inScene);
+    }
 }
