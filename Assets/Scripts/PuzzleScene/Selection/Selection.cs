@@ -29,14 +29,14 @@ public partial class Selection : Singleton<Selection>
         OnDisable();
         GameMode.changed += HandleGameModeChange;
         InteractionMode.changed += HandleInteractionModeChange;
-        LiveComponent.destroyed += HandleComponentDestroyed;
+        EditorBehaviour.editorBehaviourDestroyed += HandleComponentDestroyed;
     }
 
     private void OnDisable()
     {
         GameMode.changed -= HandleGameModeChange;
         InteractionMode.changed -= HandleInteractionModeChange;
-        LiveComponent.destroyed -= HandleComponentDestroyed;
+        EditorBehaviour.editorBehaviourDestroyed -= HandleComponentDestroyed;
     }
 
     private void HandleComponentDestroyed(EditorBehaviour c)

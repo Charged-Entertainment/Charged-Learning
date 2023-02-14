@@ -8,6 +8,7 @@ public partial class EditorBehaviour : MonoBehaviour
     static public Action<EditorBehaviour> mouseExited;
     static public Action<EditorBehaviour> mouseDown;
     static public Action<EditorBehaviour> mouseUp;
+    static public Action<EditorBehaviour> editorBehaviourDestroyed;
 
     private class EditorBehaviourController : Singleton<Controller>
     {
@@ -154,5 +155,9 @@ public partial class EditorBehaviour : MonoBehaviour
     private void OnMouseExit()
     {
         mouseExited?.Invoke(this);
+    }
+
+    private void OnDestroy() {
+        editorBehaviourDestroyed?.Invoke(this);
     }
 }
