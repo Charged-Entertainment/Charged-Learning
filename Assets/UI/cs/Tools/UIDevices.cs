@@ -43,10 +43,10 @@ public class UIDevices : MonoBehaviour
             }
         });
 
+
         multimeterBtn.RegisterCallback<ClickEvent>(ev =>
         {
-            multimeterBtn.SetEnabled(!multimeterBtn.enabledSelf);
-            if (multimeterBtn.enabledSelf) Multimeter.Spawn();
+            if (!Multimeter.spawned) Multimeter.Spawn();
             else Multimeter.Destroy();
         });
 
