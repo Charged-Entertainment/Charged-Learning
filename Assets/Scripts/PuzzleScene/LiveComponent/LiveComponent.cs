@@ -16,11 +16,11 @@ public partial class LiveComponent : EditorBehaviour
 
     public Components.LevelComponent levelComponent;
 
-    private Terminal[] terminals;
+    [field:SerializeField] public Terminal[] Terminals{get; private set;}
 
-    void Start()
+    void Awake()
     {
-        terminals = gameObject.GetComponentsInChildren<Terminal>(true);
+        Terminals = gameObject.GetComponentsInChildren<Terminal>(true);
     }
 
 
