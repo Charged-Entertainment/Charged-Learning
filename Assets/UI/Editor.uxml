@@ -118,6 +118,8 @@
 
                 </ui:VisualElement>
 
+                <ui:Button name="submit-btn"/>
+
             </ui:VisualElement>
 
             <ui:VisualElement name="components-bar" class="col">
