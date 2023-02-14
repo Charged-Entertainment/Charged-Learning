@@ -112,8 +112,9 @@ public class DefaultTooltipCB : DefaultTooltip
         LiveComponent.mouseEntered += c => { if (c == component) document.Add(root); };
         LiveComponent.mouseExited += c => { if (c == component) document.Remove(root); };
         // TODO: this object will remain in memory, find a way for it to be garbage collected.
-        LiveComponent.destroyed += c => { if (c == component) document.Remove(root); };
-    }
+        
+        //Handle the case when component is deleted while the mouse is not over it.
+        LiveComponent.destroyed += c => { if (c == component && document.Contains(root)) document.Remove(root);};    }
 }
 
 // TODO: add LevelComponentToolip (includes key-value pairs of values)
