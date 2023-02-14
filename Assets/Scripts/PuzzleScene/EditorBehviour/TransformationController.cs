@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class ComponentManager
+public partial class EditorBehaviour
 {
     private class TransformationController : Controller
     {
@@ -10,28 +10,28 @@ public partial class ComponentManager
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftControl))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.Move(new Vector3(-1f, 0, 0));
                 }
             }
             if (Input.GetKeyDown(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftControl))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.Move(new Vector3(1f, 0, 0));
                 }
             }
             if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftControl))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.Move(new Vector3(0, 1, 0));
                 }
             }
             if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.Move(new Vector3(0, -1, 0));
                 }
@@ -39,7 +39,7 @@ public partial class ComponentManager
 
             if (Input.GetKeyDown(KeyCode.H) && Input.GetKey(KeyCode.LeftShift))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.FlipH();
                 }
@@ -47,7 +47,7 @@ public partial class ComponentManager
 
             if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.FlipV();
                 }
@@ -55,7 +55,7 @@ public partial class ComponentManager
 
             if (Input.GetKeyDown(KeyCode.E) && Input.GetKey(KeyCode.LeftControl))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.Rotate(45);
                 }
@@ -63,7 +63,7 @@ public partial class ComponentManager
 
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents())
+                foreach (var selectedObject in Selection.GetSelectedComponents<LiveComponent>())
                 {
                     selectedObject.Destroy();
                 }

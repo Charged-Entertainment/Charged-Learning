@@ -15,10 +15,10 @@ public class Utils : MonoBehaviour
     //TODO: generic version
     // public static Collider2D PhysicsOverlapAreaAll<T>(Vector2 PointA, Vector2 PointB)
 
-    public static Bounds GetBoundsOfComponentsArray(ComponentBehavior[] components)
+    public static Bounds GetBounds<T>(IList<T> components) where T : EditorBehaviour
     {
 
-        if (components.Length == 0)
+        if (components.Count == 0)
             return new Bounds();
 
         Bounds bounds = new Bounds(components[0].transform.position, Vector3.zero);
@@ -29,7 +29,7 @@ public class Utils : MonoBehaviour
         return bounds;
     }
 
-    public static Terminal[] GetTerminals(ComponentBehavior c)
+    public static Terminal[] GetTerminals(EditorBehaviour c)
     {
         return c.gameObject.GetComponentsInChildren<Terminal>(true);
     }

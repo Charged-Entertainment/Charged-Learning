@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 934400286232217542}
   - component: {fileID: 3825958676819526411}
   - component: {fileID: 6962624927337928350}
-  - component: {fileID: 2947921257735705399}
   - component: {fileID: 6367746842520242904}
   - component: {fileID: 5391436497011341842}
+  - component: {fileID: 7707969119979385175}
   m_Layer: 0
   m_Name: multimeter-wire-black
   m_TagString: Untagged
@@ -104,18 +104,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.41, y: 2.12}
   m_Direction: 0
---- !u!114 &2947921257735705399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7757906009920298507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0e57027db7403c0493e9899a5cfe5bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6367746842520242904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +137,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7707969119979385175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7757906009920298507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292735b6bf4e3be4b901210850485e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

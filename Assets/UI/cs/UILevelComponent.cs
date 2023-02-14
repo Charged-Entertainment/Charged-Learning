@@ -56,7 +56,7 @@ public class UILevelComponent : VisualElement
         image.RegisterCallback<MouseUpEvent>(e =>
         {
             image.style.opacity = 1f;
-            ComponentManager.Instantiate(levelComponent, Vector2.zero);
+            LiveComponent.Instantiate(levelComponent, Vector2.zero);
 
             // TODO: fix this
             // ComponentManager.Instantiate(levelComponent, Utils.GetMouseWorldPosition());

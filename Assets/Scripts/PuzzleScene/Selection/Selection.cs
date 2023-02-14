@@ -12,7 +12,7 @@ public partial class Selection : Singleton<Selection>
     on them.
     */
 
-    static private Dictionary<int, ComponentBehavior> selectedGameObjects;
+    static private Dictionary<int, EditorBehaviour> selectedGameObjects;
 
     static private SelectionArea selectionArea = null;
 
@@ -20,7 +20,7 @@ public partial class Selection : Singleton<Selection>
 
     private void Start()
     {
-        selectedGameObjects = new Dictionary<int, ComponentBehavior>();
+        selectedGameObjects = new Dictionary<int, EditorBehaviour>();
         selectionController = gameObject.AddComponent<SelectionController>();
     }
 
@@ -29,17 +29,17 @@ public partial class Selection : Singleton<Selection>
         OnDisable();
         GameMode.changed += HandleGameModeChange;
         InteractionMode.changed += HandleInteractionModeChange;
-        ComponentManager.destroyed += HandleComponentDestroyed;
+        LiveComponent.destroyed += HandleComponentDestroyed;
     }
 
     private void OnDisable()
     {
         GameMode.changed -= HandleGameModeChange;
         InteractionMode.changed -= HandleInteractionModeChange;
-        ComponentManager.destroyed -= HandleComponentDestroyed;
+        LiveComponent.destroyed -= HandleComponentDestroyed;
     }
 
-    private void HandleComponentDestroyed(ComponentBehavior c)
+    private void HandleComponentDestroyed(EditorBehaviour c)
     {
         int key = c.GetInstanceID();
         if (selectedGameObjects.ContainsKey(key)) selectedGameObjects.Remove(key);
@@ -73,7 +73,7 @@ public partial class Selection : Singleton<Selection>
         selectionArea.Adjust(point);
     }
 
-    static public List<ComponentBehavior> EndMultiSelect()
+    static public List<EditorBehaviour> EndMultiSelect()
     {
         var t = selectionArea.GetSelection();
         GameObject.Destroy(selectionArea.gameObject);
@@ -82,14 +82,14 @@ public partial class Selection : Singleton<Selection>
         return t;
     }
 
-    static public void InvertComponent(ComponentBehavior component)
+    static public void InvertComponent(EditorBehaviour component)
     {
         if (selectedGameObjects.ContainsKey(component.GetInstanceID())) RemoveComponent(component);
         else AddComponent(component);
 
     }
 
-    static public void AddComponent(ComponentBehavior component)
+    static public void AddComponent(EditorBehaviour component)
     {
         if (selectedGameObjects.ContainsKey(component.GetInstanceID())) return;
         else
@@ -99,13 +99,13 @@ public partial class Selection : Singleton<Selection>
         }
     }
 
-    static public void RemoveComponent(ComponentBehavior component)
+    static public void RemoveComponent(EditorBehaviour component)
     {
         selectedGameObjects.Remove(component.GetInstanceID());
         GameObject.Destroy(component.gameObject.GetComponent<SelectedObjectOverlay>());
     }
 
-    static public void InvertComponents(List<ComponentBehavior> components)
+    static public void InvertComponents(List<EditorBehaviour> components)
     {
         foreach (var component in components)
         {
@@ -113,7 +113,7 @@ public partial class Selection : Singleton<Selection>
         }
     }
 
-    static public void AddComponents(List<ComponentBehavior> components)
+    static public void AddComponents(List<EditorBehaviour> components)
     {
         foreach (var component in components)
         {
@@ -121,7 +121,7 @@ public partial class Selection : Singleton<Selection>
         }
     }
 
-    static public void RemoveComponents(List<ComponentBehavior> components)
+    static public void RemoveComponents(List<EditorBehaviour> components)
     {
         foreach (var component in components)
         {
@@ -131,17 +131,22 @@ public partial class Selection : Singleton<Selection>
 
     static public void Clear()
     {
-        RemoveComponents(new List<ComponentBehavior>(selectedGameObjects.Values));
+        RemoveComponents(new List<EditorBehaviour>(selectedGameObjects.Values));
         selectedGameObjects.Clear(); // just to make sure
     }
 
-    static public List<ComponentBehavior> GetSelectedComponents(bool includeDisabled = false)
+    static public List<T> GetSelectedComponents<T>(bool includeDisabled = false) where T : EditorBehaviour
     {
-        if (includeDisabled) return new List<ComponentBehavior>(selectedGameObjects.Values);
-        return selectedGameObjects.Values.Where(c => c.IsEnabled()).ToList();
+        List<T> res = new List<T>();
+        foreach (var item in selectedGameObjects) {
+            var t = item.Value.GetComponent<T>();
+            if (t != null) res.Add(t);
+        }
+        if (includeDisabled) return res;
+        return res.Where(c => c.IsEnabled()).ToList();
     }
 
-    static public bool IsSelected(ComponentBehavior c)
+    static public bool IsSelected(EditorBehaviour c)
     {
         return selectedGameObjects.ContainsKey(c.GetInstanceID());
     }
