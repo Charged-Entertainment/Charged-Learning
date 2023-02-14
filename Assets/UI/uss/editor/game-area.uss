@@ -15,6 +15,22 @@
   margin-left: 120px;
 }
 
+#gamemode-indicator {
+  position: absolute;
+  height: 250px;
+  width: 250px;
+  top: 60px;
+  right: 60px;
+}
+
+.gamemode-indicator-on {
+  background-image: resource("on");
+}
+
+.gamemode-indicator-off {
+  background-image: resource("off");
+}
+
 .editor-control-btn {
   background-color: rgba(255, 255, 255, 0.15);
   border-width: 0;
