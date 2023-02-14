@@ -60,9 +60,9 @@ namespace Components
         }
 
         // TODO: handle reveal event and qunatity change event
-        private void HandleComponentCreated(EditorBehaviour comp)
+        private void HandleComponentCreated(LiveComponent comp)
         {
-            if (comp.GetComponent<LiveComponent>().levelComponent == this)
+            if (comp.levelComponent == this)
             {
                 if (Quantity.Used < Quantity.Total)
                 {
