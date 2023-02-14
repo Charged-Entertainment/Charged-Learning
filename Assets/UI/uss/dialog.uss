@@ -1,25 +1,24 @@
 #dialog {
   background-color: transparent;
   flex-direction: row;
-  margin-right: 100px;
-  bottom: 20px;
+  margin-right: 400px;
+  bottom: 80px;
 }
 
 #dialog Label {
-  padding: 20px;
+  padding: 80px;
+  min-height: 356px;
+  width: 1709px;
   white-space: normal;
-  width: 534px;
-  height: 131px;
-  margin-right: 50px;
+  margin-right: 200px;
 
   background-color: rgba(27, 15, 22, 0.8);
-  border-radius: 10px;
+  border-radius: 40px;
 }
 
 #dialog Image {
-  margin-top: -10px;
-  height: 167px;
-  width: 230px;
-
+  height: 349px;
+  width: 485px;
+  align-self: center;
   background-image: resource("Robot/default");
 }

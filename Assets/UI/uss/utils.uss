@@ -31,7 +31,20 @@
 }
 
 .h1 {
-  font-size: 20px;
+  font-size: 64px;
+}
+
+.h2 {
+  font-size: 46px;
+}
+
+.p {
+  font-size: 32px;
+}
+
+
+
+.bold {
   -unity-font-style: bold;
 }
 

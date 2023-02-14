@@ -1,47 +1,59 @@
-#main{
-    flex-grow: 1;
-    color: #fff;
+#main {
+  flex-grow: 1;
+  color: #fff;
 }
 
-
-#middle-section{
-    background-color: transparent;
-    flex-grow: 1;
-    justify-content: space-between;
-    
+#middle-section {
+  background-color: transparent;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
-#components-bar{
-    background-color: #333;
+#components-bar {
+  background-color: #333;
+  width: 511px;
 }
 
-.left-arrow{
-    align-self: center;
-    background-image: resource("left-arrow");
-    width: 7px;
-    height: 15px;
+#components-bar #components-bar-header {
+  -unity-font-style: bold;
+  width: 100%;
+  height: 157px;
+  font-size: 46px;
+  background-color: #1b1b1b;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.right-arrow{
-    align-self: center;
-    background-image: resource("right-arrow");
-    width: 7px;
-    height: 15px;
+#components-bar #components-bar-header .up-arrow {
+  margin-right: 35px;
 }
 
-#terminal-instance{
-    position: absolute;
-    height: 50%;
-    width: 50%;
+.up-arrow,
+.down-arrow {
+  align-self: center;
+  height: 30px;
+  width: 52.466px;
+}
+.up-arrow {
+  background-image: resource("up-arrow");
+}
+.down-arrow {
+  background-image: resource("down-arrow");
 }
 
-#corner-logo{
-    background-image: resource("logo");
-    
-    position: absolute;
-    bottom: 35px;
-    left: 35px;
-    width: 200px;
-    height: 50px;
-    opacity: 0.5;
+#terminal-instance {
+  position: absolute;
+  height: 50%;
+  width: 50%;
+}
+
+#corner-logo {
+  background-image: resource("logo");
+  position: absolute;
+  width: 443.78px;
+  height: 119.33px;
+  bottom: 140px;
+  left: 140px;
+  opacity: 0.5;
 }

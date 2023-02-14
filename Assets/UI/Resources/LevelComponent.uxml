@@ -3,7 +3,7 @@
     <ui:VisualElement class="col">
         <ui:Label name="name" text="some text" class="text-center" />
         <ui:Image class="self-center"
-            style='background-image: resource("led"); width:50px; height:100px;' />
+            style='background-image: resource("led"); width:200px; height:400px;' />
         <ui:Label name="qty" text="x0" class="text-center" />
     </ui:VisualElement>
 </ui:UXML>
