@@ -47,19 +47,30 @@ public partial class Clipboard : Singleton<Clipboard>
 
         foreach (var component in components)
         {
-            LiveComponent copy = LiveComponent.Instantiate(component, Instance.transform);
-            copy.transform.position -= Instance.transform.position;
+            //filthy solution to allow cutting where qty == 0
+            if (isCut) component.levelComponent.Quantity.Used-= components.Count; 
+            
+            LiveComponent copy = LiveComponent.Instantiate(component.levelComponent, Instance.transform, component.transform.position);
             copy.Disable();
-
-            if (isCut) GameObject.Destroy(component);
+            
+            if (isCut)
+            {
+                component.Destroy();
+                component.levelComponent.Quantity.Used+= components.Count;
+            }
         }
     }
 
     static public void Paste(Vector2 pos)
     {
         Instance.transform.position = pos;
+        
+        var content = GetContent();
+        
+        Selection.Clear();
+        Selection.AddComponents(new List<EditorBehaviour>(content));
 
-        foreach (var component in GetContent())
+        foreach (var component in content)
         {
             component.Enable();
             component.gameObject.transform.parent = null;

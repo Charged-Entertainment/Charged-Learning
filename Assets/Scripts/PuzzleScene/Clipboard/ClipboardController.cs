@@ -13,6 +13,11 @@ public partial class Clipboard : Singleton<Clipboard>
                 Clipboard.Copy(Selection.GetSelectedComponents<LiveComponent>());
             }
 
+            else if (Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
+            {
+                Clipboard.Copy(Selection.GetSelectedComponents<LiveComponent>(), true);
+            }
+
             else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
             {
                 Clipboard.Paste(Utils.GetMouseWorldPosition());

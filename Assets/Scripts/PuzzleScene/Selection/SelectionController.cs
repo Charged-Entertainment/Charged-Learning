@@ -17,7 +17,7 @@ public partial class Selection : Singleton<Selection>
             // Never disabled.
             LiveComponent.mouseEntered += HandleMouseEntered;
             LiveComponent.mouseExited += HandleMouseExited;
-            EditorBehaviour.editorBehaviourDestroyed += HandleMouseExited; //same handler due to same effect
+            EditorBehaviour.destroyed += HandleMouseExited; //same handler due to same effect
         }
 
         void OnEnable()
