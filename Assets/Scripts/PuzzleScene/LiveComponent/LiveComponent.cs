@@ -35,51 +35,21 @@ public partial class LiveComponent : EditorBehaviour
         destroyed?.Invoke(this);
     }
 
-
     // Handle all that should happen when creating a new component.
-    static public LiveComponent Instantiate(LiveComponent original, Transform parent)
-    {
-        LiveComponent copy = GameObject.Instantiate(original, parent);
-
-        bool selected = Selection.IsSelected(original);
-        if (selected) Selection.AddComponent(copy);
-
-        return copy;
-    }
-
-    static public LiveComponent Instantiate(Components.LevelComponent comp)
-    {
-        if (comp.Quantity.Used < comp.Quantity.Total)
-        {
-            var prefab = Resources.Load<GameObject>(comp.Name);
-            LiveComponent copy = GameObject.Instantiate(prefab).GetComponent<LiveComponent>();
-            var liveComp = copy.gameObject.AddComponent<LiveComponent>();
-            liveComp.levelComponent = comp;
-            created?.Invoke(copy);
-            return copy;
-        }
-        else
-        {
-            //TODO: emit error event
-            throw new Exception("Quantity ");
-        }
-    }
-
-    static public LiveComponent Instantiate(Components.LevelComponent comp, Vector2 pos)
+    static public LiveComponent Instantiate(Components.LevelComponent comp, Transform parent = null, Vector2? pos = null)
     {
         if (comp.Quantity.Used < comp.Quantity.Total)
         {
             var prefab = Resources.Load<GameObject>($"Components/{comp.Name}");
-            LiveComponent copy = GameObject.Instantiate(prefab).GetComponent<LiveComponent>();
+            LiveComponent copy = GameObject.Instantiate(prefab, parent).GetComponent<LiveComponent>();
             copy.levelComponent = comp;
-            copy.transform.position = pos;
+            if (pos != null) copy.transform.position = (Vector2)pos;
             created?.Invoke(copy);
             return copy;
         }
         else
         {
-            //TODO: emit error event
-            throw new Exception("Quantity ");
+            throw new Exception("Quantity...");
         }
     }
 }

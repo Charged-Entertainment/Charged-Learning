@@ -47,11 +47,17 @@ public partial class Clipboard : Singleton<Clipboard>
 
         foreach (var component in components)
         {
-            LiveComponent copy = LiveComponent.Instantiate(component, Instance.transform);
-            copy.transform.position -= Instance.transform.position;
+            //filthy solution to allow cutting where qty == 0
+            if (isCut) component.levelComponent.Quantity.Used--; 
+            
+            LiveComponent copy = LiveComponent.Instantiate(component.levelComponent, Instance.transform, component.transform.position);
             copy.Disable();
-
-            if (isCut) GameObject.Destroy(component);
+            
+            if (isCut)
+            {
+                component.Destroy();
+                component.levelComponent.Quantity.Used++;
+            }
         }
     }
 
