@@ -8,75 +8,11 @@ public partial class EditorBehaviour : MonoBehaviour
     static public Action<EditorBehaviour> mouseExited;
     static public Action<EditorBehaviour> mouseDown;
     static public Action<EditorBehaviour> mouseUp;
-    static public Action<EditorBehaviour> editorBehaviourDestroyed;
-
-    private class EditorBehaviourController : Singleton<Controller>
-    {
-        private static DragController dragController;
-        private static TransformationController transformationController;
-
-        new void Awake()
-        {
-            base.Awake();
-            dragController = gameObject.AddComponent<DragController>();
-            transformationController = gameObject.AddComponent<TransformationController>();
-        }
-        private void OnEnable()
-        {
-            OnDisable();
-            GameMode.changed += HandleGameModeChange;
-            InteractionMode.changed += HandleInteractionModeChange;
-        }
-
-        private void OnDisable()
-        {
-            GameMode.changed -= HandleGameModeChange;
-            InteractionMode.changed -= HandleInteractionModeChange;
-        }
-
-        private void HandleGameModeChange(GameModes mode)
-        {
-            HandleGameModeOrInteractionModeChange();
-        }
-
-        private void HandleInteractionModeChange(InteractionModes mode)
-        {
-            HandleGameModeOrInteractionModeChange();
-        }
-
-        private void HandleGameModeOrInteractionModeChange()
-        {
-            if (GameMode.Current != GameModes.Edit)
-            {
-                dragController.enabled = false;
-                transformationController.enabled = false;
-                return;
-            }
-
-            if (InteractionMode.Current == InteractionModes.Normal)
-            {
-                dragController.enabled = true;
-                transformationController.enabled = true;
-            }
-            else if (InteractionMode.Current == InteractionModes.Pan)
-            {
-                dragController.enabled = false;
-                transformationController.enabled = true;
-            }
-            else if (InteractionMode.Current == InteractionModes.Wire)
-            {
-                dragController.enabled = false;
-                transformationController.enabled = false;
-            }
-            else
-            {
-                Debug.Log("Error: unknown InteractionMode: " + InteractionMode.Current);
-            }
-        }
-    }
-
+    static public Action<EditorBehaviour> created;
+    static public Action<EditorBehaviour> destroyed;
     static public Action<EditorBehaviour> dragged;
     static public Action<EditorBehaviour> moved;
+
     public void FlipH()
     {
         var current_scale = transform.localScale;
@@ -117,47 +53,58 @@ public partial class EditorBehaviour : MonoBehaviour
         return bounds;
     }
 
-    public bool IsEnabled()
+    virtual protected void Awake()
+    {
+        created?.Invoke(this);
+    }
+
+    virtual public bool IsEnabled()
     {
         return gameObject.activeSelf;
     }
 
-    public void Enable()
+    virtual public void Enable()
     {
         gameObject.SetActive(true);
     }
 
-    public void Disable()
+    virtual public void Disable()
     {
         gameObject.SetActive(false);
     }
 
-    private void OnMouseDown()
+    virtual public void Destroy()
+    {
+        GameObject.Destroy(gameObject);
+    }
+
+    virtual protected void OnMouseDown()
     {
         mouseDown?.Invoke(this);
     }
 
-    private void OnMouseUp()
+    virtual protected void OnMouseUp()
     {
         mouseUp?.Invoke(this);
     }
 
-    private void OnMouseDrag()
+    virtual protected void OnMouseDrag()
     {
         dragged?.Invoke(this);
     }
 
-    private void OnMouseEnter()
+    virtual protected void OnMouseEnter()
     {
         mouseEntered?.Invoke(this);
     }
 
-    private void OnMouseExit()
+    virtual protected void OnMouseExit()
     {
         mouseExited?.Invoke(this);
     }
 
-    private void OnDestroy() {
-        editorBehaviourDestroyed?.Invoke(this);
+    virtual protected void OnDestroy()
+    {
+        destroyed?.Invoke(this);
     }
 }

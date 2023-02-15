@@ -9,8 +9,8 @@ using Components;
 public partial class LiveComponent : EditorBehaviour
 {
     // Possible change: use UnityEvents (https://www.jacksondunstan.com/articles/3335#comment-713798).
-    static public Action<LiveComponent> created;
-    static public Action<LiveComponent> destroyed;
+    static new public Action<LiveComponent> created;
+    static new public Action<LiveComponent> destroyed;
     static public Action<Terminal, Terminal> connected;
     static public Action<Terminal, Terminal> disconnected;
 
@@ -21,6 +21,18 @@ public partial class LiveComponent : EditorBehaviour
     void Start()
     {
         terminals = gameObject.GetComponentsInChildren<Terminal>(true);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        created?.Invoke(this);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        destroyed?.Invoke(this);
     }
 
 
@@ -69,10 +81,5 @@ public partial class LiveComponent : EditorBehaviour
             //TODO: emit error event
             throw new Exception("Quantity ");
         }
-    }
-    public void Destroy()
-    {
-        LiveComponent.destroyed.Invoke(this);
-        GameObject.Destroy(gameObject);
     }
 }
