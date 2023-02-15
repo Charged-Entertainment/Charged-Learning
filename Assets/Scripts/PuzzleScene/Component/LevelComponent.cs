@@ -20,11 +20,11 @@ namespace Components
     public class Property
     {
         public bool isRevealed;
-        public PureProperty properties { get; private set; }
+        public PureProperty pureProperty { get; private set; }
 
         public Property(PureProperty pureProperty, bool isRevealed = false)
         {
-            this.properties = pureProperty;
+            this.pureProperty = pureProperty;
             this.isRevealed = isRevealed;
         }
     }
