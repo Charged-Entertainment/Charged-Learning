@@ -9,7 +9,8 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
 
     enum WindowState { Normal, Maximized, Minimized }
 
-    public static Action enabled, disabled;
+    public new static Action enabled;
+    public static Action disabled;
 
 
     #region privates

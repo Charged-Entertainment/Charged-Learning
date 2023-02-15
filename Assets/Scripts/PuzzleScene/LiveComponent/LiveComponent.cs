@@ -18,7 +18,7 @@ public partial class LiveComponent : EditorBehaviour
 
     private Terminal[] terminals;
 
-    void Start()
+    protected override void Awake()
     {
         terminals = gameObject.GetComponentsInChildren<Terminal>(true);
     }
