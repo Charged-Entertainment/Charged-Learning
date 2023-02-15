@@ -64,8 +64,13 @@ public partial class Clipboard : Singleton<Clipboard>
     static public void Paste(Vector2 pos)
     {
         Instance.transform.position = pos;
+        
+        var content = GetContent();
+        
+        Selection.Clear();
+        Selection.AddComponents(new List<EditorBehaviour>(content));
 
-        foreach (var component in GetContent())
+        foreach (var component in content)
         {
             component.Enable();
             component.gameObject.transform.parent = null;
