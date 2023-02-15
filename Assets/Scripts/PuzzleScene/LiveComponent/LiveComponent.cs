@@ -18,7 +18,7 @@ public partial class LiveComponent : EditorBehaviour
 
     [field:SerializeField] public Terminal[] Terminals{get; private set;}
 
-    void Awake()
+    protected override void Awake()
     {
         Terminals = gameObject.GetComponentsInChildren<Terminal>(true);
     }
