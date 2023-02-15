@@ -63,7 +63,7 @@ public partial class EditorBehaviour
 
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                foreach (var selectedObject in Selection.GetSelectedComponents<LiveComponent>())
+                foreach (var selectedObject in Selection.GetSelectedComponents<EditorBehaviour>())
                 {
                     selectedObject.Destroy();
                 }

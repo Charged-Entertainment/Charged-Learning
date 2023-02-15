@@ -46,20 +46,31 @@ public class UIDevices : MonoBehaviour
 
         multimeterBtn.RegisterCallback<ClickEvent>(ev =>
         {
-            if (!Multimeter.spawned) Multimeter.Spawn();
-            else Multimeter.Destroy();
+            if (!Multimeter.IsAvailable()) Multimeter.Spawn();
         });
+
+        Multimeter.created += () => {
+            multimeterBtn.SetEnabled(false);
+            SetButtonVisable(multimeterBtn, true);
+        };
+        Multimeter.destroyed += () => {
+            multimeterBtn.SetEnabled(true);
+            SetButtonVisable(multimeterBtn, true);
+        };
 
         var terminal = document.Q("terminal-instance");
         var terminalButton = document.Q<Button>("terminal-btn");
-        FeebackTerminal.disabled += () => {
+        FeebackTerminal.disabled += () =>
+        {
             terminalButton.SetEnabled(true);
         };
 
-        FeebackTerminal.enabled += () => {
+        FeebackTerminal.enabled += () =>
+        {
             terminalButton.SetEnabled(false);
         };
-        terminalButton.RegisterCallback<ClickEvent>(e => {
+        terminalButton.RegisterCallback<ClickEvent>(e =>
+        {
             FeebackTerminal.Enable();
         });
         terminalButton.SetEnabled(false);
@@ -103,7 +114,7 @@ public class UIDevices : MonoBehaviour
     private void SetButtonVisable(Button b, bool enabled)
     {
         b.visible = enabled;
-        b.style.opacity = enabled ? 1 : 0;
+        b.style.opacity = enabled ? (b.enabledSelf? 1 : 0.5f) : 0;
     }
 
     private void InitButtonPositions()

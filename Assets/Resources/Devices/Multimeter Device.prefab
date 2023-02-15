@@ -288,7 +288,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: multimeter-wire-red
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5967973247088881015, guid: bef356bbde070727584d99c9019e602a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bef356bbde070727584d99c9019e602a, type: 3}
 --- !u!4 &2599035193526164443 stripped
 Transform:
@@ -367,6 +368,10 @@ PrefabInstance:
       value: 3.9366455
       objectReference: {fileID: 0}
     - target: {fileID: 5169353463643657296, guid: 780932062d5ee634a977a77748883aed, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169353463643657296, guid: 780932062d5ee634a977a77748883aed, type: 3}
       propertyPath: m_Offset.y
       value: 0.36537313
       objectReference: {fileID: 0}
@@ -376,14 +381,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635555707316928878, guid: 780932062d5ee634a977a77748883aed, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6721833413625201778, guid: 780932062d5ee634a977a77748883aed, type: 3}
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 5321346007106688085, guid: 780932062d5ee634a977a77748883aed, type: 3}
+    - {fileID: 0}
+    - {fileID: 4189925745853317367, guid: 780932062d5ee634a977a77748883aed, type: 3}
+    - {fileID: 8133843568038090692, guid: 780932062d5ee634a977a77748883aed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 780932062d5ee634a977a77748883aed, type: 3}
 --- !u!4 &5810327364325386971 stripped
 Transform:
@@ -445,7 +452,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: multimeter-wire-black
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7707969119979385175, guid: 7fc2c7b5618c690c1bcd1db7b5d08947, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7fc2c7b5618c690c1bcd1db7b5d08947, type: 3}
 --- !u!4 &6870818062106906025 stripped
 Transform:
