@@ -48,7 +48,7 @@ public partial class Clipboard : Singleton<Clipboard>
         foreach (var component in components)
         {
             //filthy solution to allow cutting where qty == 0
-            if (isCut) component.levelComponent.Quantity.Used--; 
+            if (isCut) component.levelComponent.Quantity.Used-= components.Count; 
             
             LiveComponent copy = LiveComponent.Instantiate(component.levelComponent, Instance.transform, component.transform.position);
             copy.Disable();
@@ -56,7 +56,7 @@ public partial class Clipboard : Singleton<Clipboard>
             if (isCut)
             {
                 component.Destroy();
-                component.levelComponent.Quantity.Used++;
+                component.levelComponent.Quantity.Used+= components.Count;
             }
         }
     }
