@@ -105,7 +105,7 @@ public partial class Selection : Singleton<Selection>
         GameObject.Destroy(component.gameObject.GetComponent<SelectedObjectOverlay>());
     }
 
-    static public void InvertComponents(List<EditorBehaviour> components)
+    static public void InvertComponents(IEnumerable<EditorBehaviour> components)
     {
         foreach (var component in components)
         {
@@ -113,7 +113,7 @@ public partial class Selection : Singleton<Selection>
         }
     }
 
-    static public void AddComponents(List<EditorBehaviour> components)
+    static public void AddComponents(IEnumerable<EditorBehaviour> components)
     {
         foreach (var component in components)
         {
@@ -121,7 +121,7 @@ public partial class Selection : Singleton<Selection>
         }
     }
 
-    static public void RemoveComponents(List<EditorBehaviour> components)
+    static public void RemoveComponents(IEnumerable<EditorBehaviour> components)
     {
         foreach (var component in components)
         {
@@ -131,7 +131,7 @@ public partial class Selection : Singleton<Selection>
 
     static public void Clear()
     {
-        RemoveComponents(new List<EditorBehaviour>(selectedGameObjects.Values));
+        RemoveComponents(selectedGameObjects.Values);
         selectedGameObjects.Clear(); // just to make sure
     }
 
