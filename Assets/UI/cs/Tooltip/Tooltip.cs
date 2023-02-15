@@ -37,8 +37,12 @@ abstract public class Tooltip
 
         private static void HandleLiveComponentCreated(LiveComponent c)
         {
-            var t = new DefaultTooltipCB(c, c.levelComponent.Name, "ctrl +", "Testo besto");
-            // TODO: set the position of t.root to somewhere near c.gameObject.transform.position
+            if (c.levelComponent != null)
+            {
+                var t = new DefaultTooltipCB(c, c.levelComponent.Name, "ctrl +", "Testo besto");
+                // TODO: set the position of t.root to somewhere near c.gameObject.transform.position
+            }
+            else Debug.Log("Error");
         }
     }
 }
@@ -94,7 +98,7 @@ public class DefaultTooltipVE : DefaultTooltip
         VisualElement.RegisterCallback<MouseEnterEvent>(e =>
         {
             // TODO: fix this: it should happen only once not on every mouse enter
-            root.style.left = VisualElement.worldBound.x - VisualElement.worldBound.width/2;
+            root.style.left = VisualElement.worldBound.x - VisualElement.worldBound.width / 2;
             root.style.top = VisualElement.worldBound.y;
             document.Add(root);
 
@@ -112,9 +116,10 @@ public class DefaultTooltipCB : DefaultTooltip
         LiveComponent.mouseEntered += c => { if (c == component) document.Add(root); };
         LiveComponent.mouseExited += c => { if (c == component) document.Remove(root); };
         // TODO: this object will remain in memory, find a way for it to be garbage collected.
-        
+
         //Handle the case when component is deleted while the mouse is not over it.
-        LiveComponent.destroyed += c => { if (c == component && document.Contains(root)) document.Remove(root);};    }
+        LiveComponent.destroyed += c => { if (c == component && document.Contains(root)) document.Remove(root); };
+    }
 }
 
 // TODO: add LevelComponentToolip (includes key-value pairs of values)

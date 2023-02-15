@@ -23,12 +23,6 @@ public partial class LiveComponent : EditorBehaviour
         terminals = gameObject.GetComponentsInChildren<Terminal>(true);
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        created?.Invoke(this);
-    }
-
     protected override void OnDestroy()
     {
         base.OnDestroy();
