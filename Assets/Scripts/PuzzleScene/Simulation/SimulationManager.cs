@@ -6,27 +6,24 @@ using SpiceSharp.Validation;
 
 public class SimulationManager : Singleton<SimulationManager>
 {
-    [SerializeField] bool test = false;
+    private static SpiceSharp.Simulations.IBiasingSimulation simulation;
+    public static Action <SpiceSharp.Simulations.IBiasingSimulation> simulationDone;
     void Update()
     {
-        if (test)
-        {
-            CircuitBuilder.Collect();
-            test = false;
-        }
+        
     }
 
     public static void Simulate()
     {
         //One node must be called "0" --represent the ground--
         Debug.Log("Starting simulation");
-        var op = new SpiceSharp.Simulations.Transient("sim1");
+        simulation = new SpiceSharp.Simulations.Transient("sim1");
 
         var circuit = CircuitBuilder.Collect();
-        op.ExportSimulationData += HandleSimulationResults;
+        simulation.ExportSimulationData += HandleSimulationResults;
         try
         {
-            op.Run(circuit);
+            simulation.Run(circuit);
         }
         catch (SpiceSharp.Simulations.ValidationFailedException e)
         {
@@ -48,6 +45,17 @@ public class SimulationManager : Singleton<SimulationManager>
             double voltage = args.GetVoltage(CircuitBuilder.GetNode(c.Terminals[0]), CircuitBuilder.GetNode(c.Terminals[1]));
             Debug.Log($"Voltage across {c.Terminals[0].name} and {c.Terminals[1].name} on {c.gameObject.name} ({c.GetInstanceID()}) is {voltage}V");
         }
+
+        simulationDone?.Invoke(simulation);
+
+        // var multimeter = GameObject.FindObjectOfType<Multimeter>();
+        // if(multimeter.DeviceMode is CurrentMode){
+        //     var currentPropertyExport = new SpiceSharp.Simulations.RealCurrentExport(simulation, multimeter.GetInstanceID().ToString());
+        //     Debug.Log($"Current across {multimeter.Terminals[0].name} and {multimeter.Terminals[1].name} on {multimeter.gameObject.name} ({multimeter.GetInstanceID()}) is {currentPropertyExport.Value}A");
+        // }
+        // double voltageMultimeter = args.GetVoltage(CircuitBuilder.GetNode(multimeter.Terminals[0]), CircuitBuilder.GetNode(multimeter.Terminals[1]));
+        
+        // Debug.Log($"Voltage across {multimeter.Terminals[0].name} and {multimeter.Terminals[1].name} on {multimeter.gameObject.name} ({multimeter.GetInstanceID()}) is {voltageMultimeter}V");
 
         FeebackTerminal.Write(new Log($"Voltage on the ground '0' node {RichText.Color(args.GetVoltage("0").ToString(), PaletteColor.Green)}"));
     }

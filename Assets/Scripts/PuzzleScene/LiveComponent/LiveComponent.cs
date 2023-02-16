@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using GameManagement;
 using Components;
 
-public partial class LiveComponent : EditorBehaviour
+public partial class LiveComponent : EditorBehaviour, CircuitComponent
 {
     // Possible change: use UnityEvents (https://www.jacksondunstan.com/articles/3335#comment-713798).
     static new public Action<LiveComponent> created;
@@ -16,7 +16,7 @@ public partial class LiveComponent : EditorBehaviour
 
     public Components.LevelComponent levelComponent;
 
-    [field:SerializeField] public Terminal[] Terminals{get; private set;}
+    [field: SerializeField] public Terminal[] Terminals { get; private set; }
 
     protected override void Awake()
     {
@@ -27,6 +27,30 @@ public partial class LiveComponent : EditorBehaviour
     {
         base.OnDestroy();
         destroyed?.Invoke(this);
+    }
+
+    public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
+    {
+        var component = levelComponent.Component;
+        switch (component.componentType)
+        {
+            case ComponentType.Resistor:
+                return new SpiceSharp.Components.Resistor(
+                        levelComponent.Name + GetInstanceID(),
+                        negativeWire,
+                        positiveWire,
+                        component.Properties[PropertyType.Resistance].value
+                        );
+            case ComponentType.Battery:
+                return new SpiceSharp.Components.VoltageSource(
+                       levelComponent.Name,
+                       negativeWire,
+                       positiveWire,
+                       component.Properties[PropertyType.Voltage].value
+                       );
+        }
+        return null;
+
     }
 
     // Handle all that should happen when creating a new component.
@@ -46,4 +70,6 @@ public partial class LiveComponent : EditorBehaviour
             throw new Exception("Quantity...");
         }
     }
+
+
 }

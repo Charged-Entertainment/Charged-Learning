@@ -20,8 +20,12 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
 
     private void HandleWireDestroyed(Wire wire)
     {
+        Debug.Log("Wire destroyed");
         List<Terminal> ts = new List<Terminal>();
         foreach (var t in terminalToWire) ts.Add(t.Key);
+
+        //BUG: Doesn't delete parallel wires, because they are added to the dictionary as the common wire
+        // so "terminalToWire[item] == wire" is never true
         foreach (var t in ts.Where((item) => terminalToWire.ContainsKey(item) && terminalToWire[item] == wire)) terminalToWire.Remove(t);
     }
 
@@ -54,27 +58,46 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
         }
     }
 
+    private static HashSet<CircuitComponent> GetCircuitComponents(){
+        var circuitComponents = new HashSet<CircuitComponent>();
+        bool multimeterConnected = false;
+        foreach (var terminal in terminalToWire)
+        {
+            circuitComponents.Add(terminal.Key.parent);
+            if(terminal.Key.parent is Multimeter){
+                Debug.Log("Multimeter is in circuit");
+                multimeterConnected = true;
+            }
+        }
+        var multimeter = GameObject.FindObjectOfType<Multimeter>();
+        if(multimeter!=null)multimeter.Connected = multimeterConnected;
+
+        return circuitComponents;
+    }
 
     public static SpiceSharp.Circuit Collect()
     {
         FindGroundWire();
-        var liveComponents = new HashSet<LiveComponent>();
-        foreach (var terminal in terminalToWire)
-        {
-            liveComponents.Add(terminal.Key.parent);
-        }
+
+        var circuitComponents = GetCircuitComponents();
 
         var circuit = new SpiceSharp.Circuit();
 
-        foreach (var liveComponent in liveComponents)
+        foreach (var circuitComponent in circuitComponents)
         {
-            var entity = SpiceComponentFactory(liveComponent);
+            var entity = circuitComponent.GetSpiceComponent(
+                GetWireName(terminalToWire[circuitComponent.Terminals[0]]),
+                GetWireName(terminalToWire[circuitComponent.Terminals[1]])
+                );
+
             circuit.Add(entity);
         }
+        
         return circuit;
     }
 
-    public static string GetNode(Terminal t) {
+    public static string GetNode(Terminal t)
+    {
         if (terminalToWire.ContainsKey(t)) return GetWireName(terminalToWire[t]);
         else return null;
     }
@@ -92,7 +115,8 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
         foreach (var pair in terminalToWire)
         {
             // TODO: find a way to make this more generic since more than 1 battery can be in the scene.
-            if (pair.Key.parent.levelComponent.Component.componentType == ComponentType.Battery && pair.Key.name == "negative_terminal")
+            var component = pair.Key.parent as LiveComponent;
+            if (component != null && component.levelComponent.Component.componentType == ComponentType.Battery && pair.Key.name == "negative_terminal")
             {
                 groundWire = pair.Value;
                 return pair.Value;
@@ -102,28 +126,4 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
         return null;
     }
 
-    private static SpiceSharp.Components.Component SpiceComponentFactory(LiveComponent liveComponent)
-    {
-        var component = liveComponent.levelComponent.Component;
-        switch (component.componentType)
-        {
-            case ComponentType.Resistor:
-
-                return new SpiceSharp.Components.Resistor(
-                    liveComponent.levelComponent.Name+liveComponent.GetInstanceID(),
-                    GetWireName(terminalToWire[liveComponent.Terminals[0]]),
-                    GetWireName(terminalToWire[liveComponent.Terminals[1]]),
-                    component.Properties[PropertyType.Resistance].value
-                    );
-
-            case ComponentType.Battery:
-                return new SpiceSharp.Components.VoltageSource(
-                    liveComponent.levelComponent.Name,
-                    GetWireName(terminalToWire[liveComponent.Terminals[0]]),
-                    GetWireName(terminalToWire[liveComponent.Terminals[1]]),
-                    component.Properties[PropertyType.Voltage].value
-                    );
-        }
-        return null;
-    }
 }

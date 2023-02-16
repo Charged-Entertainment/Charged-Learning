@@ -52,7 +52,7 @@ namespace Components
 
         }
         public HashSet<Terminal> connectedTerminals { get; private set; }
-        public LiveComponent parent;
+        public CircuitComponent parent;
         static public Action<Terminal> mouseEntered;
         static public Action<Terminal> mouseExited;
         static public Action<Terminal> mouseDown;
@@ -70,7 +70,7 @@ namespace Components
             connectedTerminals = new HashSet<Terminal>();
             controller = gameObject.AddComponent<TerminalController>();
             connectionCandidates = new Dictionary<Terminal, float>();
-            parent = GetComponentInParent<LiveComponent>();
+            parent = GetComponentInParent<CircuitComponent>();
         }
 
         ///<summary> 

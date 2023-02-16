@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class Multimeter : Device
+using Components;
+public class Multimeter : Device, CircuitComponent
 {
     [SerializeField] private float testDisplayValue;
     [SerializeField] private Display display;
     [SerializeField] private bool turnedOn;
+    public bool Connected {get; set;}
+    [field: SerializeField] public Terminal[] Terminals { get; private set; }
+
     public static Action created;
     public static Action destroyed;
 
@@ -15,6 +19,8 @@ public class Multimeter : Device
     private void Awake()
     {
         created?.Invoke();
+        Terminals = gameObject.GetComponentsInChildren<Terminal>(true);
+
     }
 
     private void OnDestroy()
@@ -22,30 +28,28 @@ public class Multimeter : Device
         destroyed?.Invoke();
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         display = transform.Find("Multimeter").gameObject.AddComponent<Display>();
         transform.Find("Multimeter").gameObject.AddComponent<Body>();
-        deviceMode = new OffMode();
+        DeviceMode = new OffMode();
         turnedOn = false;
-        deviceMode.OnEnter(this);
+        DeviceMode.OnEnter(this);
     }
     public override void ChangeMode(DeviceMode newMode)
     {
-        deviceMode.OnExit();
+        DeviceMode.OnExit();
         newMode.OnEnter(this);
-        deviceMode = newMode;
+        DeviceMode = newMode;
 
     }
     private void Update()
     {
-        if (turnedOn) DisplayMeasurement(testDisplayValue);
     }
 
-    public void DisplayMeasurement(float measurementValue)
+    public void DisplayMessage(string message)
     {
-        display.WriteMeasurement(measurementValue);
+        display.Write(message);
     }
 
     public void TurnOff()
@@ -58,6 +62,32 @@ public class Multimeter : Device
     {
         turnedOn = true;
     }
+
+    public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
+    {
+        Debug.Log(RichText.Color("Multimeter get spice called", PaletteColor.Red));
+        if (DeviceMode is VoltageMode)
+        {
+            return new SpiceSharp.Components.Resistor(
+                GetInstanceID().ToString(),
+                positiveWire,
+                negativeWire,
+                10e6
+                );
+        }
+        else if (DeviceMode is CurrentMode)
+        {
+                return new SpiceSharp.Components.VoltageSource(
+                GetInstanceID().ToString(),
+                positiveWire,
+                negativeWire,
+                0
+                );
+
+        }else
+        throw new NotImplementedException("Set the multimeter to current or voltage modes for now");
+    }
+
 
     public static void Spawn()
     {
