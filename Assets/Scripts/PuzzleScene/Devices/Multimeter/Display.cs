@@ -12,8 +12,8 @@ public class Display : MonoBehaviour
     }
 
 
-    public void WriteMeasurement(float measurement){
-        textElement.text = measurement.ToString();
+    public void Write(string message){
+        textElement.text = message.ToString();
     }
 
     public void TurnOff(){

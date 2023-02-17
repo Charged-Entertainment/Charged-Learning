@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2124420416305328619}
   - component: {fileID: 5054020186432654496}
   m_Layer: 0
-  m_Name: left_terminal
+  m_Name: positive_terminal
   m_TagString: Terminal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ae2edfb167e32adb5727220289d939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!61 &2124420416305328619
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -106,7 +107,7 @@ GameObject:
   - component: {fileID: 4963045182255662625}
   - component: {fileID: 4979454945097036653}
   m_Layer: 0
-  m_Name: right_terminal
+  m_Name: negative_terminal
   m_TagString: Terminal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ae2edfb167e32adb5727220289d939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!61 &4963045182255662625
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -287,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123f5703cbd53b06fae9e4551e79ffe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Terminals>k__BackingField: []
 --- !u!61 &3196838369763121935
 BoxCollider2D:
   m_ObjectHideFlags: 0

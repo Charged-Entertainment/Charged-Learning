@@ -20,11 +20,11 @@ namespace Components
     public class Property
     {
         public bool isRevealed;
-        public PureProperty properties { get; private set; }
+        public PureProperty pureProperty { get; private set; }
 
         public Property(PureProperty pureProperty, bool isRevealed = false)
         {
-            this.properties = pureProperty;
+            this.pureProperty = pureProperty;
             this.isRevealed = isRevealed;
         }
     }
@@ -35,7 +35,7 @@ namespace Components
 
         public static Action<LevelComponent> quantityChanged;
 
-        public Dictionary<string, Property> Properties { get; private set; }
+        public Dictionary<PropertyType, Property> Properties { get; private set; }
 
         // public Dictionary<string, Terminal> Terminals { get; private set; }
 
@@ -47,13 +47,13 @@ namespace Components
 
         public LevelComponent(Component component, Quantity quantity)
         {
-            Properties = new Dictionary<string, Property>();
+            Properties = new Dictionary<PropertyType, Property>();
             this.Component = component;
             this.Quantity = quantity;
 
             foreach (var prop in component.Properties)
             {
-                Properties.Add(prop.Value.name, new Property(prop.Value));
+                Properties.Add(prop.Value.propertyType, new Property(prop.Value));
             }
             LiveComponent.created += HandleComponentCreated;
             LiveComponent.destroyed += HandleComponentDestroyed;
