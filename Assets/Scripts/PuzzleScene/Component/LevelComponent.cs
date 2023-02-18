@@ -33,7 +33,7 @@ namespace Components
     {
         public Component Component { get; private set; }
 
-        public static Action<LevelComponent> quantityChanged;
+        public static Action<LevelComponent> quantityChanged, propertyRevealed;
 
         public Dictionary<PropertyType, Property> Properties { get; private set; }
 
@@ -97,6 +97,22 @@ namespace Components
             }
         }
 
-        // public bool 
+        public void RevealProperty(PropertyType propertyType)
+        {
+            var propertyName = Enum.GetName(typeof(PropertyType), propertyType);
+            if(!Properties.ContainsKey(propertyType)){
+                Debug.Log($"{propertyName} property doesn't exist for this component");
+                return;
+            }
+
+            var propertyIsRevealed = Properties[propertyType].isRevealed;
+            if (propertyIsRevealed){
+                Debug.Log($"{propertyName} has been already revealed");
+                return;
+            }
+            Properties[propertyType].isRevealed = true;
+            Debug.Log("property revealed!");
+            propertyRevealed?.Invoke(this);
+        }
     }
 }

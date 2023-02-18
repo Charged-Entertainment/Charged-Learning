@@ -24,6 +24,6 @@ public class ResistanceMode : MultimeterMode
         var currentExport = new RealCurrentExport(simulation, multimeter.GetInstanceID().ToString());
         //TODO: magic number set create a constant for it
         multimeter.DisplayMessage($"{System.Math.Abs(1/currentExport.Value)}Ω");
-
+        multimeter.ConnectedComponent.levelComponent.RevealProperty(Components.PropertyType.Resistance);
     }
 }

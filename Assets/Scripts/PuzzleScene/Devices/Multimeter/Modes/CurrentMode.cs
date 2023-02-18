@@ -16,7 +16,8 @@ public class CurrentMode : MultimeterMode
 
     /// <param name="ac">Decide weather you are measuring AC or DC voltage</param>
     /// <param name="measurementRange">The range you expect the measurement to be in</param>
-    public CurrentMode(bool ac, string measurementRange){
+    public CurrentMode(bool ac, string measurementRange)
+    {
         this.ac = ac;
         this.measurementRange = measurementRange;
     }
@@ -26,5 +27,7 @@ public class CurrentMode : MultimeterMode
     {
         if (!multimeter.InCircuit) return;
         var currentExport = new RealCurrentExport(simulation, multimeter.GetInstanceID().ToString());
-        multimeter.DisplayMessage($"{currentExport.Value}A");    }
+        multimeter.DisplayMessage($"{currentExport.Value}A");
+        
+    }
 }
