@@ -9,33 +9,21 @@ public class Puzzle : Singleton<Puzzle>
     public static Action<LevelComponent, Property> propertyRevealed { get; set; }
     public static Action<LevelComponent> quantityChanged { get; set; }
 
-    public static List<LevelComponent> Components { get; set; }
-    protected override void Awake()
+    public static List<LevelComponent> Components { get; set; } = new List<LevelComponent>();
+
+    static public LevelComponent CreateLevelComponent(string name, ComponentType type, int qty)
     {
-        base.Awake();
-        Components = new List<LevelComponent>();
+        var c = new Components.Component(type);
+        var q = new Components.Quantity(qty);
+        var t = new LevelComponent(c, q, name);
+        Components.Add(t);
+        return t;
+    }
 
-        // test resistor
-        var c1 = new Components.Component(ComponentType.Resistor);
-        c1.AddProperty(new PureProperty(PropertyType.Resistance, 5,1,"ohm",true));
-        var q1 = new Components.Quantity(5);
-        var t1 = new LevelComponent(c1, q1);
-        t1.Name = "resistor";
-        Components.Add(t1);
-
-        // test battery
-        var c2 = new Components.Component(ComponentType.Battery);
-        c2.AddProperty(new PureProperty(PropertyType.Voltage, 12,1,"v",true));
-        var q2 = new Components.Quantity(1);
-        var t2 = new LevelComponent(c2, q2);
-        t2.Name = "battery";
-        Components.Add(t2);
-
-        // test LED
-        var c3 = new Components.Component(ComponentType.Led);
-        var q3 = new Components.Quantity(2);
-        var t3 = new LevelComponent(c3, q3);
-        t3.Name = "led";
-        Components.Add(t3);
+    static public PureProperty AddProperty(LevelComponent c, PropertyType type, float value, int multiplier, string unit, bool isStatic)
+    {
+        var p = new PureProperty(type, value, multiplier, unit, isStatic);
+        c.Component.AddProperty(p);
+        return p;
     }
 }

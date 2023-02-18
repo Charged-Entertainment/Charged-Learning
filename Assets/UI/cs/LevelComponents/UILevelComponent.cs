@@ -5,16 +5,15 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Components;
 
-public class UILevelComponent : VisualElement
+public class UILevelComponent
 {
     public static Action<UILevelComponent> created;
 
-    public VisualElement visualElement {get; private set;}
-    Label label;
+    public VisualElement visualElement { get; private set; }
     Image image;
     Label qty;
 
-    public LevelComponent levelComponent {get; private set;}
+    public LevelComponent levelComponent { get; private set; }
 
     public UILevelComponent(LevelComponent c)
     {
@@ -22,11 +21,9 @@ public class UILevelComponent : VisualElement
         VisualTreeAsset template = Resources.Load<VisualTreeAsset>("LevelComponent");
         visualElement = template.Instantiate();
 
-        label = visualElement.Q<Label>("name");
         image = visualElement.Q<Image>();
         qty = visualElement.Q<Label>("qty");
 
-        label.text = c.Name;
         qty.text = "x" + c.Quantity.Total.ToString();
 
         var sprite = Resources.Load<Sprite>(c.Name);
@@ -75,16 +72,18 @@ public class UILevelComponent : VisualElement
 
     private class UILevelComponentLoader : Singleton<UILevelComponentLoader>
     {
-        private void Start()
+        VisualElement document, container;
+        private new void Awake()
         {
-            var document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-            var container = document.Q("level-components");
-            foreach (var c in Puzzle.Components)
+            base.Awake();
+            document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
+            container = document.Q("level-components");
+            LevelComponent.created += c =>
             {
                 var t = new UILevelComponent(c);
                 container.Add(t.visualElement);
                 UILevelComponent.created?.Invoke(t);
-            }
+            };
         }
     }
 }

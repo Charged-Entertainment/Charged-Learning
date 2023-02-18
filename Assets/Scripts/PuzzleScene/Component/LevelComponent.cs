@@ -31,7 +31,9 @@ namespace Components
 
     public class LevelComponent
     {
+
         public Component Component { get; private set; }
+        public static Action<LevelComponent> created;
 
         public static Action<LevelComponent> quantityChanged;
 
@@ -45,11 +47,12 @@ namespace Components
 
 
 
-        public LevelComponent(Component component, Quantity quantity)
+        public LevelComponent(Component component, Quantity quantity, string name)
         {
             Properties = new Dictionary<PropertyType, Property>();
             this.Component = component;
             this.Quantity = quantity;
+            this.Name = name;
 
             foreach (var prop in component.Properties)
             {
@@ -57,6 +60,7 @@ namespace Components
             }
             LiveComponent.created += HandleComponentCreated;
             LiveComponent.destroyed += HandleComponentDestroyed;
+            created?.Invoke(this);
         }
 
         // TODO: handle reveal event and qunatity change event

@@ -13,7 +13,7 @@ public class Book : Singleton<Book>
 
     private static TwoPageLayout emptyPage;
 
-    public void ShowEmpty() { emptyPage.enabled = true; }
+    public static void ShowEmpty() { emptyPage.enabled = true; }
     private void Start()
     {
         // test

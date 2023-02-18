@@ -50,11 +50,13 @@ public class UIDevices : MonoBehaviour
         });
 
         Multimeter.created += () => {
-            multimeterBtn.SetEnabled(false);
+            // Bug!! multimeterBtn.SetEnabled(false); should not be commented out. 
+            // this here is disabled becuase in the tutorial, when it fired, it disabled the button in the middle of handling the handlers subscribed to the click event, and it'd fire first, canceling all the subsequent handlers since the button is disabled. (Unity checks if the button is still enabled before calling each handler in case on disables it??)
+            // multimeterBtn.SetEnabled(false);
             SetButtonVisable(multimeterBtn, true);
         };
         Multimeter.destroyed += () => {
-            multimeterBtn.SetEnabled(true);
+            // multimeterBtn.SetEnabled(true);
             SetButtonVisable(multimeterBtn, true);
         };
 
