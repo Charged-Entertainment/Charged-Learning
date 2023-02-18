@@ -20,6 +20,10 @@ public class ResistanceMode : MultimeterMode
 
     protected override void HandleSimulationDone(IBiasingSimulation simulation)
     {
-        throw new System.NotImplementedException();
+        if (!multimeter.InCircuit) return;
+        var currentExport = new RealCurrentExport(simulation, multimeter.GetInstanceID().ToString());
+        //TODO: magic number set create a constant for it
+        multimeter.DisplayMessage($"{System.Math.Abs(1/currentExport.Value)}Ω");
+
     }
 }

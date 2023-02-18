@@ -97,18 +97,21 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
     private static HashSet<CircuitComponent> GetCircuitComponents()
     {
         var circuitComponents = new HashSet<CircuitComponent>();
-        bool multimeterConnected = false;
+        Multimeter multimeter = null;
         foreach (var terminal in finalCircuit)
         {
             circuitComponents.Add(terminal.Key.parent);
             if (terminal.Key.parent is Multimeter)
             {
-                Debug.Log("Multimeter is in circuit");
-                multimeterConnected = true;
+                multimeter = terminal.Key.parent as Multimeter;
+                var multimeterTerminal1 = circuitGraph[multimeter.Terminals[0]].First().Key;
+                var multimeterTerminal2 = circuitGraph[multimeter.Terminals[1]].First().Key;
+                if(multimeterTerminal1.parent == multimeterTerminal2.parent)
+                    multimeter.ConnectedComponent = (multimeterTerminal1.parent as LiveComponent);
+                Debug.Log($"Multimeter is in circuit: {multimeter}");
+                multimeter.InCircuit = true;
             }
         }
-        var multimeter = GameObject.FindObjectOfType<Multimeter>();
-        if (multimeter != null) multimeter.Connected = multimeterConnected;
 
         return circuitComponents;
     }
@@ -116,10 +119,11 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
     public static SpiceSharp.Circuit Collect()
     {
         CreateFinalCircuit();
-     
-        FindGroundWire();
 
         var circuitComponents = GetCircuitComponents();
+
+        FindGroundWire();
+
 
         var circuit = new SpiceSharp.Circuit();
 
@@ -162,6 +166,13 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
                 return pair.Value;
             }
         }
+        var multimeter = GameObject.FindObjectOfType<Multimeter>();
+        if(multimeter.InCircuit && multimeter.DeviceMode is ResistanceMode){
+            groundWire = finalCircuit[multimeter.Terminals[0]];
+            return groundWire;
+        }else
+            Debug.Log($"Multimeter.InCircuit:{multimeter.InCircuit}, deviceMode: {multimeter.DeviceMode}");
+        
         Debug.Log("No wire in the circuit can be considered as ground.");
         return null;
     }
