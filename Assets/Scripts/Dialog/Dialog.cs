@@ -9,6 +9,12 @@ namespace Dialogs
     public class Dialog : Singleton<Dialog>
     {
 
+        public static Action<DialogEntry> entryStarted;
+        public static Action<DialogEntry> entryEnded;
+
+        public static Action<DialogSequence> sequenceStarted;
+        public static Action<DialogSequence> sequenceEnded;
+
         private static VisualElement container;
 
         private static DialogSequence currentSequence;
@@ -40,6 +46,7 @@ namespace Dialogs
             container.SetEnabled(true);
             container.visible = true;
             currentSequence = seq;
+            sequenceStarted?.Invoke(seq);
             PlayNextEntry();
         }
 
@@ -48,6 +55,7 @@ namespace Dialogs
             Debug.Log("End of dialog reached.");
             container.SetEnabled(false);
             container.visible = false;
+            sequenceEnded?.Invoke(currentSequence);
             currentSequence = null;
         }
 

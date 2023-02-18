@@ -41,9 +41,17 @@ namespace Dialogs
 
         public void Next()
         {
+            Dialog.entryEnded?.Invoke(curr);
+            curr.ended?.Invoke();
+
             curr = curr.next;
             currentNumber++;
-            if (curr != null) Dialog.SetCurrent(curr);
+            if (curr != null)
+            {
+                Dialog.SetCurrent(curr);
+                Dialog.entryStarted?.Invoke(curr);
+                curr.started?.Invoke();
+            }
             else Dialog.End();
         }
     }
