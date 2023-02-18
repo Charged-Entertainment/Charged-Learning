@@ -27,9 +27,10 @@ public class VoltageMode : MultimeterMode
 
     protected override void HandleSimulationDone(IBiasingSimulation simulation)
     {
-        if (!multimeter.Connected) return;
+        if (!multimeter.InCircuit) return;
         Debug.Log("Voltage mode sim handler is called");
         var voltageExport = new RealVoltageExport(simulation, CircuitBuilder.GetNode(multimeter.Terminals[0]), CircuitBuilder.GetNode(multimeter.Terminals[1]));
         multimeter.DisplayMessage($"{voltageExport.Value}V");
+        multimeter.ConnectedComponent.levelComponent.RevealProperty(Components.PropertyType.Voltage);
     }
 }

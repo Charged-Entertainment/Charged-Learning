@@ -8,11 +8,11 @@ public class Multimeter : Device, CircuitComponent
     [SerializeField] private float testDisplayValue;
     [SerializeField] private Display display;
     [SerializeField] private bool turnedOn;
-    public bool Connected {get; set;}
+    public bool InCircuit { get; set; }
     [field: SerializeField] public Terminal[] Terminals { get; private set; }
 
-    public static Action created;
-    public static Action destroyed;
+    public static Action created, destroyed;
+    public LiveComponent ConnectedComponent { get; set; }
 
     private static string prefabName = "Multimeter Device";
 
@@ -77,15 +77,28 @@ public class Multimeter : Device, CircuitComponent
         }
         else if (DeviceMode is CurrentMode)
         {
+            return new SpiceSharp.Components.VoltageSource(
+            GetInstanceID().ToString(),
+            positiveWire,
+            negativeWire,
+            0
+            );
+
+        }
+        else if (DeviceMode is ResistanceMode)
+        {
+            {
                 return new SpiceSharp.Components.VoltageSource(
                 GetInstanceID().ToString(),
                 positiveWire,
                 negativeWire,
-                0
+                1
                 );
+            }
 
-        }else
-        throw new NotImplementedException("Set the multimeter to current or voltage modes for now");
+        }
+        else
+            throw new NotImplementedException("Set the multimeter to current or voltage modes for now");
     }
 
 

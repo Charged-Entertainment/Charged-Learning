@@ -19,7 +19,7 @@ public class OffMode : MultimeterMode
     }
     protected override void HandleSimulationDone(IBiasingSimulation simulation)
     {
-        if(!multimeter.Connected) return;
+        if(!multimeter.InCircuit) return;
         throw new System.NotImplementedException();
     }
 }
