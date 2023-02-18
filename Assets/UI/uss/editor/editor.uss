@@ -10,14 +10,19 @@
 }
 
 #components-bar {
-  background-color: #333;
   width: 511px;
+}
+
+#components-bar #level-components {
+  background-color: #333;
+  height: 100%;
+  transition: height 0.3s ease-out;
 }
 
 #components-bar #components-bar-header {
   -unity-font-style: bold;
   width: 100%;
-  height: 157px;
+  height: 180px;
   font-size: 46px;
   background-color: #1b1b1b;
   align-self: center;
@@ -29,16 +34,16 @@
   margin-right: 35px;
 }
 
-.up-arrow,
+.up-arrow {
+  align-self: center;
+  height: 30px;
+  width: 52.466px;
+  background-image: resource("up-arrow");
+}
 .down-arrow {
   align-self: center;
   height: 30px;
   width: 52.466px;
-}
-.up-arrow {
-  background-image: resource("up-arrow");
-}
-.down-arrow {
   background-image: resource("down-arrow");
 }
 
