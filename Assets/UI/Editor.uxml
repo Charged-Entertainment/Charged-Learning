@@ -9,6 +9,7 @@
     <Style src="uss/editor/tools.uss" />
     <Style src="uss/tooltip.uss" />
     <Style src="uss/dialog.uss" />
+    <Style src="uss/book.uss" />
 
     <Template src="Terminal.uxml" name="Terminal" />
 
