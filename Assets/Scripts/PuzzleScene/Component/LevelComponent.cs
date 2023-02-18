@@ -63,6 +63,11 @@ namespace Components
             created?.Invoke(this);
         }
 
+        public void AddProperty(PureProperty pureProperty){
+            Component.AddProperty(pureProperty);
+            Properties.Add(pureProperty.propertyType, new Property(pureProperty));
+        }
+
         // TODO: handle reveal event and qunatity change event
         private void HandleComponentCreated(LiveComponent comp)
         {

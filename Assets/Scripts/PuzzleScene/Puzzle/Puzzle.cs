@@ -23,7 +23,7 @@ public class Puzzle : Singleton<Puzzle>
     static public PureProperty AddProperty(LevelComponent c, PropertyType type, float value, int multiplier, string unit, bool isStatic)
     {
         var p = new PureProperty(type, value, multiplier, unit, isStatic);
-        c.Component.AddProperty(p);
+        c.AddProperty(p);
         return p;
     }
 }
