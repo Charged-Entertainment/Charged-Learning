@@ -37,8 +37,6 @@ public class Utils : MonoBehaviour
     public static bool IsMouseOverGameObject()
     {
         var colliders = Physics2D.RaycastAll(Utils.GetMouseWorldPosition(), Vector2.zero);
-        // print($"Mouse is over the following gameobjects [{colliders.Length}]: ");
-        foreach (var collider in colliders) print(collider.transform.gameObject);
         return colliders.Length != 0;
     }
 
@@ -50,7 +48,6 @@ public class Utils : MonoBehaviour
     public static Vector2 ScreenToPanelPosition(IPanel panel, Vector2 screenPosition){
         Vector2 mousePositionCorrected = new Vector2(screenPosition.x, Screen.height - screenPosition.y);
         mousePositionCorrected = RuntimePanelUtils.ScreenToPanel(panel, mousePositionCorrected);
-
         return mousePositionCorrected;
     }
 
