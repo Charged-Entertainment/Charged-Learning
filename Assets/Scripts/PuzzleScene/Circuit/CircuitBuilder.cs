@@ -8,12 +8,14 @@ using System.Linq;
 public class CircuitBuilder : Singleton<CircuitBuilder>
 {
     // Start is called before the first frame update
-    private static Dictionary<Terminal, Wire> terminalToWire;
+    private static Dictionary<Terminal, Wire> finalCircuit;
+    private static Dictionary<Terminal, Dictionary<Terminal, Wire>> circuitGraph;
     private static Wire groundWire;
     protected new void Awake()
     {
         base.Awake();
-        terminalToWire = new Dictionary<Terminal, Wire>();
+        finalCircuit = new Dictionary<Terminal, Wire>();
+        circuitGraph = new Dictionary<Terminal, Dictionary<Terminal, Wire>>();
         Wire.created += HandleWireCreated;
         Wire.destroyed += HandleWireDestroyed;
     }
@@ -21,12 +23,14 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
     private void HandleWireDestroyed(Wire wire)
     {
         Debug.Log("Wire destroyed");
-        List<Terminal> ts = new List<Terminal>();
-        foreach (var t in terminalToWire) ts.Add(t.Key);
 
-        //BUG: Doesn't delete parallel wires, because they are added to the dictionary as the common wire
-        // so "terminalToWire[item] == wire" is never true
-        foreach (var t in ts.Where((item) => terminalToWire.ContainsKey(item) && terminalToWire[item] == wire)) terminalToWire.Remove(t);
+        circuitGraph[wire.t1].Remove(wire.t2);
+        circuitGraph[wire.t2].Remove(wire.t1);
+
+        if(circuitGraph[wire.t1].Count == 0)
+            circuitGraph.Remove(wire.t1);
+        if(circuitGraph[wire.t2].Count == 0)
+            circuitGraph.Remove(wire.t2);
     }
 
     // Update is called once per frame
@@ -37,46 +41,82 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
 
     void HandleWireCreated(Wire wire)
     {
-        if (terminalToWire.ContainsKey(wire.t1) && terminalToWire.ContainsKey(wire.t2))
+        if (!circuitGraph.ContainsKey(wire.t1))
         {
-            Debug.Log("Both terminals are already in the dict");
-            return;
+            circuitGraph[wire.t1] = new Dictionary<Terminal, Wire>();
         }
+        circuitGraph[wire.t1].Add(wire.t2, wire);
 
-        if (terminalToWire.ContainsKey(wire.t1))
+
+        if (!circuitGraph.ContainsKey(wire.t2))
         {
-            terminalToWire.Add(wire.t2, terminalToWire[wire.t1]);
+            circuitGraph[wire.t2] = new Dictionary<Terminal, Wire>();
         }
-        else if (terminalToWire.ContainsKey(wire.t2))
-        {
-            terminalToWire.Add(wire.t1, terminalToWire[wire.t2]);
+        circuitGraph[wire.t2].Add(wire.t1, wire);
+    }
+
+    /// <summary>Performs a DFS traversal of the graph to create the final circuit represintation</summary>
+    private static void CreateFinalCircuit(){
+        finalCircuit.Clear();
+        var nodesVisited = new HashSet<Terminal>();
+        foreach(var node in circuitGraph){
+            TraverseNode(node.Key, nodesVisited);
         }
-        else
+            
+    }
+    private static void TraverseNode(Terminal startingNode, HashSet<Terminal> nodesVisited)
+    {
+        var stack = new Stack<Terminal>();
+        stack.Push(startingNode);
+        while(stack.Count > 0)
         {
-            terminalToWire.Add(wire.t1, wire);
-            terminalToWire.Add(wire.t2, wire);
+            var terminal = stack.Pop();
+            if(!nodesVisited.Contains(terminal)){
+                nodesVisited.Add(terminal);
+
+                foreach(var neighbor in circuitGraph[terminal]){
+                    if(finalCircuit.ContainsKey(terminal) && finalCircuit.ContainsKey(neighbor.Key)){
+                        Debug.Log("Both terminals are already in dict");
+                    }
+                    else if(finalCircuit.ContainsKey(terminal)){
+                        finalCircuit.Add(neighbor.Key, finalCircuit[terminal]);
+                    }else if(finalCircuit.ContainsKey(neighbor.Key)){
+                        //this case probably never happens
+                        Debug.Log("neighbor in finalCircuit");
+                        finalCircuit.Add(terminal, finalCircuit[neighbor.Key]);
+                    }else{
+                        finalCircuit.Add(terminal, neighbor.Value);
+                        finalCircuit.Add(neighbor.Key, neighbor.Value);
+                    }
+                    stack.Push(neighbor.Key);
+                }
+            }
         }
     }
 
-    private static HashSet<CircuitComponent> GetCircuitComponents(){
+    private static HashSet<CircuitComponent> GetCircuitComponents()
+    {
         var circuitComponents = new HashSet<CircuitComponent>();
         bool multimeterConnected = false;
-        foreach (var terminal in terminalToWire)
+        foreach (var terminal in finalCircuit)
         {
             circuitComponents.Add(terminal.Key.parent);
-            if(terminal.Key.parent is Multimeter){
+            if (terminal.Key.parent is Multimeter)
+            {
                 Debug.Log("Multimeter is in circuit");
                 multimeterConnected = true;
             }
         }
         var multimeter = GameObject.FindObjectOfType<Multimeter>();
-        if(multimeter!=null)multimeter.Connected = multimeterConnected;
+        if (multimeter != null) multimeter.Connected = multimeterConnected;
 
         return circuitComponents;
     }
 
     public static SpiceSharp.Circuit Collect()
     {
+        CreateFinalCircuit();
+     
         FindGroundWire();
 
         var circuitComponents = GetCircuitComponents();
@@ -86,19 +126,19 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
         foreach (var circuitComponent in circuitComponents)
         {
             var entity = circuitComponent.GetSpiceComponent(
-                GetWireName(terminalToWire[circuitComponent.Terminals[0]]),
-                GetWireName(terminalToWire[circuitComponent.Terminals[1]])
+                GetWireName(finalCircuit[circuitComponent.Terminals[0]]),
+                GetWireName(finalCircuit[circuitComponent.Terminals[1]])
                 );
 
             circuit.Add(entity);
         }
-        
+
         return circuit;
     }
 
     public static string GetNode(Terminal t)
     {
-        if (terminalToWire.ContainsKey(t)) return GetWireName(terminalToWire[t]);
+        if (finalCircuit.ContainsKey(t)) return GetWireName(finalCircuit[t]);
         else return null;
     }
 
@@ -112,7 +152,7 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
     {
         if (groundWire != null) return groundWire;
 
-        foreach (var pair in terminalToWire)
+        foreach (var pair in finalCircuit)
         {
             // TODO: find a way to make this more generic since more than 1 battery can be in the scene.
             var component = pair.Key.parent as LiveComponent;
