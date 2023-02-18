@@ -26,6 +26,10 @@ namespace Dialogs
             for (int i = 1; i < list.Count; i++) Add(list[i]);
         }
 
+        public void Play() {
+            Dialog.PlaySequence(this);
+        }
+
         public DialogSequence(DialogEntry dialog)
         {
             Add(dialog);

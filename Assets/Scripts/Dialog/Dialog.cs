@@ -28,16 +28,28 @@ namespace Dialogs
             container = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement.Q("dialog");
             image = container.Q<Image>();
             textContent = container.Q<Label>();
-
-            image.RegisterCallback<ClickEvent>(e=> PlayNextEntry());
-            textContent.RegisterCallback<ClickEvent>(e=> PlayNextEntry());
+            RegisterCallbacks();
         }
 
-        private static void SetImageSprite(Sprite sprite) {
+        static private void RegisterCallbacks()
+        {
+            image.RegisterCallback<ClickEvent>(Continue);
+            textContent.RegisterCallback<ClickEvent>(Continue);
+        }
+
+        static private void UnregisterCallbacks()
+        {
+            image.UnregisterCallback<ClickEvent>(Continue);
+            textContent.UnregisterCallback<ClickEvent>(Continue);
+        }
+
+        private static void SetImageSprite(Sprite sprite)
+        {
             image.style.backgroundImage = new StyleBackground(sprite);
         }
 
-        private static void SetText(string text) {
+        private static void SetText(string text)
+        {
             textContent.text = text;
         }
 
@@ -47,7 +59,7 @@ namespace Dialogs
             container.visible = true;
             currentSequence = seq;
             sequenceStarted?.Invoke(seq);
-            PlayNextEntry();
+            Continue();
         }
 
         public static void End()
@@ -59,11 +71,21 @@ namespace Dialogs
             currentSequence = null;
         }
 
-        private static void PlayNextEntry() {
+        private static bool paused;
+        public static void Pause()
+        {
+            paused = true;
+            UnregisterCallbacks();
+        }
+
+        public static void Continue(ClickEvent e = null)
+        {
+            if (paused) { RegisterCallbacks(); paused = false; }
             currentSequence.Next();
         }
 
-        public static void SetCurrent(DialogEntry dialogEntry) {
+        public static void SetCurrent(DialogEntry dialogEntry)
+        {
             SetImageSprite(dialogEntry);
             SetText(dialogEntry);
         }

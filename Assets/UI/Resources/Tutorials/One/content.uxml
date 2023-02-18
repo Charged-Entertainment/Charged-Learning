@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <Style src="./style.uss" />
+    <ui:VisualElement name="tutorial1">
+        <ui:Image name="arrow0" class="disabled"/>
+        <ui:Image name="arrow1" class="disabled"/>
+        <ui:Image name="arrow2" class="disabled"/>
+        <ui:Image name="arrow3" class="disabled"/>
+        <ui:Image name="arrow4" class="disabled"/>
+        <ui:Image name="arrow5" class="disabled"/>
+    </ui:VisualElement>
+</ui:UXML>

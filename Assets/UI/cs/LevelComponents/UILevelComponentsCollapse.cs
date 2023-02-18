@@ -27,7 +27,7 @@ public class UILevelComponentsCollapse : MonoBehaviour
         originalHeight = container.style.height;
     }
 
-    private void ToggleCollapse(ClickEvent ev)
+    public void ToggleCollapse(ClickEvent ev)
     {
         isCollapsed = !isCollapsed;
         image.EnableInClassList(up, !isCollapsed);

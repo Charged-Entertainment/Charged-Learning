@@ -4,7 +4,8 @@ using UnityEngine;
 using Dialogs;
 
 // This class is used to test Dialogs for now. Later it may be deleted, or it'll actually be used to manage and load dialogs.
-public class DialogLoader : Singleton<DialogLoader>
+public class DialogLoader
+// public class DialogLoader : Singleton<DialogLoader>
 {
     private void Start() {
         List<DialogEntry> seq1Entries = new List<DialogEntry>();
