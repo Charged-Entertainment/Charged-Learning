@@ -14,30 +14,29 @@ public class Knob : MonoBehaviour
         numberOfModes = 20;
         degreePerMode = 360 / numberOfModes;
     }
-    private void Update()
-    {
-    }
 
     ///<summary>Calculates the angle that the knob should be rotated at 
     ///when the mouse is dragging it.
     ///</summary>
     private void OnMouseDrag()
     {
-        var diff = Utils.GetMouseWorldPosition() - transform.position;
-        diff.Normalize();
-        float rotationZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        var newAngle = Mathf.RoundToInt(rotationZ / degreePerMode) * degreePerMode;
-        if (newAngle < 0) newAngle += 360;
-        CheckAngleChange(newAngle);
-        currentRotationAngle = newAngle;
-        transform.localRotation = Quaternion.Euler(0, 0, currentRotationAngle);
+        if (isActiveAndEnabled)
+        {
+            var diff = Utils.GetMouseWorldPosition() - transform.position;
+            diff.Normalize();
+            float rotationZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            var newAngle = Mathf.RoundToInt(rotationZ / degreePerMode) * degreePerMode;
+            if (newAngle < 0) newAngle += 360;
+            CheckAngleChange(newAngle);
+            currentRotationAngle = newAngle;
+            transform.localRotation = Quaternion.Euler(0, 0, currentRotationAngle);
+        }
     }
 
     private void CheckAngleChange(int newAngle)
     {
         if (newAngle == currentRotationAngle) return;
         multiMeter.ChangeMode(GetAngleMode(newAngle));
-
     }
 
     ///<summary>Takes an angle and return the appropriate mode for it.</summary>
@@ -61,9 +60,5 @@ public class Knob : MonoBehaviour
         var knob = GameObject.Find("multimeter-knob");
         if (knob != null) knob.GetComponent<Knob>().enabled = enabled;
         else Debug.Log("multimeter-knob doesn't exist");
-    }
-
-    private void OnMouseDown()
-    {
     }
 }

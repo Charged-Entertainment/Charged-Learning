@@ -10,14 +10,12 @@ public abstract class MultimeterMode : DeviceMode
     public virtual void OnEnter(Device device)
     {
         multimeter = (Multimeter)device;
-        Debug.Log($"Entered ({this.GetType().Name}) Mode");
         //Subscribe to simulation results
         SimulationManager.simulationDone += HandleSimulationDone;
     }
 
     public virtual void OnExit()
     {
-        Debug.Log("Exited from ({this.GetType().Name}) Mode");
         //Unsubscribe from simulation results
         SimulationManager.simulationDone -= HandleSimulationDone;
 

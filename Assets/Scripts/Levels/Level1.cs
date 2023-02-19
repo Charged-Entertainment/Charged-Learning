@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,46 +37,42 @@ public class Level1 : MonoBehaviour
     UILevelComponent UIBattery, UIResistor;
     #endregion
 
-    private void Awake()
+    #region  init
+
+    private void DisableAllSystems()
     {
-        document = GameObject.Find("UIDocument").GetComponent<UIDocument>();
-        root = document.rootVisualElement;
+        // controlsSection.visible = false;
+        circuitBreakerBtn.visible = false;
+        hintBtn.visible = false;
+        resetBtn.visible = false;
 
-        controlsSection = root.Q("controls-section");
-        circuitBreakerBtn = controlsSection.Q<Button>("circuit-breaker");
-        hintBtn = controlsSection.Q<Button>("hint-btn");
-        resetBtn = controlsSection.Q<Button>("reset-btn");
-        pauseBtn = controlsSection.Q<Button>("pause-btn");
+        gameModeIndicator.visible = false;
 
-        gameModeIndicator = root.Q<Image>("gamemode-indicator");
+        SetEnabled(editorControls.Q("book-btn"), false);
+        SetEnabled(editorControls.Q("normal-btn"), false);
+        SetEnabled(editorControls.Q("zoom-in-btn"), false);
+        SetEnabled(editorControls.Q("zoom-out-btn"), false);
+        SetEnabled(editorControls.Q("wiring-btn"), false);
+        SetEnabled(editorControls.Q("pan-btn"), false);
 
-        dialog = root.Q("dialog");
+        SetEnabled(tools.Q("devices"), false);
+        SetEnabled(tools.Q("terminal-btn"), false);
 
-        editorControls = root.Q("editor-controls");
 
-        tools = root.Q("tools");
+        submitBtn.visible = false;
 
-        submitBtn = root.Q<Button>("submit-btn");
+        document.gameObject.GetComponent<UILevelComponentsCollapse>().ToggleCollapse(null);
 
-        componentsBar = root.Q("components-bar");
+        componentsBar.Q("components-bar-header").SetEnabled(false);
+        componentsBar.Q("level-components").SetEnabled(false);
 
-        VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("Tutorials/One/content");
-        StyleSheet styleSheet = Resources.Load<StyleSheet>("Tutorials/One/style");
-        visualElement = uxml.Instantiate().Q("tutorial1");
-        root.styleSheets.Add(styleSheet);
-        root.Add(visualElement);
+        Camera.Disable();
+        Clipboard.Disable();
+        FeebackTerminal.Disable();
+        GameManager.Disable();
+        Selection.Disable();
+        WireManager.Disable();
     }
-
-    private void SetArrowEnabled(Image arrow, bool enabled)
-    {
-        if (enabled) arrow.RemoveFromClassList("disabled");
-        else arrow.AddToClassList("disabled");
-        if (enabled)
-            foreach (var otherArrow in arrows)
-                if (otherArrow != arrow)
-                    SetArrowEnabled(otherArrow, false);
-    }
-
     private void Start()
     {
         InitializeAssets();
@@ -120,47 +117,48 @@ public class Level1 : MonoBehaviour
             UILevelComponent.created -= InitResisorUI;
         }
     }
+    private void Awake()
+    {
+        document = GameObject.Find("UIDocument").GetComponent<UIDocument>();
+        root = document.rootVisualElement;
 
-    private void SetEnabledVisable(VisualElement v, bool enabled, bool? visible = null)
+        controlsSection = root.Q("controls-section");
+        circuitBreakerBtn = controlsSection.Q<Button>("circuit-breaker");
+        hintBtn = controlsSection.Q<Button>("hint-btn");
+        resetBtn = controlsSection.Q<Button>("reset-btn");
+        pauseBtn = controlsSection.Q<Button>("pause-btn");
+
+        gameModeIndicator = root.Q<Image>("gamemode-indicator");
+
+        dialog = root.Q("dialog");
+
+        editorControls = root.Q("editor-controls");
+
+        tools = root.Q("tools");
+
+        submitBtn = root.Q<Button>("submit-btn");
+
+        componentsBar = root.Q("components-bar");
+
+        VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("Tutorials/One/content");
+        StyleSheet styleSheet = Resources.Load<StyleSheet>("Tutorials/One/style");
+        visualElement = uxml.Instantiate().Q("tutorial1");
+        root.styleSheets.Add(styleSheet);
+        root.Add(visualElement);
+    }
+    #endregion
+
+    private void ShowImage(Image image, DialogEntry entry)
+    {
+        image.RemoveFromClassList("disabled");
+        entry.ended += () => image.AddToClassList("disabled");
+    }
+
+    private void SetEnabled(VisualElement v, bool enabled, bool? visible = null)
     {
         if (visible == null) visible = enabled;
         v.SetEnabled(enabled);
         v.visible = visible.Value;
-    }
-
-    private void DisableAllSystems()
-    {
-        // controlsSection.visible = false;
-        circuitBreakerBtn.visible = false;
-        hintBtn.visible = false;
-        resetBtn.visible = false;
-
-        gameModeIndicator.visible = false;
-
-        SetEnabledVisable(editorControls.Q("book-btn"), false);
-        SetEnabledVisable(editorControls.Q("normal-btn"), false);
-        SetEnabledVisable(editorControls.Q("zoom-in-btn"), false);
-        SetEnabledVisable(editorControls.Q("zoom-out-btn"), false);
-        SetEnabledVisable(editorControls.Q("wiring-btn"), false);
-        SetEnabledVisable(editorControls.Q("pan-btn"), false);
-
-        SetEnabledVisable(tools.Q("devices"), false);
-        SetEnabledVisable(tools.Q("terminal-btn"), false);
-
-
-        submitBtn.visible = false;
-
-        document.gameObject.GetComponent<UILevelComponentsCollapse>().ToggleCollapse(null);
-
-        componentsBar.Q("components-bar-header").SetEnabled(false);
-        componentsBar.Q("level-components").SetEnabled(false);
-
-        Camera.Disable();
-        Clipboard.Disable();
-        FeebackTerminal.Disable();
-        GameManager.Disable();
-        Selection.Disable();
-        WireManager.Disable();
     }
 
     private List<DialogEntry> entries;
@@ -185,16 +183,11 @@ public class Level1 : MonoBehaviour
         AddEntry("First Lets discover the components we have. Click Here.");
         lastEntry.started += () =>
         {
-            UIBattery.visualElement.SetEnabled(false);
-            componentsBar.Q("components-bar-header").SetEnabled(true);
-            SetArrowEnabled(arrows[0], true);
             Dialog.Pause();
             ContinueOnClick(componentsBar.Q("components-bar-header"));
-        };
-        lastEntry.ended += () =>
-        {
-            SetArrowEnabled(arrows[0], false);
-            UnregisterContinue(componentsBar.Q("components-bar-header"));
+            UIBattery.visualElement.SetEnabled(false);
+            componentsBar.Q("components-bar-header").SetEnabled(true);
+            ShowImage(arrows[0], entries[2]);
         };
 
         // 3
@@ -204,8 +197,8 @@ public class Level1 : MonoBehaviour
         AddEntry("Battery Page Unlocked. A battery is a device that stores electric power in the form of chemical energy. When necessary, the energy is again released as electric power.");
         lastEntry.started += () =>
         {
-            SetArrowEnabled(arrows[2], true);
-            SetEnabledVisable(editorControls.Q("book-btn"), true);
+            ShowImage(arrows[2], entries[4]);
+            SetEnabled(editorControls.Q("book-btn"), true);
         };
         lastEntry.ended += Book.ShowEmpty;
 
@@ -217,28 +210,26 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             UIBattery.visualElement.SetEnabled(true);
-            SetArrowEnabled(arrows[1], true);
+            ShowImage(arrows[1], entries[6]);
             Dialog.Pause();
             ContinueOnClick(UIBattery.visualElement);
         };
-        lastEntry.ended += () => UnregisterContinue(UIBattery.visualElement);
 
         // 7
         AddEntry("Did you know!! YOU can move through as you like through the grid either using the tools up there or the shortcut for each tool");
         lastEntry.started += () =>
         {
-            SetArrowEnabled(arrows[3], true);
+            ShowImage(arrows[3], entries[7]);
 
-            SetEnabledVisable(editorControls.Q("normal-btn"), true);
-            SetEnabledVisable(editorControls.Q("zoom-in-btn"), true);
-            SetEnabledVisable(editorControls.Q("zoom-out-btn"), true);
-            SetEnabledVisable(editorControls.Q("pan-btn"), true);
+            SetEnabled(editorControls.Q("normal-btn"), true);
+            SetEnabled(editorControls.Q("zoom-in-btn"), true);
+            SetEnabled(editorControls.Q("zoom-out-btn"), true);
+            SetEnabled(editorControls.Q("pan-btn"), true);
 
             GameManager.Enable();
             Selection.Enable();
             Camera.Enable();
         };
-        lastEntry.ended += () => SetArrowEnabled(arrows[3], false);
 
         // 8
         AddEntry("As we mentioned, the Battery is a DC power source. But we don't know how much energy it gives us. This energy is called Voltage which has it’s own measuring unit Volts");
@@ -248,43 +239,42 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            SetArrowEnabled(arrows[4], true);
-            SetEnabledVisable(tools.Q("devices"), true);
             ContinueOnClick(tools.Q("devices-btn"));
+            ShowImage(arrows[4], entries[9]);
+            SetEnabled(tools.Q("devices"), true);
         };
-        lastEntry.ended += () => UnregisterContinue(tools.Q("devices-btn"));
 
         // 10 
         AddEntry("Now spawn the multi-meter in the editor by clicking on its icon.");
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            SetArrowEnabled(arrows[5], true);
+            ShowImage(arrows[5], entries[10]);
             ContinueOnClick(tools.Q("multimeter-btn"));
         };
-        lastEntry.ended += () => UnregisterContinue(tools.Q("multimeter-btn"));
 
         // 11 
-
-        System.Action<LevelComponent> HandlePropertyRevealed = (component =>
-            {
-                    Dialog.Continue();
-            });
-
-        AddEntry(RichText.Bold(RichText.Color("Okay the multi-meter is now in the editor. Connect its probe to the battery and set its mode to voltage then measure the battery", PaletteColor.Red)));
+        AddEntry("Okay the multi-meter is now in the editor. We want to measure the battery's voltage, so set the multi-meter to voltage mode.");
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            SetArrowEnabled(arrows[5], false);
-            SetEnabledVisable(editorControls.Q("wiring-btn"), true);
-            WireManager.Enable();
-            SetEnabledVisable(submitBtn, true);
-            LevelComponent.propertyRevealed += HandlePropertyRevealed;
+            Handle<MultimeterMode>(ref Multimeter.modeChanged, m =>
+            {
+                Debug.Log("here");
+                if (m is VoltageMode)
+                {
+                    Knob.SetEnabled(false);
+                    Dialog.Continue();
+                    return true;
+                }
+                return false;
+            }, (handler) => Multimeter.modeChanged -= handler);
         };
 
-        lastEntry.ended += () => LevelComponent.propertyRevealed -= HandlePropertyRevealed;
 
-        AddEntry("hello");
+
+        // 12
+        AddEntry("Okay now click on the wire icon to go into wire mode. You can also press 'w' on your keyboard if you're a shortcut person.");
 
 
         // WiP...
@@ -293,14 +283,26 @@ public class Level1 : MonoBehaviour
         Dialog.PlaySequence(seq1);
     }
 
-    public void ContinueOnClick(VisualElement v)
+    /// <summary>
+    /// Subscribe to an action with a handler.
+    /// If your handler returns true, it'll call your 'clean' handler.
+    /// Otherwise, it'll continue its subscription.
+    /// </summary>
+    void Handle<T>(ref Action<T> action, Func<T, bool> handle, Action<Action<T>> clean)
     {
-        v.RegisterCallback<ClickEvent>(Dialog.Continue);
+        Action<T> _handler = null;
+        _handler = c => { if (handle(c)) clean(_handler); };
+        action += _handler;
     }
 
-    public void UnregisterContinue(VisualElement v)
+    void ContinueOnClick(VisualElement v)
     {
-        v.UnregisterCallback<ClickEvent>(Dialog.Continue);
+        EventCallback<ClickEvent> doOnce = null;
+        doOnce = ev =>
+        {
+            Dialog.Continue();
+            v.UnregisterCallback<ClickEvent>(doOnce);
+        };
+        v.RegisterCallback<ClickEvent>(doOnce);
     }
-
 }
