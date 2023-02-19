@@ -106,7 +106,7 @@ public class Level1 : MonoBehaviour
     private void CreateResistor()
     {
         UILevelComponent.created += InitResisorUI;
-        resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Battery, 1);
+        resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Resistor, 1);
         Puzzle.AddProperty(resistor, PropertyType.Resistance, 5, 1, "ohm", true);
     }
     private void InitResisorUI(UILevelComponent c)
