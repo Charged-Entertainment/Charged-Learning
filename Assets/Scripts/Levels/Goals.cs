@@ -24,18 +24,36 @@ public class ComponentMeasured : Goal
 
 public class CircuitSubmit : Goal
 {
-    CircuitSubmit(string message) : base(message)
+    private LevelComponent battery;
+    private LevelComponent resistor;
+    public CircuitSubmit(string message, LevelComponent battery, LevelComponent resistor) : base(message)
     {
-        GameManagement.GameMode.changed += HandleModeChanged;
+        SimulationManager.simulationDone += HandleModeChanged;
+        this.battery = battery;
+        this.resistor = resistor;
     }
 
-    private void HandleModeChanged(State state)
+    private void HandleModeChanged(SpiceSharp.Simulations.IBiasingSimulation simulation)
     {
-        if(state is GameManagement.Evaluate){
+        if (GameManagement.GameMode.Current is GameManagement.Evaluate)
+        {
             Debug.Log("goal: game mode is evaluate");
-            // CircuitBuilder.GetCircuitComponents();
-            Achieved = true;
-            Puzzle.goalAchieved?.Invoke(this);
+            var circuitComponents = CircuitBuilder.GetCircuitComponents();
+            var circuitLevelComponent = new HashSet<LevelComponent>();
+            foreach (var component in circuitComponents)
+            {
+                var liveComponent = (component as LiveComponent);
+                if (liveComponent != null)
+                {
+                    circuitLevelComponent.Add(liveComponent.levelComponent);
+                }
+            }
+
+            if (circuitLevelComponent.Contains(battery) && circuitLevelComponent.Contains(resistor))
+            {
+                Achieved = true;
+                Puzzle.goalAchieved?.Invoke(this);
+            }
 
         }
     }

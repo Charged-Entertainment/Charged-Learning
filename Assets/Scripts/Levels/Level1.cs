@@ -39,15 +39,6 @@ public class Level1 : MonoBehaviour
 
     #region  init
 
-    private void CreateGoals(){
-        var goals = new List<Goal>(){
-            new ComponentMeasured("Measure the battery", battery),
-            new ComponentMeasured("Measure the resistor", resistor)
-        };
-        Puzzle.AddGoals(goals);
-        Debug.Log("goals added");
-    }
-
     private void DisableAllSystems()
     {
         // controlsSection.visible = false;
@@ -86,7 +77,6 @@ public class Level1 : MonoBehaviour
     {
         InitializeAssets();
         DisableAllSystems();
-        CreateGoals();
         PlayDialogSequence1();
     }
 
@@ -103,6 +93,8 @@ public class Level1 : MonoBehaviour
         UILevelComponent.created += InitBatteryUI;
         battery = Puzzle.CreateLevelComponent("battery", ComponentType.Battery, 1);
         Puzzle.AddProperty(battery, PropertyType.Voltage, 12, 1, "v", true);
+        Puzzle.AddGoal(new ComponentMeasured("Measure the battery", battery));
+
     }
     private void InitBatteryUI(UILevelComponent c)
     {
@@ -118,6 +110,8 @@ public class Level1 : MonoBehaviour
         UILevelComponent.created += InitResisorUI;
         resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Resistor, 1);
         Puzzle.AddProperty(resistor, PropertyType.Resistance, 5, 1, "ohm", true);
+        Puzzle.AddGoal(new ComponentMeasured("Measure the resistor", resistor));
+
     }
     private void InitResisorUI(UILevelComponent c)
     {
@@ -337,7 +331,7 @@ public class Level1 : MonoBehaviour
             Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {
                         ComponentMeasured compMeasuredGoal = (goal as ComponentMeasured);
-                        if (compMeasuredGoal != null && compMeasuredGoal.levelComponent == battery )
+                        if (compMeasuredGoal != null && compMeasuredGoal.levelComponent == battery)
                         {
                             Dialog.Continue();
                             return true;
@@ -372,6 +366,7 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             SetEnabled(tools.Q("terminal-btn"), true);
+            Puzzle.AddGoal(new CircuitSubmit("Connect the resistor and the battery in a circuit then submit", battery, resistor));
             FeebackTerminal.Enable();
             Knob.SetEnabled(true);
         };
@@ -384,36 +379,13 @@ public class Level1 : MonoBehaviour
         // }, handler => LevelComponent.propertyRevealed -= handler);
 
         // temp
-        bool connected1 = false, connected2 = false;
-        var handler1 = Handle<Terminal, Terminal>(ref Terminal.connected, (t1, t2) =>
-            {
-                string s = t1.gameObject.name + " " + t2.gameObject.name;
 
-                if (s.Contains("multimeter-wire-red-terminal") && s.Contains("left_terminal"))
-                    connected1 = true;
 
-                if (s.Contains("multimeter-wire-black-terminal") && s.Contains("right_terminal"))
-                    connected2 = true;
-
-                return false;
-            }, (h) => { });
-
-            var handler2 = Handle<Terminal, Terminal>(ref Terminal.disconnected, (t1, t2) =>
-            {
-                string s = t1.gameObject.name + " " + t2.gameObject.name;
-
-                if (s.Contains("multimeter-wire-red-terminal") || s.Contains("left_terminal"))
-                    connected1 = false;
-
-                if (s.Contains("multimeter-wire-black-terminal") || s.Contains("right_terminal"))
-                    connected2 = false;
-
-                return false;
-            }, (h) => { });
-
-        Handle<GameModes>(ref GameMode.changed, m =>
+        Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {
-                        if (connected1 && connected2 && m == GameModes.Live)
+                        ComponentMeasured compMeasuredGoal = (goal as ComponentMeasured);
+
+                        if (compMeasuredGoal != null && compMeasuredGoal.levelComponent == resistor)
                         {
                             PlayDialogSequence2();
                             return true;
@@ -421,9 +393,7 @@ public class Level1 : MonoBehaviour
                         return false;
                     }, (handler) =>
                     {
-                        Terminal.connected -= handler1;
-                        Terminal.disconnected -= handler2;
-                        GameMode.changed -= handler;
+                        Puzzle.goalAchieved -= handler;
                     });
         var seq = new DialogSequence(entries);
         Dialog.PlaySequence(seq);
@@ -436,10 +406,28 @@ public class Level1 : MonoBehaviour
 
         AddEntry("init");
         AddEntry("Greate job!! Now onto out final goal of the day.");
-        AddEntry("Connect the resistor to the battery!");
-        AddEntry("Blah blah 3");
-        AddEntry("Blah blah 4");
-        AddEntry("Blah blah 5");
+        AddEntry("Connect the resistor to the battery and press the submit button to evaluate the circuit.");
+        lastEntry.started += () =>
+        {
+            SetEnabled(submitBtn, true);
+            Dialog.Pause();
+            Multimeter.Destroy();
+
+            Handle<Goal>(ref Puzzle.goalAchieved, goal =>
+                    {
+                        CircuitSubmit circuitSubmitGoal = (goal as CircuitSubmit);
+                        if (circuitSubmitGoal != null)
+                        {
+                            Dialog.Continue();
+                            return true;
+                        }
+                        return false;
+                    }, (handler) => Puzzle.goalAchieved -= handler);
+
+        };
+
+        AddEntry("Good Job!!!");
+        AddEntry("You have built your first circuit!!!");
 
         var seq = new DialogSequence(entries);
         Dialog.PlaySequence(seq);
