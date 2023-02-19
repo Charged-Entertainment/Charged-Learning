@@ -37,7 +37,7 @@ public class Knob : MonoBehaviour
     }
     
     ///<summary>Takes an angle and return the appropriate mode for it.</summary>
-    private DeviceMode GetAngleMode(int angle){
+    private MultimeterMode GetAngleMode(int angle){
         if(angle==0)
             return new OffMode();
         if(angle is > 0 and <= 18*5)

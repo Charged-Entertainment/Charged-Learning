@@ -12,6 +12,7 @@ public class Multimeter : Device, CircuitComponent
     [field: SerializeField] public Terminal[] Terminals { get; private set; }
 
     public static Action created, destroyed;
+    public static Action<MultimeterMode> modeChanged;
     public LiveComponent ConnectedComponent { get; set; }
 
     private static string prefabName = "Multimeter Device";
@@ -41,7 +42,7 @@ public class Multimeter : Device, CircuitComponent
         DeviceMode.OnExit();
         newMode.OnEnter(this);
         DeviceMode = newMode;
-
+        modeChanged?.Invoke((MultimeterMode)newMode);
     }
     private void Update()
     {
