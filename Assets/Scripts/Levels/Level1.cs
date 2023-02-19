@@ -146,7 +146,7 @@ public class Level1 : MonoBehaviour
 
         SetEnabledVisable(tools.Q("devices"), false);
         SetEnabledVisable(tools.Q("terminal-btn"), false);
-        
+
 
         submitBtn.visible = false;
 
@@ -265,12 +265,27 @@ public class Level1 : MonoBehaviour
         lastEntry.ended += () => UnregisterContinue(tools.Q("multimeter-btn"));
 
         // 11 
-        AddEntry(RichText.Bold(RichText.Color("Okay the multi-meter is now in the editor. Get someone else to connect it because I'm done.", PaletteColor.Red)));
-        lastEntry.started += () => {
+
+        System.Action<LevelComponent> HandlePropertyRevealed = (component =>
+            {
+                    Dialog.Continue();
+            });
+
+        AddEntry(RichText.Bold(RichText.Color("Okay the multi-meter is now in the editor. Connect its probe to the battery and set its mode to voltage then measure the battery", PaletteColor.Red)));
+        lastEntry.started += () =>
+        {
+            Dialog.Pause();
             SetArrowEnabled(arrows[5], false);
-            SetEnabledVisable(editorControls.Q("wire-btn"), true);
+            SetEnabledVisable(editorControls.Q("wiring-btn"), true);
             WireManager.Enable();
+            SetEnabledVisable(submitBtn, true);
+            LevelComponent.propertyRevealed += HandlePropertyRevealed;
         };
+
+        lastEntry.ended += () => LevelComponent.propertyRevealed -= HandlePropertyRevealed;
+
+        AddEntry("hello");
+
 
         // WiP...
 
