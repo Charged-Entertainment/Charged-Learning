@@ -31,6 +31,7 @@ public class Cursor : Singleton<Cursor>
     static void HandleMouseDown(EditorBehaviour c)
     {
         lastSeenCursorBeforeDrag = currentCursor;
+        if(InteractionMode.Current is not GameManagement.Normal) return;
         ChangeCursor(dragCursor);
     }
 
