@@ -39,6 +39,15 @@ public class Level1 : MonoBehaviour
 
     #region  init
 
+    private void CreateGoals(){
+        var goals = new List<Goal>(){
+            new ComponentMeasured("Measure the battery", battery),
+            new ComponentMeasured("Measure the resistor", resistor)
+        };
+        Puzzle.AddGoals(goals);
+        Debug.Log("goals added");
+    }
+
     private void DisableAllSystems()
     {
         // controlsSection.visible = false;
@@ -77,6 +86,7 @@ public class Level1 : MonoBehaviour
     {
         InitializeAssets();
         DisableAllSystems();
+        CreateGoals();
         PlayDialogSequence1();
     }
 
@@ -324,15 +334,16 @@ public class Level1 : MonoBehaviour
             Dialog.Pause();
             SetEnabled(gameModeIndicator, true);
             SetEnabled(circuitBreakerBtn, true);
-            Handle<GameModes>(ref GameMode.changed, m =>
+            Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {
-                        if (m == GameModes.Live)
+                        ComponentMeasured compMeasuredGoal = (goal as ComponentMeasured);
+                        if (compMeasuredGoal != null && compMeasuredGoal.levelComponent == battery )
                         {
                             Dialog.Continue();
                             return true;
                         }
                         return false;
-                    }, (handler) => GameMode.changed -= handler);
+                    }, (handler) => Puzzle.goalAchieved -= handler);
         };
 
         // 17
