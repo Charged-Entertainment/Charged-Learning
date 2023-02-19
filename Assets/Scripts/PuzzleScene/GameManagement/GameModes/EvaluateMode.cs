@@ -9,7 +9,6 @@ namespace GameManagement
         public override void HandleNormal()
         {
             InteractionMode.ChangeTo(InteractionModes.Pan);
-            SimulationManager.Simulate();
         }
 
         public override void HandlePan()
