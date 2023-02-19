@@ -106,7 +106,7 @@ public class Level1 : MonoBehaviour
     private void CreateResistor()
     {
         UILevelComponent.created += InitResisorUI;
-        resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Battery, 5);
+        resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Battery, 1);
         Puzzle.AddProperty(resistor, PropertyType.Resistance, 5, 1, "ohm", true);
     }
     private void InitResisorUI(UILevelComponent c)
@@ -260,7 +260,6 @@ public class Level1 : MonoBehaviour
             Dialog.Pause();
             Handle<MultimeterMode>(ref Multimeter.modeChanged, m =>
             {
-                Debug.Log("here");
                 if (m is VoltageMode)
                 {
                     Knob.SetEnabled(false);
@@ -275,12 +274,164 @@ public class Level1 : MonoBehaviour
 
         // 12
         AddEntry("Okay now click on the wire icon to go into wire mode. You can also press 'w' on your keyboard if you're a shortcut person.");
+        lastEntry.started += () =>
+                {
+                    Dialog.Pause();
+                    SetEnabled(editorControls.Q("wiring-btn"), true);
+                    Handle<InteractionModes>(ref InteractionMode.changed, m =>
+                    {
+                        if (m == InteractionModes.Wire)
+                        {
+                            Dialog.Continue();
+                            return true;
+                        }
+                        return false;
+                    }, (handler) => InteractionMode.changed -= handler);
+                };
 
+        // 13
+        AddEntry("Now connect the multimeter's probes to the battery: the red probe to the battery's positve terminal, and the black one to its negative terminal.");
+        lastEntry.started += () =>
+        {
+            Dialog.Pause();
+            WireManager.Enable();
+            bool positiveConnected = false, negativeConnected = false;
+            Handle<Terminal, Terminal>(ref Terminal.connected, (t1, t2) =>
+            {
+                string s = t1.gameObject.name + " " + t2.gameObject.name;
 
-        // WiP...
+                if (s.Contains("multimeter-wire-red-terminal") && s.Contains("positive_terminal"))
+                    positiveConnected = true;
 
-        var seq1 = new DialogSequence(entries);
-        Dialog.PlaySequence(seq1);
+                if (s.Contains("multimeter-wire-black-terminal") && s.Contains("negative_terminal"))
+                    negativeConnected = true;
+
+                if (positiveConnected && negativeConnected) Dialog.Continue();
+                return positiveConnected && negativeConnected;
+            }, (handler) => Terminal.connected -= handler);
+        };
+
+        // 14
+        AddEntry("Great the voltage of the battery is... Why is the multimeter not working?");
+
+        // 15
+        AddEntry("Hmmm... Let's see...");
+
+        // 16
+        AddEntry("Oh! We forgot to flip the circuit breaker. Here's an indicator to help keep this from happening again in the future. Now flip the breaker. (Or press '2' on your keyboard).");
+        lastEntry.started += () =>
+        {
+            Dialog.Pause();
+            SetEnabled(gameModeIndicator, true);
+            SetEnabled(circuitBreakerBtn, true);
+            Handle<GameModes>(ref GameMode.changed, m =>
+                    {
+                        if (m == GameModes.Live)
+                        {
+                            Dialog.Continue();
+                            return true;
+                        }
+                        return false;
+                    }, (handler) => GameMode.changed -= handler);
+        };
+
+        // 17
+        AddEntry("Nice! The battery is 12 volts! This means that 12 jouls of energy are exerted for each coulomb of electrons flowing out of the battery. You can learn more about this in the book.");
+
+        // 18
+        AddEntry("Now, onto our second matter of the day: resistors! Resistors can be used to limit the flow of electrical current in a circuit. Their unit is 'Ohm'. Don't worry, you'll learn more about all of this very soon.");
+        lastEntry.started += () =>
+        {
+            CreateResistor();
+            SetEnabled(UIResistor.visualElement, false, true);
+        };
+        lastEntry.ended += Book.ShowEmpty;
+
+        // 19
+        AddEntry("Grab the resistor into the editor.");
+        lastEntry.started += () =>
+        {
+            Dialog.Pause();
+            ContinueOnClick(UIResistor.visualElement);
+            SetEnabled(UIResistor.visualElement, true);
+        };
+
+        // 20
+        AddEntry("Now we need to also determine the value of this resistor, but I've been helping you a lot, maybe you can try to do this next task by yourself. Here's a lovely feedback terminal to guide you through your journey.");
+        lastEntry.started += () =>
+        {
+            SetEnabled(tools.Q("terminal-btn"), true);
+            FeebackTerminal.Enable();
+            Knob.SetEnabled(true);
+        };
+
+        // not working for some reason
+        // Handle<LevelComponent>(ref LevelComponent.propertyRevealed, p =>
+        // {
+        //     if (p.Name == "resistor") PlayDialogSequence2();
+        //     return p.Name == "resistor";
+        // }, handler => LevelComponent.propertyRevealed -= handler);
+
+        // temp
+        bool connected1 = false, connected2 = false;
+        var handler1 = Handle<Terminal, Terminal>(ref Terminal.connected, (t1, t2) =>
+            {
+                string s = t1.gameObject.name + " " + t2.gameObject.name;
+
+                if (s.Contains("multimeter-wire-red-terminal") && s.Contains("left_terminal"))
+                    connected1 = true;
+
+                if (s.Contains("multimeter-wire-black-terminal") && s.Contains("right_terminal"))
+                    connected2 = true;
+
+                return false;
+            }, (h) => { });
+
+            var handler2 = Handle<Terminal, Terminal>(ref Terminal.disconnected, (t1, t2) =>
+            {
+                string s = t1.gameObject.name + " " + t2.gameObject.name;
+
+                if (s.Contains("multimeter-wire-red-terminal") || s.Contains("left_terminal"))
+                    connected1 = false;
+
+                if (s.Contains("multimeter-wire-black-terminal") || s.Contains("right_terminal"))
+                    connected2 = false;
+
+                return false;
+            }, (h) => { });
+
+        Handle<GameModes>(ref GameMode.changed, m =>
+                    {
+                        if (connected1 && connected2 && m == GameModes.Live)
+                        {
+                            PlayDialogSequence2();
+                            return true;
+                        }
+                        return false;
+                    }, (handler) =>
+                    {
+                        Terminal.connected -= handler1;
+                        Terminal.disconnected -= handler2;
+                        GameMode.changed -= handler;
+                    });
+        var seq = new DialogSequence(entries);
+        Dialog.PlaySequence(seq);
+    }
+
+    void PlayDialogSequence2()
+    {
+        entries = new List<DialogEntry>();
+        lastEntry = null;
+
+        AddEntry("init");
+        AddEntry("Greate job!! Now onto out final goal of the day.");
+        AddEntry("Connect the resistor to the battery!");
+        AddEntry("Blah blah 3");
+        AddEntry("Blah blah 4");
+        AddEntry("Blah blah 5");
+
+        var seq = new DialogSequence(entries);
+        Dialog.PlaySequence(seq);
     }
 
     /// <summary>
@@ -288,11 +439,20 @@ public class Level1 : MonoBehaviour
     /// If your handler returns true, it'll call your 'clean' handler.
     /// Otherwise, it'll continue its subscription.
     /// </summary>
-    void Handle<T>(ref Action<T> action, Func<T, bool> handle, Action<Action<T>> clean)
+    Action<T> Handle<T>(ref Action<T> action, Func<T, bool> handle, Action<Action<T>> clean)
     {
         Action<T> _handler = null;
         _handler = c => { if (handle(c)) clean(_handler); };
         action += _handler;
+        return _handler;
+    }
+
+    Action<T, T2> Handle<T, T2>(ref Action<T, T2> action, Func<T, T2, bool> handle, Action<Action<T, T2>> clean)
+    {
+        Action<T, T2> _handler = null;
+        _handler = (c, c2) => { if (handle(c, c2)) clean(_handler); };
+        action += _handler;
+        return _handler;
     }
 
     void ContinueOnClick(VisualElement v)

@@ -47,11 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8ca5dfafcedb0599e3c62de4cde000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  negativeProbe: {fileID: 0}
-  positiveProbe: {fileID: 0}
   testDisplayValue: 4.46
   display: {fileID: 0}
   turnedOn: 0
+  <Terminals>k__BackingField: []
 --- !u!1001 &1120346804211502529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,6 +105,10 @@ PrefabInstance:
     - target: {fileID: 4137343801367332334, guid: bef356bbde070727584d99c9019e602a, type: 3}
       propertyPath: m_Name
       value: multimeter-wire-red
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606560428107459775, guid: bef356bbde070727584d99c9019e602a, type: 3}
+      propertyPath: m_Name
+      value: multimeter-wire-red-terminal
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5967973247088881015, guid: bef356bbde070727584d99c9019e602a, type: 3}
@@ -227,6 +230,10 @@ PrefabInstance:
     - target: {fileID: 934400286232217542, guid: 7fc2c7b5618c690c1bcd1db7b5d08947, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670185628535099649, guid: 7fc2c7b5618c690c1bcd1db7b5d08947, type: 3}
+      propertyPath: m_Name
+      value: multimeter-wire-black-terminal
       objectReference: {fileID: 0}
     - target: {fileID: 7757906009920298507, guid: 7fc2c7b5618c690c1bcd1db7b5d08947, type: 3}
       propertyPath: m_Name
