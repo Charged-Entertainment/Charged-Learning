@@ -8,9 +8,9 @@ using Components;
 public class UILevelComponent : VisualElement
 {
     public static Action<UILevelComponent> created;
+    // public static float spriteScaleMultiplier = 1f;
 
     public VisualElement visualElement {get; private set;}
-    Label label;
     Image image;
     Label qty;
 
@@ -22,15 +22,15 @@ public class UILevelComponent : VisualElement
         VisualTreeAsset template = Resources.Load<VisualTreeAsset>("LevelComponent");
         visualElement = template.Instantiate();
 
-        label = visualElement.Q<Label>("name");
         image = visualElement.Q<Image>();
         qty = visualElement.Q<Label>("qty");
 
-        label.text = c.Name;
         qty.text = "x" + c.Quantity.Total.ToString();
 
         var sprite = Resources.Load<Sprite>(c.Name);
         image.style.backgroundImage = new StyleBackground(sprite);
+        image.style.height = sprite.rect.height; /* * spriteScaleMultiplier; */
+        image.style.width = sprite.rect.width; /* * spriteScaleMultiplier; */
 
         OnEnable();
     }
