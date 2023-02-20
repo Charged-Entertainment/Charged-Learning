@@ -40,23 +40,7 @@ public class SimulationManager : Singleton<SimulationManager>
 
     private static void HandleSimulationResults(object sender, SpiceSharp.Simulations.ExportDataEventArgs args)
     {
-        foreach (var c in GameObject.FindObjectsOfType<LiveComponent>())
-        {
-            double voltage = args.GetVoltage(CircuitBuilder.GetNode(c.Terminals[0]), CircuitBuilder.GetNode(c.Terminals[1]));
-            Debug.Log($"Voltage across {c.Terminals[0].name} and {c.Terminals[1].name} on {c.gameObject.name} ({c.GetInstanceID()}) is {voltage}V");
-        }
-
         simulationDone?.Invoke(simulation);
 
-        // var multimeter = GameObject.FindObjectOfType<Multimeter>();
-        // if(multimeter.DeviceMode is CurrentMode){
-        //     var currentPropertyExport = new SpiceSharp.Simulations.RealCurrentExport(simulation, multimeter.GetInstanceID().ToString());
-        //     Debug.Log($"Current across {multimeter.Terminals[0].name} and {multimeter.Terminals[1].name} on {multimeter.gameObject.name} ({multimeter.GetInstanceID()}) is {currentPropertyExport.Value}A");
-        // }
-        // double voltageMultimeter = args.GetVoltage(CircuitBuilder.GetNode(multimeter.Terminals[0]), CircuitBuilder.GetNode(multimeter.Terminals[1]));
-        
-        // Debug.Log($"Voltage across {multimeter.Terminals[0].name} and {multimeter.Terminals[1].name} on {multimeter.gameObject.name} ({multimeter.GetInstanceID()}) is {voltageMultimeter}V");
-
-        FeebackTerminal.Write(new Log($"Voltage on the ground '0' node {RichText.Color(args.GetVoltage("0").ToString(), PaletteColor.Green)}"));
     }
 }

@@ -63,6 +63,10 @@ public class RichText
     {
         return new RichText($"<b>{text}</b>");
     }
+
+    public static RichText StrikeThrough(RichText text){
+        return new RichText($"<s>{text}</s>");
+    }
     //... more tags can be added
 
 

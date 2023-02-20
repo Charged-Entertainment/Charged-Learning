@@ -94,7 +94,7 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
         }
     }
 
-    private static HashSet<CircuitComponent> GetCircuitComponents()
+    public static HashSet<CircuitComponent> GetCircuitComponents()
     {
         var circuitComponents = new HashSet<CircuitComponent>();
         Multimeter multimeter = null;
