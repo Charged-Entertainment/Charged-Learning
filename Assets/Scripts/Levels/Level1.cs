@@ -107,7 +107,7 @@ public class Level1 : MonoBehaviour
     private void CreateResistor()
     {
         UILevelComponent.created += InitResisorUI;
-        resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Battery, 1);
+        resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Resistor, 1);
         Puzzle.AddProperty(resistor, PropertyType.Resistance, 5, 1, "ohm", true);
     }
     private void InitResisorUI(UILevelComponent c)
@@ -213,7 +213,7 @@ public class Level1 : MonoBehaviour
             UIBattery.visualElement.SetEnabled(true);
             ShowImage(arrows[1], entries[6]);
             Dialog.Pause();
-            ContinueOnClick(UIBattery.visualElement);
+            ContinueOnClick(UIBattery.visualElement.Q<Image>());
         };
 
         // 7
@@ -354,7 +354,7 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            ContinueOnClick(UIResistor.visualElement);
+            ContinueOnClick(UIResistor.visualElement.Q<Image>());
             SetEnabled(UIResistor.visualElement, true);
         };
 
