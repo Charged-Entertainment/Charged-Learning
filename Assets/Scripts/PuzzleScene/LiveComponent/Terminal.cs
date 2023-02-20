@@ -60,6 +60,13 @@ namespace Components
         static public Action<Terminal> destroyed;
         static public Action<Terminal, Terminal> connected;
         static public Action<Terminal, Terminal> disconnected;
+
+        static public bool Enabled { get; private set; }
+
+        static public void SetEnabled(bool enabled) { Enabled = enabled; }
+        static public void Disable() { Enabled = false; }
+        static public void Enable() { Enabled = true; }
+
         private Dictionary<Terminal, float> connectionCandidates;
         private static float minTimeToConnectCollidedTerminal = 0.3f;
 
@@ -145,27 +152,36 @@ namespace Components
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var t = other.gameObject.GetComponent<Terminal>();
-            if (t != null && !connectedTerminals.Contains(t)) connectionCandidates.Add(t, 0f);
+            if (Enabled)
+            {
+                var t = other.gameObject.GetComponent<Terminal>();
+                if (t != null && !connectedTerminals.Contains(t)) connectionCandidates.Add(t, 0f);
+            }
         }
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            var t = other.gameObject.GetComponent<Terminal>();
-            if (t != null && connectionCandidates.ContainsKey(t))
+            if (Enabled)
             {
-                connectionCandidates[t] += Time.fixedDeltaTime;
-                if (connectionCandidates[t] >= minTimeToConnectCollidedTerminal)
+                var t = other.gameObject.GetComponent<Terminal>();
+                if (t != null && connectionCandidates.ContainsKey(t))
                 {
-                    Connect(t);
-                    connectionCandidates.Remove(t);
+                    connectionCandidates[t] += Time.fixedDeltaTime;
+                    if (connectionCandidates[t] >= minTimeToConnectCollidedTerminal)
+                    {
+                        Connect(t);
+                        connectionCandidates.Remove(t);
+                    }
                 }
             }
         }
         private void OnTriggerExit2D(Collider2D other)
         {
-            var t = other.gameObject.GetComponent<Terminal>();
-            if (t != null && connectionCandidates.ContainsKey(t)) connectionCandidates.Remove(t);
+            if (Enabled)
+            {
+                var t = other.gameObject.GetComponent<Terminal>();
+                if (t != null && connectionCandidates.ContainsKey(t)) connectionCandidates.Remove(t);
+            }
         }
 
         private void OnDestroy() { destroyed?.Invoke(this); }

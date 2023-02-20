@@ -72,6 +72,7 @@ public class Level1 : MonoBehaviour
         GameManager.Disable();
         Selection.Disable();
         WireManager.Disable();
+        Terminal.Disable();
     }
     private void Start()
     {
@@ -295,6 +296,7 @@ public class Level1 : MonoBehaviour
         {
             Dialog.Pause();
             WireManager.Enable();
+            Terminal.Enable();
             bool positiveConnected = false, negativeConnected = false;
             Handle<Terminal, Terminal>(ref Terminal.connected, (t1, t2) =>
             {
