@@ -10,7 +10,7 @@
   border-radius: 21.025px 21.025px 0px 0px;
   align-items: center;
   /* height: 30%; */
-  height: 73.63px;
+  height: 100px;
 }
 
 #main {
@@ -20,12 +20,17 @@
   border-radius: 0px 0px 21.025px 21.025px;
 }
 
+#body {
+  padding: 32px;
+  padding-left: 32px;
+}
+
 #body Label {
   white-space: normal;
 }
 
 #maximize-btn {
-  background-image: resource("maximize");
+  /* background-image: resource("maximize"); */
   border-width: 0;
   border-radius: 100%;
 }
@@ -34,6 +39,10 @@
   background-color: rgb(145, 11, 11);
   border-width: 0;
   border-radius: 100%;
+}
+
+#minimize-btn:hover {
+  background-color: rgb(170, 34, 34);
 }
 
 #scroll-view Scroller {
