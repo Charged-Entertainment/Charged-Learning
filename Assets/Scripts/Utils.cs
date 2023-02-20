@@ -77,6 +77,7 @@ public class Utils : MonoBehaviour
         {
             List<RaycastResult> res = new List<RaycastResult>();
             EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current), res);
+            if (res.Count == 0 ) return new List<VisualElement>();
             var panel = res[0].gameObject.GetComponent<PanelEventHandler>().panel;
             List<VisualElement> picked = new List<VisualElement>();
 
