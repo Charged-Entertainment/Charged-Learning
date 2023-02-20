@@ -35,7 +35,7 @@
         </ui:VisualElement>
         
         <ui:VisualElement name="middle-section" class="row" picking-mode="Ignore">
-            <ui:VisualElement name="game-area" class="row-reverse rel">
+            <ui:VisualElement name="game-area" class="row-reverse rel" picking-mode="Ignore">
                 <ui:Image name="gamemode-indicator" class="gamemode-indicator-off"/>
                 <ui:VisualElement name="dialog" class="abs">
                     <ui:Label
