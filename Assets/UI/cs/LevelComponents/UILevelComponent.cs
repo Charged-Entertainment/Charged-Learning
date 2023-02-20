@@ -8,8 +8,9 @@ using Components;
 public class UILevelComponent
 {
     public static Action<UILevelComponent> created;
+    // public static float spriteScaleMultiplier = 1f;
 
-    public VisualElement visualElement { get; private set; }
+    public VisualElement visualElement {get; private set;}
     Image image;
     Label qty;
 
@@ -28,6 +29,8 @@ public class UILevelComponent
 
         var sprite = Resources.Load<Sprite>(c.Name);
         image.style.backgroundImage = new StyleBackground(sprite);
+        image.style.height = sprite.rect.height; /* * spriteScaleMultiplier; */
+        image.style.width = sprite.rect.width; /* * spriteScaleMultiplier; */
 
         OnEnable();
     }

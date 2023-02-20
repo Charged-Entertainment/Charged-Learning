@@ -10,8 +10,7 @@ public partial class Camera : Singleton<Camera>
         {
             float scrollData;
             scrollData = Input.GetAxis("Mouse ScrollWheel");
-            if (scrollData != 0) Camera.Zoom(scrollData);
+            if (scrollData != 0 && !Utils.IsMouseOverUI()) Camera.Zoom(scrollData);
         }
     }
-
 }

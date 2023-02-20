@@ -19,6 +19,17 @@
   transition: height 0.3s ease-out;
 }
 
+#components-bar .level-component {
+  margin: 50px;
+}
+
+/* #components-bar .level-component Image {
+} */
+
+#components-bar .level-component Label {
+margin-top: 50px;
+}
+
 #components-bar #components-bar-header {
   -unity-font-style: bold;
   width: 100%;
