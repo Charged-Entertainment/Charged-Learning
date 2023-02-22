@@ -20,5 +20,5 @@
   height: 349px;
   width: 485px;
   align-self: center;
-  background-image: resource("Robot/default");
+  background-image: resource("Sprites/Robot/default");
 }

@@ -135,7 +135,7 @@ public class WireManager : Singleton<WireManager>
 
         public void StartIndicator()
         {
-            lineRenderer = Instantiate((GameObject)Resources.Load("LineRenderer")).GetComponent<LineRenderer>();
+            lineRenderer = Instantiate((GameObject)Resources.Load("Prefabs/LineRenderer")).GetComponent<LineRenderer>();
             lineRenderer.name = "WirePreview";
 
             lineRenderer.positionCount = 2;

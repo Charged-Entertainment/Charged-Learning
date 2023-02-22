@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 public class UIDevices : MonoBehaviour
 {
     VisualElement document, container;
-    Button devicesBtn;
+    public static Button DevicesButton;
 
-    List<Button> buttons;
+    public static List<Button> DevicesButtons;
 
     // the delay in seconds between each element showing/disappearing
     private static float delay = 0.1f;
@@ -17,23 +17,23 @@ public class UIDevices : MonoBehaviour
     {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
         container = document.Q<VisualElement>("devices");
-        devicesBtn = container.Q<Button>("devices-btn");
-        buttons = new List<Button>();
+        DevicesButton = container.Q<Button>("devices-btn");
+        DevicesButtons = new List<Button>();
 
         Button multimeterBtn = container.Q<Button>("multimeter-btn");
-        buttons.Add(multimeterBtn);
+        DevicesButtons.Add(multimeterBtn);
         SetButtonVisable(multimeterBtn, false);
 
         List<Button> unknowns = container.Query<Button>(className: "unknown").ToList();
         foreach (var b in unknowns)
         {
-            buttons.Add(b);
+            DevicesButtons.Add(b);
             SetButtonVisable(b, false);
         }
 
         InitButtonPositions();
 
-        devicesBtn.RegisterCallback<ClickEvent>(ev =>
+        DevicesButton.RegisterCallback<ClickEvent>(ev =>
         {
             reverse = !reverse;
             if (!currentlyInAnimation)
@@ -83,8 +83,8 @@ public class UIDevices : MonoBehaviour
     bool currentlyInAnimation = false;
     private void Play()
     {
-        var b = buttons[currButtonIdx];
-        SetButtonVisable(buttons[currButtonIdx], !reverse);
+        var b = DevicesButtons[currButtonIdx];
+        SetButtonVisable(DevicesButtons[currButtonIdx], !reverse);
 
         if (reverse && currButtonIdx != 0)
         {
@@ -93,7 +93,7 @@ public class UIDevices : MonoBehaviour
             return;
         }
 
-        if (!reverse && currButtonIdx != buttons.Count - 1)
+        if (!reverse && currButtonIdx != DevicesButtons.Count - 1)
         {
             currButtonIdx++;
             Invoke("Play", delay);
@@ -121,9 +121,9 @@ public class UIDevices : MonoBehaviour
 
     private void InitButtonPositions()
     {
-        for (int i = 0; i < buttons.Count; i++)
+        for (int i = 0; i < DevicesButtons.Count; i++)
         {
-            Button b = buttons[i];
+            Button b = DevicesButtons[i];
             b.style.top = new StyleLength(-r * Mathf.Cos((i + offset) * Mathf.Deg2Rad * theta));
             b.style.left = new StyleLength(r * Mathf.Sin((i + offset) * Mathf.Deg2Rad * theta));
         }

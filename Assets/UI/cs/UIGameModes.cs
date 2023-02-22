@@ -6,30 +6,31 @@ using System.Linq;
 
 public class UIGameModes : MonoBehaviour
 {
-    VisualElement document, normal, zoomIn, zoomOut, pan;
+    VisualElement document;
+    public static VisualElement NormalButton, ZoomInButton, ZoomOutButton, PanButton;
 
     protected void Awake() {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
 
-        zoomIn = document.Q("zoom-in-btn");
-        zoomOut = document.Q("zoom-out-btn");
-        pan = document.Q("pan-btn");
-        normal = document.Q("normal-btn");
+        ZoomInButton = document.Q("zoom-in-btn");
+        ZoomOutButton = document.Q("zoom-out-btn");
+        PanButton = document.Q("pan-btn");
+        NormalButton = document.Q("normal-btn");
     }
 
     private void OnEnable() {
         OnDisable();
-        zoomIn.RegisterCallback<ClickEvent>(HandleZoomIn);
-        zoomOut.RegisterCallback<ClickEvent>(HandleZoomOut);
-        pan.RegisterCallback<ClickEvent>(HandlePan);
-        normal.RegisterCallback<ClickEvent>(HandleNormal);
+        ZoomInButton.RegisterCallback<ClickEvent>(HandleZoomIn);
+        ZoomOutButton.RegisterCallback<ClickEvent>(HandleZoomOut);
+        PanButton.RegisterCallback<ClickEvent>(HandlePan);
+        NormalButton.RegisterCallback<ClickEvent>(HandleNormal);
     }
 
     private void OnDisable() {
-        zoomIn.UnregisterCallback<ClickEvent>(HandleZoomIn);
-        zoomOut.UnregisterCallback<ClickEvent>(HandleZoomOut);
-        pan.UnregisterCallback<ClickEvent>(HandlePan);
-        normal.UnregisterCallback<ClickEvent>(HandleNormal);
+        ZoomInButton.UnregisterCallback<ClickEvent>(HandleZoomIn);
+        ZoomOutButton.UnregisterCallback<ClickEvent>(HandleZoomOut);
+        PanButton.UnregisterCallback<ClickEvent>(HandlePan);
+        NormalButton.UnregisterCallback<ClickEvent>(HandleNormal);
 
     }
 

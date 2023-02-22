@@ -19,7 +19,7 @@ public class UILevelComponent
     public UILevelComponent(LevelComponent c)
     {
         levelComponent = c;
-        VisualTreeAsset template = Resources.Load<VisualTreeAsset>("LevelComponent");
+        VisualTreeAsset template = Resources.Load<VisualTreeAsset>("UI/LevelComponent");
         visualElement = template.Instantiate();
 
         image = visualElement.Q<Image>();
@@ -27,7 +27,7 @@ public class UILevelComponent
 
         qty.text = "x" + c.Quantity.Total.ToString();
 
-        var sprite = Resources.Load<Sprite>(c.Name);
+        var sprite = Resources.Load<Sprite>("Sprites/Components/" + c.Name);
         image.style.backgroundImage = new StyleBackground(sprite);
         image.style.height = sprite.rect.height; /* * spriteScaleMultiplier; */
         image.style.width = sprite.rect.width; /* * spriteScaleMultiplier; */

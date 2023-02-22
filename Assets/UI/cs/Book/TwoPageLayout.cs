@@ -15,7 +15,7 @@ public class TwoPageLayout : Page
     private void Awake()
     {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("TwoPageLayout");
+        VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("UI/TwoPageLayout");
         backgroundOverlay = uxml.Instantiate().Q(className: "BookTwoPageLayout");
         image = backgroundOverlay.Q<Image>();
         content = backgroundOverlay.Q<TextElement>();

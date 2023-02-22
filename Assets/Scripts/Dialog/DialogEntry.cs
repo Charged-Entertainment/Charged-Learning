@@ -26,7 +26,7 @@ namespace Dialogs
         public DialogEntry(RichText content)
         {
             this.content = content;
-            this.image = Resources.Load<Sprite>("Robot/default");
+            this.image = Resources.Load<Sprite>("Sprites/Robot/default");
         }
 
         public static implicit operator string(DialogEntry d)

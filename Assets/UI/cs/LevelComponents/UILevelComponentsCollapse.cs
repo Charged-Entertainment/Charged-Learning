@@ -5,7 +5,8 @@ using UnityEngine.UIElements;
 
 public class UILevelComponentsCollapse : MonoBehaviour
 {
-    VisualElement document, container, header;
+    VisualElement document, container;
+    public static VisualElement Header;
     Image image;
 
     string up = "up-arrow";
@@ -19,10 +20,10 @@ public class UILevelComponentsCollapse : MonoBehaviour
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
 
         container = document.Q("components-bar").Q("level-components");
-        header = document.Q("components-bar").Q("components-bar-header");
-        image = header.Q<Image>();
+        Header = document.Q("components-bar").Q("components-bar-header");
+        image = Header.Q<Image>();
 
-        header.RegisterCallback<ClickEvent>(ToggleCollapse);
+        Header.RegisterCallback<ClickEvent>(ToggleCollapse);
 
         originalHeight = container.style.height;
     }

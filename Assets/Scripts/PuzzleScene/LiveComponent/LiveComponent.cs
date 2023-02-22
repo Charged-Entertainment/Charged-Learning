@@ -58,7 +58,7 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
     {
         if (comp.Quantity.Used < comp.Quantity.Total)
         {
-            var prefab = Resources.Load<GameObject>($"Components/{comp.Name}");
+            var prefab = Resources.Load<GameObject>($"Prefabs/Components/{comp.Name}");
             LiveComponent copy = GameObject.Instantiate(prefab, parent).GetComponent<LiveComponent>();
             copy.levelComponent = comp;
             if (pos != null) copy.transform.position = (Vector2)pos;

@@ -24,18 +24,18 @@
 }
 
 .gamemode-indicator-on {
-  background-image: resource("on");
+  background-image: resource("UIElements/PuzzleScene/on");
 }
 
 .gamemode-indicator-off {
-  background-image: resource("off");
+  background-image: resource("UIElements/PuzzleScene/off");
 }
 
 #submit-btn {
   position: absolute;
   left: -10px;
   bottom: -150px;
-  background-image: resource("submit-btn");
+  background-image: resource("UIElements/PuzzleScene/submit-btn");
   height: 594px;
   width: 682px;
   background-color: transparent;
@@ -53,7 +53,7 @@
 }
 
 #book-btn Image {
-  background-image: resource("book");
+  background-image: resource("Icons/book");
   align-self: center;
   width: 74.83px;
   height: 98px;
@@ -61,21 +61,21 @@
 }
 
 #normal-btn Image {
-  background-image: resource("mouse-pointer");
+  background-image: resource("Icons/mouse-pointer");
   align-self: center;
 }
 
 #zoom-in-btn Image {
-  background-image: resource("zoom-in");
+  background-image: resource("Icons/zoom-in");
   align-self: center;
 }
 
 #zoom-out-btn Image {
-  background-image: resource("zoom-out");
+  background-image: resource("Icons/zoom-out");
   align-self: center;
 }
 
 #pan-btn Image {
-  background-image: resource("pan");
+  background-image: resource("Icons/pan");
   align-self: center;
 }

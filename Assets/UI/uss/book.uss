@@ -1,5 +1,5 @@
 .BookTwoPageLayout Image {
-  background-image: resource("book-pop-up");
+  background-image: resource("UIElements/PuzzleScene/book-pop-up");
   position: absolute;
   width: 2642px;
   height: 1679.14px;

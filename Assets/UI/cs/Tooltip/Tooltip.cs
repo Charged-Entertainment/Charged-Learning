@@ -12,7 +12,7 @@ abstract public class Tooltip
 
     protected Tooltip()
     {
-        VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("Tooltip");
+        VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("UI/Tooltip");
         root = uxml.Instantiate().Q("tooltip");
     }
 

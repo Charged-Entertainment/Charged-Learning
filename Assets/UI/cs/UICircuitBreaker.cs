@@ -7,15 +7,15 @@ using GameManagement;
 public class UICircuitBreaker : MonoBehaviour
 {
     VisualElement document;
-    Button breaker;
+    public static Button CircuitBreaker;
 
     string down = "circuit-breaker-down";
     void Start()
     {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        breaker = document.Q<Button>("circuit-breaker");
+        CircuitBreaker = document.Q<Button>("circuit-breaker");
 
-        breaker.RegisterCallback<ClickEvent>(HandleClick);
+        CircuitBreaker.RegisterCallback<ClickEvent>(HandleClick);
         GameMode.changed += HandleGameModeChange;
     }
 
@@ -26,16 +26,16 @@ public class UICircuitBreaker : MonoBehaviour
     }
 
     private void HandleGameModeChange(GameModes mode) {
-        breaker.SetEnabled(mode != GameModes.Evaluate);
+        CircuitBreaker.SetEnabled(mode != GameModes.Evaluate);
         if (mode == GameModes.Live) Down();
         if (mode == GameModes.Edit) Up();
     }
 
     void Up() {
-        breaker.EnableInClassList(down, true);
+        CircuitBreaker.EnableInClassList(down, true);
     }
 
     void Down() {
-        breaker.EnableInClassList(down, false);
+        CircuitBreaker.EnableInClassList(down, false);
     }
 }

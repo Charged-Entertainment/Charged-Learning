@@ -7,14 +7,14 @@ using GameManagement;
 public class UIGameModeIndicator : MonoBehaviour
 {
     VisualElement document;
-    Image image;
+    public static Image GameModeIndicator;
 
     string on = "gamemode-indicator-on";
     string off = "gamemode-indicator-off";
     void Start()
     {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        image = document.Q<Image>("gamemode-indicator");
+        GameModeIndicator = document.Q<Image>("gamemode-indicator");
         GameMode.changed += HandleGameModeChange;
     }
 
@@ -24,12 +24,12 @@ public class UIGameModeIndicator : MonoBehaviour
     }
 
     void On() {
-        image.EnableInClassList(on, true);
-        image.EnableInClassList(off, false);
+        GameModeIndicator.EnableInClassList(on, true);
+        GameModeIndicator.EnableInClassList(off, false);
     }
 
     void Off() {
-        image.EnableInClassList(off, true);
-        image.EnableInClassList(on, false);
+        GameModeIndicator.EnableInClassList(off, true);
+        GameModeIndicator.EnableInClassList(on, false);
     }
 }

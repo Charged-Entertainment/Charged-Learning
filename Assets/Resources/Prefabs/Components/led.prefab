@@ -70,7 +70,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.42628342, y: 2.1912682}
+  m_Size: {x: 0.7087507, y: 2.730589}
   m_EdgeRadius: 0
 --- !u!50 &3725914592534681100
 Rigidbody2D:
@@ -163,7 +163,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4199741, y: 1.5472867}
+  m_Size: {x: 0.6493782, y: 2.0466928}
   m_EdgeRadius: 0
 --- !u!50 &7440994691679166975
 Rigidbody2D:
@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123f5703cbd53b06fae9e4551e79ffe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Terminals>k__BackingField: []
 --- !u!70 &5268489511488267215
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

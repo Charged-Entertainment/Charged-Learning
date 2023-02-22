@@ -61,7 +61,7 @@ namespace Components
         static public Action<Terminal, Terminal> connected;
         static public Action<Terminal, Terminal> disconnected;
 
-        static public bool Enabled { get; private set; }
+        static public bool Enabled { get; private set; } = true;
 
         static public void SetEnabled(bool enabled) { Enabled = enabled; }
         static public void Disable() { Enabled = false; }

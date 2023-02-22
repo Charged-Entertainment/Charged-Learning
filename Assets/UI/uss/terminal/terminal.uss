@@ -30,7 +30,6 @@
 }
 
 #maximize-btn {
-  /* background-image: resource("maximize"); */
   border-width: 0;
   border-radius: 100%;
 }

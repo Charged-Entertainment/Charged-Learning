@@ -64,7 +64,7 @@ public partial class Selection : Singleton<Selection>
     static public void StartMultiSelect(Vector2 anchor)
     {
         OnGoingMultiSelect = true;
-        if (selectionArea == null) selectionArea = Instantiate(((GameObject)Resources.Load("SelectionArea"))).AddComponent<SelectionArea>();
+        if (selectionArea == null) selectionArea = Instantiate(((GameObject)Resources.Load("Prefabs/SelectionArea"))).AddComponent<SelectionArea>();
         selectionArea.SetAnchorPoint(anchor);
     }
 

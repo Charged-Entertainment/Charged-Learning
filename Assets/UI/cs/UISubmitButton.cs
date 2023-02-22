@@ -7,13 +7,13 @@ using GameManagement;
 public class UISubmitButton : MonoBehaviour
 {
     VisualElement document;
-    Button submit;
+    public static Button SubmitButton;
     void Start()
     {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        submit = document.Q<Button>("submit-btn");
+        SubmitButton = document.Q<Button>("submit-btn");
 
-        submit.RegisterCallback<ClickEvent>(HandleClick);
+        SubmitButton.RegisterCallback<ClickEvent>(HandleClick);
         GameMode.changed += HandleGameModeChange;
     }
 
@@ -21,14 +21,14 @@ public class UISubmitButton : MonoBehaviour
     {
         if (GameMode.Current != GameModes.Evaluate)
         {
-            submit.SetEnabled(false);
+            SubmitButton.SetEnabled(false);
             GameMode.ChangeTo(GameModes.Evaluate);
         }
-        else submit.SetEnabled(true);
+        else SubmitButton.SetEnabled(true);
     }
 
     private void HandleGameModeChange(GameModes mode)
     {
-        submit.SetEnabled(mode != GameModes.Evaluate); 
+        SubmitButton.SetEnabled(mode != GameModes.Evaluate); 
     }
 }

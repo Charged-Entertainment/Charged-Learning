@@ -17,7 +17,7 @@ public class Wire : MonoBehaviour
 
     private void Awake()
     {
-        lineRenderer = Instantiate((GameObject)Resources.Load("LineRenderer"), transform).GetComponent<LineRenderer>();
+        lineRenderer = Instantiate((GameObject)Resources.Load("Prefabs/LineRenderer"), transform).GetComponent<LineRenderer>();
         collider = gameObject.AddComponent<MeshCollider>();
         points = new List<Transform>();
         points.Add(null);
@@ -83,7 +83,7 @@ public class Wire : MonoBehaviour
 
     private WireHelperPoint CreatePoint(Vector2 mousePos)
     {
-        var prefab = Resources.Load<GameObject>("WireHelperPoint");
+        var prefab = Resources.Load<GameObject>("Prefabs/WireHelperPoint");
         var point = GameObject.Instantiate<GameObject>(prefab, lineRenderer.transform).GetComponent<WireHelperPoint>();
         point.transform.position = mousePos;
         points.Insert(GetIndexOf2ndClosestPoint(point.transform), point.transform);

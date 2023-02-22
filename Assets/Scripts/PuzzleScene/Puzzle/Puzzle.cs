@@ -13,6 +13,12 @@ public class Puzzle : Singleton<Puzzle>
     public static List<LevelComponent> Components { get; set; } = new List<LevelComponent>();
     public static List<Goal> Goals { get; private set; } = new List<Goal>();
 
+    private void Start() {
+        // CreateLevelComponent("resistor", ComponentType.Resistor, 5);
+        // CreateLevelComponent("battery", ComponentType.Battery, 5);
+        // CreateLevelComponent("led", ComponentType.Led, 5);
+    }
+
     static public LevelComponent CreateLevelComponent(string name, ComponentType type, int qty)
     {
         var c = new Components.Component(type);

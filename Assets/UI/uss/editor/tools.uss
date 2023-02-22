@@ -14,7 +14,7 @@
 }
 
 #devices-btn Image {
-  background-image: resource("devices");
+  background-image: resource("Icons/devices");
   align-self: center;
   width: 96.2px;
   height: 80.28px;
@@ -51,13 +51,13 @@
 }
 
 #tools .unknown Image {
-  background-image: resource("question-mark");
+  background-image: resource("Icons/question-mark");
   width: 51px;
   height: 76.32px;
 }
 
 #tools #multimeter-btn Image {
-  background-image: resource("multimeter");
+  background-image: resource("Icons/multimeter");
   align-self: center;
   width: 92px;
   height: 86px;
@@ -68,7 +68,7 @@
 }
 
 #tools #terminal-btn Image {
-  background-image: resource("terminal");
+  background-image: resource("Icons/terminal");
   align-self: center;
   width: 81px;
   height: 51px;

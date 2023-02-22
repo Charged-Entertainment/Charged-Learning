@@ -28,6 +28,7 @@ namespace Dialogs
             container = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement.Q("dialog");
             image = container.Q<Image>();
             textContent = container.Q<Label>();
+            End();
             RegisterCallbacks();
         }
 
