@@ -57,11 +57,6 @@ public partial class EditorBehaviour
                 dragController.enabled = false;
                 transformationController.enabled = true;
             }
-            else if (InteractionMode.Current == InteractionModes.Wire)
-            {
-                dragController.enabled = false;
-                transformationController.enabled = false;
-            }
             else
             {
                 Debug.Log("Error: unknown InteractionMode: " + InteractionMode.Current);

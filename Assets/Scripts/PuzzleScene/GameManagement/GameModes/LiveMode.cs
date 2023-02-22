@@ -20,10 +20,5 @@ namespace GameManagement
         {
             InteractionMode.ChangeTo(InteractionModes.Tweak);
         }
-
-        public override void HandleWire()
-        {
-            Debug.Log("Cannot wire in live mode.");
-        }
     }
 }

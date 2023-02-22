@@ -9,7 +9,6 @@ namespace GameManagement
     {
         public static void Normal() { Current.HandleNormal(); }
         public static void Pan() { Current.HandlePan(); }
-        public static void Wire() { Current.HandleWire(); }
         public static void Tweak() { Current.HandleTweak(); }
 
         private void Start() {
@@ -21,7 +20,6 @@ namespace GameManagement
     {
         public abstract void HandleNormal();
         public abstract void HandlePan();
-        public abstract void HandleWire();
         public abstract void HandleTweak();
         public static Edit Edit = new Edit();
         public static Live Live = new Live();

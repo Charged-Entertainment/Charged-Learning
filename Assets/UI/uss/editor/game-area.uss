@@ -75,11 +75,6 @@
   align-self: center;
 }
 
-#wiring-btn Image {
-  background-image: resource("wiring");
-  align-self: center;
-}
-
 #pan-btn Image {
   background-image: resource("pan");
   align-self: center;

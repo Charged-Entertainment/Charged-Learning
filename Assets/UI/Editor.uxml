@@ -84,12 +84,6 @@
                         </ui:Button>
                     </ui:VisualElement>
 
-                    <ui:VisualElement class="px-1">
-                        <ui:Button name="wiring-btn" class="editor-control-btn">
-                            <ui:Image class="icon" />
-                        </ui:Button>
-                    </ui:VisualElement>
-
                 </ui:VisualElement>
 
                 <ui:VisualElement name="tools">
