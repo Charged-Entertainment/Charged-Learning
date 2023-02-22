@@ -52,7 +52,6 @@ public class Level1 : MonoBehaviour
         SetEnabled(editorControls.Q("normal-btn"), false);
         SetEnabled(editorControls.Q("zoom-in-btn"), false);
         SetEnabled(editorControls.Q("zoom-out-btn"), false);
-        SetEnabled(editorControls.Q("wiring-btn"), false);
         SetEnabled(editorControls.Q("pan-btn"), false);
 
         SetEnabled(tools.Q("devices"), false);
@@ -278,21 +277,7 @@ public class Level1 : MonoBehaviour
 
 
         // 12
-        AddEntry("Okay now click on the wire icon to go into wire mode. You can also press 'w' on your keyboard if you're a shortcut person.");
-        lastEntry.started += () =>
-                {
-                    Dialog.Pause();
-                    SetEnabled(editorControls.Q("wiring-btn"), true);
-                    Handle<InteractionModes>(ref InteractionMode.changed, m =>
-                    {
-                        if (m == InteractionModes.Wire)
-                        {
-                            Dialog.Continue();
-                            return true;
-                        }
-                        return false;
-                    }, (handler) => InteractionMode.changed -= handler);
-                };
+        AddEntry("You can draw wires by dragging the yellow terminals on any component.");
 
         // 13
         AddEntry("Now connect the multimeter's probes to the battery: the red probe to the battery's positve terminal, and the black one to its negative terminal.");
