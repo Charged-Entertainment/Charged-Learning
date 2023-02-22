@@ -20,22 +20,24 @@ namespace Components
     public class Property
     {
         public bool isRevealed;
-        public PureProperty properties { get; private set; }
+        public PureProperty pureProperty { get; private set; }
 
         public Property(PureProperty pureProperty, bool isRevealed = false)
         {
-            this.properties = pureProperty;
+            this.pureProperty = pureProperty;
             this.isRevealed = isRevealed;
         }
     }
 
     public class LevelComponent
     {
+
         public Component Component { get; private set; }
+        public static Action<LevelComponent> created;
 
-        public static Action<LevelComponent> quantityChanged;
+        public static Action<LevelComponent> quantityChanged, propertyRevealed;
 
-        public Dictionary<string, Property> Properties { get; private set; }
+        public Dictionary<PropertyType, Property> Properties { get; private set; }
 
         // public Dictionary<string, Terminal> Terminals { get; private set; }
 
@@ -45,22 +47,29 @@ namespace Components
 
 
 
-        public LevelComponent(Component component, Quantity quantity)
+        public LevelComponent(Component component, Quantity quantity, string name)
         {
-            Properties = new Dictionary<string, Property>();
+            Properties = new Dictionary<PropertyType, Property>();
             this.Component = component;
             this.Quantity = quantity;
+            this.Name = name;
 
             foreach (var prop in component.Properties)
             {
-                Properties.Add(prop.Value.name, new Property(prop.Value));
+                Properties.Add(prop.Value.propertyType, new Property(prop.Value));
             }
-            ComponentManager.created += HandleComponentCreated;
-            ComponentManager.destroyed += HandleComponentDestroyed;
+            LiveComponent.created += HandleComponentCreated;
+            LiveComponent.destroyed += HandleComponentDestroyed;
+            created?.Invoke(this);
+        }
+
+        public void AddProperty(PureProperty pureProperty){
+            Component.AddProperty(pureProperty);
+            Properties.Add(pureProperty.propertyType, new Property(pureProperty));
         }
 
         // TODO: handle reveal event and qunatity change event
-        private void HandleComponentCreated(ComponentBehavior comp)
+        private void HandleComponentCreated(LiveComponent comp)
         {
             if (comp.levelComponent == this)
             {
@@ -78,9 +87,9 @@ namespace Components
         }
 
         // TODO: handle reveal event and qunatity change event
-        private void HandleComponentDestroyed(ComponentBehavior comp)
+        private void HandleComponentDestroyed(EditorBehaviour comp)
         {
-            if (comp.levelComponent == this)
+            if (comp.GetComponent<LiveComponent>().levelComponent == this)
             {
                 if (Quantity.Used >= 1)
                 {
@@ -97,6 +106,22 @@ namespace Components
             }
         }
 
-        // public bool 
+        public void RevealProperty(PropertyType propertyType)
+        {
+            var propertyName = Enum.GetName(typeof(PropertyType), propertyType);
+            if(!Properties.ContainsKey(propertyType)){
+                Debug.Log($"{propertyName} property doesn't exist for this component");
+                return;
+            }
+
+            var propertyIsRevealed = Properties[propertyType].isRevealed;
+            if (propertyIsRevealed){
+                Debug.Log($"{propertyName} has been already revealed");
+                return;
+            }
+            Properties[propertyType].isRevealed = true;
+            Debug.Log("property revealed!");
+            propertyRevealed?.Invoke(this);
+        }
     }
 }

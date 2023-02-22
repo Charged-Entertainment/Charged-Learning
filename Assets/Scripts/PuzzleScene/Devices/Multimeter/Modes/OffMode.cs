@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SpiceSharp.Simulations;
 
 
 public class OffMode : MultimeterMode
@@ -16,8 +17,9 @@ public class OffMode : MultimeterMode
         base.OnExit();
         multimeter.TurnOn();
     }
-    protected override void OnSimulationResults()
+    protected override void HandleSimulationDone(IBiasingSimulation simulation)
     {
+        if(!multimeter.InCircuit) return;
         throw new System.NotImplementedException();
     }
 }

@@ -9,12 +9,12 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
 
     enum WindowState { Normal, Maximized, Minimized }
 
-    public static Action enabled, disabled;
+    public new static Action enabled;
+    public static Action disabled;
 
 
     #region privates
     [SerializeField] private List<Log> logs;
-    [SerializeField] private List<string> testGoals;
     private VisualElement rootVisualElement, goalsVisualElement, logsVisualElement, bodyVisualElement, terminalWindow, terminalInstance;
     private bool mouseDown = false;
     private Vector2 dragStartPos;
@@ -28,7 +28,6 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
     void OnEnable()
     {
         enabled?.Invoke();
-        testGoals = new List<string> { "measure whatever in whatever and so whatever", "measure whatever in whatever", "measure whatever in whatever" };
         logs = new List<Log> {
             new Log(RichText.Color("log1", PaletteColor.Green), LogType.Status),
             new Log("log2", LogType.Status),
@@ -57,6 +56,9 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
         terminalWindow.RegisterCallback<MouseUpEvent>(ev => mouseDown = false);
 
         DrawGoals();
+
+        Puzzle.goalsChanged += DrawGoals;
+        Puzzle.goalAchieved += (goal) => DrawGoals();
 
         windowState = WindowState.Maximized;
         MaximizeToggle();
@@ -155,14 +157,25 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
         }
     }
 
+    private RichText DrawGoal(Goal goal){
+        Debug.Log($"DrawGoal: Achieved? {goal.Achieved}");
+        if(goal.Achieved)
+            return RichText.StrikeThrough(goal.Message);
+        
+        return goal.Message;
+    }
+
     private void DrawGoals()
     {
+        var levelGoals = Puzzle.Goals;
+
         if (windowState != WindowState.Minimized)
         {
             goalsVisualElement.Clear();
-            foreach (var goal in testGoals)
+            foreach (var goal in levelGoals)
             {
-                goalsVisualElement.Add(new Label($"<indent=30em><b><s>-{goal}</s></b></indent>"));
+
+                goalsVisualElement.Add(new Label($"<indent=30em>-{DrawGoal(goal)}</indent>"));
             }
         }
     }

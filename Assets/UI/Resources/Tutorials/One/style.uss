@@ -1,0 +1,67 @@
+#tutorial1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#tutorial1 .arrow {
+  position: absolute;
+  transition: opacity 300ms ease-in;
+}
+
+#tutorial1 #arrow0 {
+  background-image: resource("Tutorials/One/arrow1");
+  height: 427.0720520019531px;
+  width: 212.5795440673828px;
+  left: 3070px;
+  top: 243px;
+}
+
+#tutorial1 #arrow1 {
+  position: absolute;
+  background-image: resource("Tutorials/One/arrow2");
+  width: 390.79px;
+  height: 438.2px;
+  left: 3145px;
+  top: 403px;
+}
+
+#tutorial1 #arrow2 {
+  position: absolute;
+  background-image: resource("Tutorials/One/arrow3");
+  height: 446.23455810546875px;
+  width: 613.66357421875px;
+  left: 212px;
+  top: 387px;
+}
+
+#tutorial1 #arrow3 {
+  position: absolute;
+  background-image: resource("Tutorials/One/arrow4");
+  height: 597.0006103515625px;
+  width: 1377px;
+  left: -3px;
+  top: 337.99951171875px;
+}
+
+#tutorial1 #arrow4 {
+  position: absolute;
+  background-image: resource("Tutorials/One/arrow5");
+  height: 279.1969909667969px;
+  width: 128.5580291748047px;
+  left: 271px;
+  top: 602.5546264648438px;
+}
+
+#tutorial1 #arrow5 {
+  position: absolute;
+  background-image: resource("Tutorials/One/arrow6");
+  height: 279.1969872084777px;
+  width: 128.55802744426273px;
+  left: 231px;
+  top: 389.2790222167969px;
+}
+
+#tutorial1 .disabled {
+  opacity: 0;
+}

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <ui:VisualElement class="BookTwoPageLayout">
+        <ui:Image>
+            <ui:TextElement>
+                <!-- load HTML for page here -->
+            </ui:TextElement>
+        </ui:Image>
+    </ui:VisualElement>
+</ui:UXML>

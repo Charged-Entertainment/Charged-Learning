@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ namespace Dialogs
 {
     public class DialogEntry
     {
+        public Action started;
+        public Action ended;
+
         public RichText content { get; private set; }
         public Sprite image { get; private set; }
 

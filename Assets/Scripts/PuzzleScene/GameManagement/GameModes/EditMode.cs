@@ -20,10 +20,5 @@ namespace GameManagement
         {
             Debug.Log("Cannot set interaction mode to tweak in edit game mode.");
         }
-
-        public override void HandleWire()
-        {
-            InteractionMode.ChangeTo(InteractionModes.Wire);
-        }
     }
 }

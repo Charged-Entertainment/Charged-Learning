@@ -6,14 +6,14 @@ public class Display : MonoBehaviour
 {
     [SerializeField]private Text textElement;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         textElement = transform.Find("Canvas").GetChild(0).GetComponent<Text>();
     }
 
 
-    public void WriteMeasurement(float measurement){
-        textElement.text = measurement.ToString();
+    public void Write(string message){
+        textElement.text = message.ToString();
     }
 
     public void TurnOff(){

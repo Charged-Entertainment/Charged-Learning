@@ -6,35 +6,27 @@ using UnityEngine;
 namespace Components
 {
 
-    public class PureProperty
-    {
-        public string name;
-        public Type type;
-        public object value;
-        public int multiplier;
-        public string unit;
-        public bool isStatic;
-
-        public PureProperty(string name, Type type, object value, int multiplier, string unit, bool isStatic)
-        {
-            this.name = name;
-            this.type = type;
-            this.value = value;
-            this.multiplier = multiplier;
-            this.unit = unit;
-            this.isStatic = isStatic;
-        }
+    public enum ComponentType{
+        Resistor,
+        Battery,
+        Led
     }
 
     public class Component
     {
-
-        public Dictionary<string, PureProperty> Properties { get; private set; }
+        public ComponentType componentType{get; private set;}
         public string Name { get; private set; }
+        public Dictionary<PropertyType, PureProperty> Properties { get; private set; }
 
-        public Component(){
-            Properties = new Dictionary<string, PureProperty>();
+        public Component(ComponentType componentType){
+            this.componentType = componentType;
+            Properties = new Dictionary<PropertyType, PureProperty>();
         }
+
+        public void AddProperty(PureProperty property){
+            Properties.Add(property.propertyType, property);
+        }
+
         // TODO: terminals
     }
 }

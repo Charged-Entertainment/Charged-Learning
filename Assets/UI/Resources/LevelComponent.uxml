@@ -1,7 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
     editor-extension-mode="False">
-    <ui:VisualElement class="col">
-        <ui:Label name="name" text="some text" class="text-center" />
+    <ui:VisualElement class="level-component col">
         <ui:Image class="self-center"
             style='background-image: resource("led"); width:200px; height:400px;' />
         <ui:Label name="qty" text="x0" class="text-center" />
