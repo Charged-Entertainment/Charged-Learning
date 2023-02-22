@@ -16,9 +16,7 @@ public partial class GameManager : Singleton<GameManager>
             
             // handle interaction modes
             else if (Input.GetKeyDown(KeyCode.Q)) GameMode.Normal();
-            else if (Input.GetKeyDown(KeyCode.W)) GameMode.Wire();
             else if (Input.GetKeyDown(KeyCode.E)) GameMode.Pan();
-            else if (Input.GetKeyDown(KeyCode.R)) GameMode.Tweak();
         }
     }
 }

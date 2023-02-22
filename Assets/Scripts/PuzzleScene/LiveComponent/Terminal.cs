@@ -119,30 +119,6 @@ namespace Components
             }
         }
 
-        private void OnEnable()
-        {
-            OnDisable();
-            InteractionMode.changed += HandleInteractionModeChange;
-        }
-
-        private void OnDisable()
-        {
-            InteractionMode.changed -= HandleInteractionModeChange;
-        }
-
-        private void HandleInteractionModeChange(InteractionModes mode)
-        {
-            if (InteractionMode.Current == InteractionModes.Wire)
-            {
-                // show red dot
-            }
-            else
-            {
-                // remove red dot
-            }
-        }
-
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             var t = other.gameObject.GetComponent<Terminal>();

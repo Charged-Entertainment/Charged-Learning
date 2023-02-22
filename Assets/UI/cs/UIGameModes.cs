@@ -6,7 +6,7 @@ using System.Linq;
 
 public class UIGameModes : MonoBehaviour
 {
-    VisualElement document, normal, zoomIn, zoomOut, pan, wire;
+    VisualElement document, normal, zoomIn, zoomOut, pan;
 
     protected void Awake() {
         document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
@@ -15,7 +15,6 @@ public class UIGameModes : MonoBehaviour
         zoomOut = document.Q("zoom-out-btn");
         pan = document.Q("pan-btn");
         normal = document.Q("normal-btn");
-        wire = document.Q("wiring-btn");
     }
 
     private void OnEnable() {
@@ -24,7 +23,6 @@ public class UIGameModes : MonoBehaviour
         zoomOut.RegisterCallback<ClickEvent>(HandleZoomOut);
         pan.RegisterCallback<ClickEvent>(HandlePan);
         normal.RegisterCallback<ClickEvent>(HandleNormal);
-        wire.RegisterCallback<ClickEvent>(HandleWire);
     }
 
     private void OnDisable() {
@@ -32,7 +30,6 @@ public class UIGameModes : MonoBehaviour
         zoomOut.UnregisterCallback<ClickEvent>(HandleZoomOut);
         pan.UnregisterCallback<ClickEvent>(HandlePan);
         normal.UnregisterCallback<ClickEvent>(HandleNormal);
-        wire.UnregisterCallback<ClickEvent>(HandleWire);
 
     }
 
@@ -52,9 +49,5 @@ public class UIGameModes : MonoBehaviour
 
     private void HandleNormal(ClickEvent ev) {
         GameManagement.GameMode.Normal();
-    }
-
-    private void HandleWire(ClickEvent ev) {
-        GameManagement.GameMode.Wire();
     }
 }

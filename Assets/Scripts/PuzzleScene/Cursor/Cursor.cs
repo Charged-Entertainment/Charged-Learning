@@ -7,7 +7,7 @@ public class Cursor : Singleton<Cursor>
 {
     static Texture2D normalCursor;
     static Texture2D panCursor;
-    static Texture2D wireCursor;
+    static Texture2D liveCursor;
     static Texture2D dragCursor;
     static Texture2D currentCursor;
     
@@ -18,7 +18,7 @@ public class Cursor : Singleton<Cursor>
     {
         normalCursor = (Texture2D)Resources.Load("Cursors/normal");
         panCursor = (Texture2D)Resources.Load("Cursors/pan");
-        wireCursor = (Texture2D)Resources.Load("Cursors/live");
+        liveCursor = (Texture2D)Resources.Load("Cursors/live");
         dragCursor = (Texture2D)Resources.Load("Cursors/drag");
 
         InteractionMode.changed += HandleInteractionModeChange;
@@ -44,8 +44,7 @@ public class Cursor : Singleton<Cursor>
     {
         if (im == InteractionModes.Normal) ChangeCursor(normalCursor);
         else if (im == InteractionModes.Pan) ChangeCursor(panCursor);
-        else if (im == InteractionModes.Wire) ChangeCursor(wireCursor);
-        else if (im == InteractionModes.Tweak) ChangeCursor(wireCursor);
+        else if (im == InteractionModes.Tweak) ChangeCursor(liveCursor);
         else Debug.Log("Error.");
     }
 
