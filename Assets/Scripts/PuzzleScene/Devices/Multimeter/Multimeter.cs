@@ -107,7 +107,7 @@ public class Multimeter : Device, CircuitComponent
     {
         var inScene = GameObject.Find(prefabName);
         if (inScene != null) Debug.Log("Multimeter already in scene, cannot spawn.");
-        else GameObject.Instantiate(Resources.Load<GameObject>($"Prefabs/Devices/{prefabName}")).name = prefabName;
+        else GameObject.Instantiate(Resources.Load<GameObject>($"Prefabs/Devices/Multimeter/{prefabName}")).name = prefabName;
     }
 
     public static bool IsAvailable()
