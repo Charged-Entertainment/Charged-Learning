@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Components;
 using UnityEngine.UIElements;
+using static UI;
 
 abstract public class Tooltip
 {

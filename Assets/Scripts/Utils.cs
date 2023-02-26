@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -52,20 +51,13 @@ public class Utils : MonoBehaviour
         return mousePositionCorrected;
     }
 
-    private static VisualElement rootVisualElement;
-    public static VisualElement GetRootVisualElement()
-    {
-        if (rootVisualElement == null) rootVisualElement = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        return rootVisualElement;
-    }
-
     public static bool IsMouseOverUI()
     {
         return EventSystem.current.IsPointerOverGameObject();
     }
     public static VisualElement GetUIUnderCursor()
     {
-        var panel = GetRootVisualElement().panel;
+        var panel = UI.GetRootVisualElement().panel;
         Vector2 pointerScreenPos = Input.mousePosition;
         Vector2 pointerUiPos = new Vector2 { x = pointerScreenPos.x, y = Screen.height - pointerScreenPos.y };
         VisualElement picked = panel.Pick(RuntimePanelUtils.ScreenToPanel(panel, pointerUiPos));
@@ -74,7 +66,7 @@ public class Utils : MonoBehaviour
 
     public static List<VisualElement> GetAllUIUnderCursor()
     {
-        var panel = GetRootVisualElement().panel;
+        var panel = UI.GetRootVisualElement().panel;
         List<VisualElement> picked = new List<VisualElement>();
         Vector2 pointerScreenPos = Input.mousePosition;
         Vector2 pointerUiPos = new Vector2 { x = pointerScreenPos.x, y = Screen.height - pointerScreenPos.y };

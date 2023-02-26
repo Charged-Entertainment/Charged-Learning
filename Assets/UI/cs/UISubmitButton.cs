@@ -4,31 +4,32 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using GameManagement;
 
-public class UISubmitButton : MonoBehaviour
+
+public partial class UI
 {
-    VisualElement document;
-    public static Button SubmitButton;
-    void Start()
+    public static Button SubmitButton { get; private set; } = null;
+    private class UISubmitButton : UIBaseElement
     {
-        document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
-        SubmitButton = document.Q<Button>("submit-btn");
-
-        SubmitButton.RegisterCallback<ClickEvent>(HandleClick);
-        GameMode.changed += HandleGameModeChange;
-    }
-
-    private void HandleClick(ClickEvent ev)
-    {
-        if (GameMode.Current != GameModes.Evaluate)
+        void Start()
         {
-            SubmitButton.SetEnabled(false);
-            GameMode.ChangeTo(GameModes.Evaluate);
+            SubmitButton = document.Q<Button>("submit-btn");
+            SubmitButton.RegisterCallback<ClickEvent>(HandleClick);
+            GameMode.changed += HandleGameModeChange;
         }
-        else SubmitButton.SetEnabled(true);
-    }
 
-    private void HandleGameModeChange(GameModes mode)
-    {
-        SubmitButton.SetEnabled(mode != GameModes.Evaluate); 
+        private void HandleClick(ClickEvent ev)
+        {
+            if (GameMode.Current != GameModes.Evaluate)
+            {
+                SubmitButton.SetEnabled(false);
+                GameMode.ChangeTo(GameModes.Evaluate);
+            }
+            else SubmitButton.SetEnabled(true);
+        }
+
+        private void HandleGameModeChange(GameModes mode)
+        {
+            SubmitButton.SetEnabled(mode != GameModes.Evaluate);
+        }
     }
 }

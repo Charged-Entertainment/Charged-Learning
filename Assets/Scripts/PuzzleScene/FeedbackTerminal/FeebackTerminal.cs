@@ -35,7 +35,7 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
             new Log(RichText.Italic(RichText.Bold("log4")), LogType.Error)
             };
 
-        rootVisualElement = GetComponent<UIDocument>().rootVisualElement;
+        rootVisualElement = UI.GetRootVisualElement();
         terminalInstance = rootVisualElement.Q("terminal-instance");
 
         goalsVisualElement = terminalInstance.Q("goals");

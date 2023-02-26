@@ -7,13 +7,20 @@ using UnityEngine;
 public class SingletonLoader : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+        LoadSystems();
+        LoadUIElements();
+        GameObject.Destroy(gameObject);
+    }
+
+    void LoadSystems()
     {
         var types = Assembly.GetAssembly(typeof(Utils)).GetTypes().
-        Where(T => 
-        IsSubclassOfRawGeneric(typeof(Singleton<>), T) 
-        && !T.IsAbstract 
-        && T.GetCustomAttribute<ExcludeFromSingletonAutoLoadingAttribute>() == null);
+                Where(T =>
+                IsSubclassOfRawGeneric(typeof(Singleton<>), T)
+                && !T.IsAbstract
+                && T.GetCustomAttribute<ExcludeFromSingletonAutoLoadingAttribute>() == null);
 
         var singletons = GameObject.Find("Singletons");
         if (singletons == null) singletons = new GameObject("Singletons");
@@ -23,7 +30,22 @@ public class SingletonLoader : MonoBehaviour
             go.AddComponent(T);
             go.transform.parent = singletons.transform;
         }
-        GameObject.Destroy(gameObject);
+    }
+
+    void LoadUIElements()
+    {
+        var types = Assembly.GetAssembly(typeof(Utils)).GetTypes().
+                        Where(T =>
+                        IsSubclassOfRawGeneric(typeof(UI.UIBaseElement), T)
+                        && !T.IsAbstract
+                        && T.GetCustomAttribute<ExcludeFromSingletonAutoLoadingAttribute>() == null);
+
+        var document = GameObject.Find("UIDocument");
+        if (document == null) document = new GameObject("UIDocument");
+        foreach (var T in types)
+        {
+            document.AddComponent(T);
+        }
     }
 
     static bool IsSubclassOfRawGeneric(System.Type generic, System.Type toCheck)
