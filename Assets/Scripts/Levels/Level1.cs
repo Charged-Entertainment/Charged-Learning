@@ -7,63 +7,40 @@ using UnityEngine.UIElements;
 using Dialogs;
 using Components;
 using GameManagement;
+using static UI;
 
 public class Level1 : MonoBehaviour
 {
-    #region UIElements' references
-    UIDocument document;
-    VisualElement root;
-    VisualElement visualElement;
+    #region script prep and tools 
 
-    VisualElement controlsSection;
-    Button circuitBreakerBtn, hintBtn, resetBtn, pauseBtn;
-
-    Image gameModeIndicator;
-
-    VisualElement dialog;
-
-    VisualElement editorControls;
-
-    VisualElement tools;
-
-    Button submitBtn;
-
-    VisualElement componentsBar;
-    #endregion
-
-    #region UIElements' references for tutorial assets
     List<Image> arrows;
+    VisualElement visualElement;
     LevelComponent battery, resistor;
-    UILevelComponent UIBattery, UIResistor;
-    #endregion
-
-    #region  init
+    UI.UILevelComponent UIBattery, UIResistor;
 
     private void DisableAllSystems()
     {
-        // controlsSection.visible = false;
-        circuitBreakerBtn.visible = false;
-        hintBtn.visible = false;
-        resetBtn.visible = false;
+        CircuitBreaker.visible = false;
+        HintButton.visible = false;
+        ResetButton.visible = false;
 
-        gameModeIndicator.visible = false;
+        GameModeIndicator.visible = false;
 
-        SetEnabled(editorControls.Q("book-btn"), false);
-        SetEnabled(editorControls.Q("normal-btn"), false);
-        SetEnabled(editorControls.Q("zoom-in-btn"), false);
-        SetEnabled(editorControls.Q("zoom-out-btn"), false);
-        SetEnabled(editorControls.Q("pan-btn"), false);
+        SetEnabled(BookButton, false);
+        SetEnabled(NormalButton, false);
+        SetEnabled(ZoomInButton, false);
+        SetEnabled(ZoomOutButton, false);
+        SetEnabled(PanButton, false);
 
-        SetEnabled(tools.Q("devices"), false);
-        SetEnabled(tools.Q("terminal-btn"), false);
+        SetEnabled(DevicesButton, false);
+        SetEnabled(TerminalButton, false);
 
 
-        submitBtn.visible = false;
+        SubmitButton.visible = false;
 
-        document.gameObject.GetComponent<UILevelComponentsCollapse>().ToggleCollapse(null);
+        UI.UILevelComponentsCollapse.Toggle();
 
-        componentsBar.Q("components-bar-header").SetEnabled(false);
-        componentsBar.Q("level-components").SetEnabled(false);
+        LevelComponentsHeader.SetEnabled(false);
 
         Camera.Disable();
         Clipboard.Disable();
@@ -123,34 +100,13 @@ public class Level1 : MonoBehaviour
     }
     private void Awake()
     {
-        document = GameObject.Find("UIDocument").GetComponent<UIDocument>();
-        root = document.rootVisualElement;
-
-        controlsSection = root.Q("controls-section");
-        circuitBreakerBtn = controlsSection.Q<Button>("circuit-breaker");
-        hintBtn = controlsSection.Q<Button>("hint-btn");
-        resetBtn = controlsSection.Q<Button>("reset-btn");
-        pauseBtn = controlsSection.Q<Button>("pause-btn");
-
-        gameModeIndicator = root.Q<Image>("gamemode-indicator");
-
-        dialog = root.Q("dialog");
-
-        editorControls = root.Q("editor-controls");
-
-        tools = root.Q("tools");
-
-        submitBtn = root.Q<Button>("submit-btn");
-
-        componentsBar = root.Q("components-bar");
-
+        var document = GetRootVisualElement();
         VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("Tutorials/One/content");
         StyleSheet styleSheet = Resources.Load<StyleSheet>("Tutorials/One/style");
         visualElement = uxml.Instantiate().Q("tutorial1");
-        root.styleSheets.Add(styleSheet);
-        root.Add(visualElement);
+        document.styleSheets.Add(styleSheet);
+        document.Add(visualElement);
     }
-    #endregion
 
     private void ShowImage(Image image, DialogEntry entry)
     {
@@ -175,6 +131,40 @@ public class Level1 : MonoBehaviour
         lastEntry = t;
     }
 
+    /// <summary>
+    /// Subscribe to an action with a handler.
+    /// If your handler returns true, it'll call your 'clean' handler.
+    /// Otherwise, it'll continue its subscription.
+    /// </summary>
+    Action<T> Handle<T>(ref Action<T> action, Func<T, bool> handle, Action<Action<T>> clean)
+    {
+        Action<T> _handler = null;
+        _handler = c => { if (handle(c)) clean(_handler); };
+        action += _handler;
+        return _handler;
+    }
+
+    Action<T, T2> Handle<T, T2>(ref Action<T, T2> action, Func<T, T2, bool> handle, Action<Action<T, T2>> clean)
+    {
+        Action<T, T2> _handler = null;
+        _handler = (c, c2) => { if (handle(c, c2)) clean(_handler); };
+        action += _handler;
+        return _handler;
+    }
+
+    void ContinueOnClick(VisualElement v)
+    {
+        EventCallback<ClickEvent> doOnce = null;
+        doOnce = ev =>
+        {
+            Dialog.Continue();
+            v.UnregisterCallback<ClickEvent>(doOnce);
+        };
+        v.RegisterCallback<ClickEvent>(doOnce);
+    }
+    #endregion
+
+    #region script
     private void PlayDialogSequence1()
     {
         // 0
@@ -188,9 +178,9 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            ContinueOnClick(componentsBar.Q("components-bar-header"));
+            ContinueOnClick(LevelComponentsHeader);
             UIBattery.visualElement.SetEnabled(false);
-            componentsBar.Q("components-bar-header").SetEnabled(true);
+            LevelComponentsHeader.SetEnabled(true);
             ShowImage(arrows[0], entries[2]);
         };
 
@@ -202,7 +192,7 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             ShowImage(arrows[2], entries[4]);
-            SetEnabled(editorControls.Q("book-btn"), true);
+            SetEnabled(BookButton, true);
         };
         lastEntry.ended += Book.ShowEmpty;
 
@@ -225,10 +215,10 @@ public class Level1 : MonoBehaviour
         {
             ShowImage(arrows[3], entries[7]);
 
-            SetEnabled(editorControls.Q("normal-btn"), true);
-            SetEnabled(editorControls.Q("zoom-in-btn"), true);
-            SetEnabled(editorControls.Q("zoom-out-btn"), true);
-            SetEnabled(editorControls.Q("pan-btn"), true);
+            SetEnabled(NormalButton, true);
+            SetEnabled(ZoomInButton, true);
+            SetEnabled(ZoomOutButton, true);
+            SetEnabled(PanButton, true);
 
             GameManager.Enable();
             Selection.Enable();
@@ -243,9 +233,9 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            ContinueOnClick(tools.Q("devices-btn"));
+            ContinueOnClick(DevicesButton);
             ShowImage(arrows[4], entries[9]);
-            SetEnabled(tools.Q("devices"), true);
+            SetEnabled(DevicesButton, true);
         };
 
         // 10 
@@ -254,7 +244,7 @@ public class Level1 : MonoBehaviour
         {
             Dialog.Pause();
             ShowImage(arrows[5], entries[10]);
-            ContinueOnClick(tools.Q("multimeter-btn"));
+            ContinueOnClick(MultimeterButton);
         };
 
         // 11 
@@ -313,8 +303,8 @@ public class Level1 : MonoBehaviour
         lastEntry.started += () =>
         {
             Dialog.Pause();
-            SetEnabled(gameModeIndicator, true);
-            SetEnabled(circuitBreakerBtn, true);
+            SetEnabled(GameModeIndicator, true);
+            SetEnabled(CircuitBreaker, true);
             Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {
                         ComponentMeasured compMeasuredGoal = (goal as ComponentMeasured);
@@ -352,21 +342,11 @@ public class Level1 : MonoBehaviour
         AddEntry("Now we need to also determine the value of this resistor, but I've been helping you a lot, maybe you can try to do this next task by yourself. Here's a lovely feedback terminal to guide you through your journey.");
         lastEntry.started += () =>
         {
-            SetEnabled(tools.Q("terminal-btn"), true);
+            SetEnabled(TerminalButton, true);
             Puzzle.AddGoal(new CircuitSubmit("Connect the resistor and the battery in a circuit then submit", battery, resistor));
             FeebackTerminal.Enable();
             Knob.SetEnabled(true);
         };
-
-        // not working for some reason
-        // Handle<LevelComponent>(ref LevelComponent.propertyRevealed, p =>
-        // {
-        //     if (p.Name == "resistor") PlayDialogSequence2();
-        //     return p.Name == "resistor";
-        // }, handler => LevelComponent.propertyRevealed -= handler);
-
-        // temp
-
 
         Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {
@@ -396,7 +376,7 @@ public class Level1 : MonoBehaviour
         AddEntry("Connect the resistor to the battery and press the submit button to evaluate the circuit.");
         lastEntry.started += () =>
         {
-            SetEnabled(submitBtn, true);
+            SetEnabled(SubmitButton, true);
             Dialog.Pause();
             Multimeter.Destroy();
 
@@ -419,36 +399,5 @@ public class Level1 : MonoBehaviour
         var seq = new DialogSequence(entries);
         Dialog.PlaySequence(seq);
     }
-
-    /// <summary>
-    /// Subscribe to an action with a handler.
-    /// If your handler returns true, it'll call your 'clean' handler.
-    /// Otherwise, it'll continue its subscription.
-    /// </summary>
-    Action<T> Handle<T>(ref Action<T> action, Func<T, bool> handle, Action<Action<T>> clean)
-    {
-        Action<T> _handler = null;
-        _handler = c => { if (handle(c)) clean(_handler); };
-        action += _handler;
-        return _handler;
-    }
-
-    Action<T, T2> Handle<T, T2>(ref Action<T, T2> action, Func<T, T2, bool> handle, Action<Action<T, T2>> clean)
-    {
-        Action<T, T2> _handler = null;
-        _handler = (c, c2) => { if (handle(c, c2)) clean(_handler); };
-        action += _handler;
-        return _handler;
-    }
-
-    void ContinueOnClick(VisualElement v)
-    {
-        EventCallback<ClickEvent> doOnce = null;
-        doOnce = ev =>
-        {
-            Dialog.Continue();
-            v.UnregisterCallback<ClickEvent>(doOnce);
-        };
-        v.RegisterCallback<ClickEvent>(doOnce);
-    }
+    #endregion
 }
