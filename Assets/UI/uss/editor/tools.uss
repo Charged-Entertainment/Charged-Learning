@@ -63,6 +63,13 @@
   height: 86px;
 }
 
+#tools #calculator-btn Image {
+  background-image: resource("Icons/calculator");
+  align-self: center;
+  height: 82px;
+  width: 86px;
+}
+
 #tools #terminal-btn {
   top: 200px;
 }

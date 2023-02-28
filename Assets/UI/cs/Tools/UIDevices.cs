@@ -6,22 +6,23 @@ using UnityEngine.UIElements;
 public partial class UI
 {
     public static Button DevicesButton { get; private set; } = null;
-    public static Button MultimeterButton { get; private set; } = null;
     public static List<Button> DevicesButtons { get; private set; } = null;
     private class UIDevices : UIBaseElement
     {
         VisualElement container;
         // the delay in seconds between each element showing/disappearing
         private static float delay = 0.1f;
-        private void Awake()
+        private void Start()
         {
             container = document.Q<VisualElement>("devices");
             DevicesButton = container.Q<Button>("devices-btn");
             DevicesButtons = new List<Button>();
 
-            MultimeterButton = container.Q<Button>("multimeter-btn");
             DevicesButtons.Add(MultimeterButton);
             SetButtonVisable(MultimeterButton, false);
+
+            DevicesButtons.Add(CalculatorButton);
+            SetButtonVisable(CalculatorButton, false);
 
             List<Button> unknowns = container.Query<Button>(className: "unknown").ToList();
             foreach (var b in unknowns)
@@ -41,25 +42,6 @@ public partial class UI
                     Play();
                 }
             });
-
-
-            MultimeterButton.RegisterCallback<ClickEvent>(ev =>
-            {
-                if (!Multimeter.IsAvailable()) Multimeter.Spawn();
-            });
-
-            Multimeter.created += () =>
-            {
-                // Bug!! multimeterBtn.SetEnabled(false); should not be commented out. 
-                // this here is disabled becuase in the tutorial, when it fired, it disabled the button in the middle of handling the handlers subscribed to the click event, and it'd fire first, canceling all the subsequent handlers since the button is disabled. (Unity checks if the button is still enabled before calling each handler in case on disables it??)
-                // multimeterBtn.SetEnabled(false);
-                SetButtonVisable(MultimeterButton, true);
-            };
-            Multimeter.destroyed += () =>
-            {
-                // multimeterBtn.SetEnabled(true);
-                SetButtonVisable(MultimeterButton, true);
-            };
         }
 
         int currButtonIdx = 0;

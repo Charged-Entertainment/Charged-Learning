@@ -33,7 +33,7 @@ public class Level1 : MonoBehaviour
         SetEnabled(PanButton, false);
 
         SetEnabled(DevicesButton, false);
-        SetEnabled(TerminalButton, false);
+        SetEnabled(CalculatorButton, false);
 
 
         SubmitButton.visible = false;
@@ -342,7 +342,7 @@ public class Level1 : MonoBehaviour
         AddEntry("Now we need to also determine the value of this resistor, but I've been helping you a lot, maybe you can try to do this next task by yourself. Here's a lovely feedback terminal to guide you through your journey.");
         lastEntry.started += () =>
         {
-            SetEnabled(TerminalButton, true);
+            SetEnabled(CalculatorButton, true);
             Puzzle.AddGoal(new CircuitSubmit("Connect the resistor and the battery in a circuit then submit", battery, resistor));
             FeebackTerminal.Enable();
             Knob.SetEnabled(true);
