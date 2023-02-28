@@ -67,7 +67,7 @@ public class Calculator : MonoBehaviour
             controller.Display(equation.Solve("x").Stringize());
         }else{
             Entity equation = expression;
-            controller.Display(((double)equation.EvalNumerical()).ToString());
+            controller.Display((equation.Simplify()).ToString());
         }
     }
 
