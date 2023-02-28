@@ -1,5 +1,6 @@
 using System.Collections;
 using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using Symbolism;
@@ -10,7 +11,7 @@ public class Calculator : MonoBehaviour
 {
     public static HashSet<char> SupportedSymbols = new HashSet<char>() {
         //Units
-        {'o'}, {'a'}, {'v'}, {'w'},
+        // {'o'}, {'a'}, {'v'}, {'w'},
 
         // SI Prefixes
         {'k'},{'m'},
@@ -54,6 +55,8 @@ public class Calculator : MonoBehaviour
 
     private static string PrepareExpression(string expression){
         expression = expression.Replace("√", "sqrt");
+        expression = expression.Replace("m", "*(10^-3)");
+        expression = expression.Replace("k", "*(10^3)");
         return expression;
     }
     public static void Solve(string expression)
