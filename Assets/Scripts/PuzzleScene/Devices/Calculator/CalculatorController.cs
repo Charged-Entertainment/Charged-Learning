@@ -18,13 +18,13 @@ public class CalculatorController : MonoBehaviour
     void Start()
     {
         inputField.onValidateInput += HandleValidation;
+        inputField.onSubmit.AddListener(HandleSubmit);
     }
 
-    // Update is called once per frame
-    void Update()
+    void HandleSubmit(string s)
     {
-        if(Input.GetKeyDown(KeyCode.Return))
-            Calculator.Solve(inputField.text);
+        Calculator.Solve(s);
+        inputField.ActivateInputField();
     }
 
     char HandleValidation(string input, int charIndex, char addedChar)
@@ -36,7 +36,6 @@ public class CalculatorController : MonoBehaviour
         return '\0';
 
     }
-
 
     public void Display(string s)
     {

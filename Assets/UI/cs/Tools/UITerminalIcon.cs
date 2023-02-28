@@ -8,7 +8,7 @@ public partial class UI
     public static Button TerminalButton { get; private set; } = null;
     private class UITerminalIcon : UIBaseElement
     {
-        private void Start()
+        private void Awake()
         {
             // var terminal = rootVisualElement.Q("terminal-instance");
             TerminalButton = document.Q<Button>("terminal-btn");
