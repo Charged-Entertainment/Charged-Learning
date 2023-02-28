@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 public class CalculatorController : MonoBehaviour
@@ -23,6 +24,7 @@ public class CalculatorController : MonoBehaviour
 
     void HandleSubmit(string s)
     {
+        Debug.Log("solve equation");
         Calculator.Solve(s);
         inputField.ActivateInputField();
     }
@@ -40,5 +42,14 @@ public class CalculatorController : MonoBehaviour
     public void Display(string s)
     {
         inputField.text = s;
+    }
+
+    public void WriteChar(char c){
+        inputField.text += c;
+    }
+
+
+    public void Submit(){
+        HandleSubmit(inputField.text);
     }
 }
