@@ -20,7 +20,7 @@ public class Calculator : EditorBehaviour
         {'?'},
 
         // Operstors
-        {'+'}, {'-'}, {'*'}, {'/'}, {'^'}, {'s'},
+        {'+'}, {'-'}, {'*'}, {'/'}, {'^'}, {'s'},{'√'},
 
         // Space
         {' '},
