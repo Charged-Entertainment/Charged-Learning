@@ -1,17 +1,14 @@
-using System.Collections;
 using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
-using Symbolism;
-using Symbolism.IsolateVariable;
 using AngouriMath;
 
 public class Calculator : EditorBehaviour
 {
     public static HashSet<char> SupportedSymbols = new HashSet<char>() {
         //Units
-        // {'o'}, {'a'}, {'v'}, {'w'},
+        {'o'}, {'a'}, {'v'}, {'w'},
 
         // SI Prefixes
         {'k'},{'m'},
@@ -44,6 +41,11 @@ public class Calculator : EditorBehaviour
         {'s', '√'},
     };
 
+    public static Dictionary<string, string> unitTranslation = new Dictionary<string, string>(){
+        {@"((A \* Ω)|(Ω \* A))", "V"},
+        {@"((A \* V)|(V \* A))", "W"}
+    };
+
 
 
     private static CalculatorController controller;
@@ -63,19 +65,24 @@ public class Calculator : EditorBehaviour
     }
     public static void Solve(string expression)
     {
+        string result = "";
         expression = PrepareExpression(expression);
         if (expression.Contains("?"))
         {
             //TODO: check if it follows the pattern for an equation
             expression = expression.Replace('?', 'x');
             Entity equation = expression;
-            controller.Display(equation.Solve("x").Stringize());
+            result = equation.Solve("x").Stringize();
         }
         else
         {
             Entity equation = expression;
-            controller.Display((equation.Simplify()).ToString());
+            result = equation.Simplify().Stringize();
         }
+        foreach(var pair in unitTranslation){
+            result = Regex.Replace(result, pair.Key, pair.Value);
+        }
+        controller.Display(result);
     }
 
     public static bool SymbolSupported(char c)
