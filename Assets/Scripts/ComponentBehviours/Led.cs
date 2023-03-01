@@ -8,7 +8,7 @@ public class Led : MonoBehaviour
     public readonly static float DANGEROUS_MAX_INTENSITY = 15;
 
     [SerializeField] private new Light2D light;
-    [SerializeField] private float lerpSpeed = 3;
+    [SerializeField] public float lerpSpeed = 3;
     [SerializeField] private float targetIntensity = 0;
     void Start()
     {
