@@ -44,12 +44,47 @@ public class CalculatorController : MonoBehaviour
         inputField.text = s;
     }
 
-    public void WriteChar(char c){
-        inputField.text += c;
+    public void WriteChar(char c)
+    {
+        inputField.text = inputField.text.Insert(inputField.caretPosition, c.ToString());
     }
 
 
-    public void Submit(){
+    public void Submit()
+    {
         HandleSubmit(inputField.text);
+    }
+
+    public void Clear()
+    {
+        inputField.text = "";
+    }
+
+    public void Delete()
+    {
+        inputField.ProcessEvent(Event.KeyboardEvent("backspace"));
+    }
+
+    public void Up()
+    {
+        inputField.ProcessEvent(Event.KeyboardEvent("up"));
+    }
+
+    public void Down()
+    {
+        inputField.ProcessEvent(Event.KeyboardEvent("down"));
+
+    }
+
+    public void Right()
+    {   
+        //not working properly
+        inputField.ProcessEvent(Event.KeyboardEvent("right"));
+    }
+
+    public void Left()
+    {
+        //not working properly
+        inputField.ProcessEvent(Event.KeyboardEvent("left"));
     }
 }

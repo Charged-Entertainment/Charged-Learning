@@ -12,17 +12,49 @@ public class CalculatorDeviceButton : MonoBehaviour
         controller = transform.GetComponentInParent<CalculatorController>();
     }
 
-    public void OnClick(){
+    public void OnClick()
+    {
         controller.WriteChar(value);
     }
 
-    public void Solve(){
+    public void Solve()
+    {
         controller.Submit();
+    }
+
+    public void Clear()
+    {
+        controller.Clear();
+    }
+
+    public void Delete()
+    {
+        controller.Delete();
+    }
+
+    public void Up()
+    {
+        controller.Up();
+    }
+
+    public void Down()
+    {
+        controller.Down();
+    }
+
+    public void Right()
+    {
+        controller.Right();
+    }
+
+    public void Left()
+    {
+        controller.Left();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
