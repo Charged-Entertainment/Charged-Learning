@@ -3,12 +3,17 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using AngouriMath;
+using AngouriMath.Extensions;
 
 public class Calculator : EditorBehaviour
 {
+    public static readonly char cLOWER_OMEGA = 'ω';
+    public static readonly char cUPPER_OMEGA = 'Ω';
+    public static readonly string sUPPER_OMEGA = "Ω";
+    public static readonly string sLOWER_OMEGA = "ω";
     public static HashSet<char> SupportedSymbols = new HashSet<char>() {
         //Units
-        {'o'}, {'a'}, {'v'}, {'w'},
+        {cLOWER_OMEGA},{'o'}, {'a'}, {'v'}, {'w'},
 
         // SI Prefixes
         {'k'},{'m'},
@@ -26,13 +31,18 @@ public class Calculator : EditorBehaviour
         {' '},
         // Paranthesis
         {'('}, {')'},
+        // Set-related
+        {'{'}, {'}'}, {','},
         // Dot
-        {'.'}
+        {'.'},
+        // Complex
+        {'i'}
     };
 
     public static Dictionary<char, char> symbolTranslation = new Dictionary<char, char>(){
         // Units
-        {'o', 'Ω'},
+        {cLOWER_OMEGA, cUPPER_OMEGA},
+        {'o', cUPPER_OMEGA},
         {'a', 'A'},
         {'v', 'V'},
         {'w', 'W'},
@@ -41,10 +51,14 @@ public class Calculator : EditorBehaviour
         {'s', '√'},
     };
 
+    static string space = @"\s*";
     public static Dictionary<string, string> unitTranslation = new Dictionary<string, string>(){
-        {@"((A \* Ω)|(Ω \* A))", "V"},
-        {@"((A \* V)|(V \* A))", "W"},
-        {@"(W / A)", "V"},
+        {$@"((A{space}\*?{space}{cUPPER_OMEGA})|({cUPPER_OMEGA}{space}\*?{space}A))", "V"},
+        {$@"(W{space}/{space}A)", "V"},
+        {$@"((A{space}\*?{space}V)|(V{space}\*?{space}A))", "W"},
+        {$@"(V{space}/{space}{cUPPER_OMEGA})", "A"},
+        {$@"(W{space}/{space}V)", "A"},
+        {$@"(V{space}/{space}A)", sUPPER_OMEGA},
     };
 
 
@@ -59,30 +73,51 @@ public class Calculator : EditorBehaviour
 
     private static string PrepareExpression(string expression)
     {
-        expression = expression.Replace("√", "sqrt");
+        expression = Regex.Replace(expression, @"√(\d*)", @"sqrt($1)");
         expression = expression.Replace("m", "*(10^-3)");
         expression = expression.Replace("k", "*(10^3)");
         return expression;
     }
+    
     public static void Solve(string expression)
     {
         string result = "";
         expression = PrepareExpression(expression);
-        if (expression.Contains("?"))
+
+        if (expression.Contains("?")) expression = expression.Replace('?', 'x');
+        else expression += " = x";
+
+        //TODO: check if it follows the pattern for an equation
+        Entity.Set solutionSet = expression.Solve("x");
+        foreach (var solution in (Entity.Set.FiniteSet)solutionSet)
         {
-            //TODO: check if it follows the pattern for an equation
-            expression = expression.Replace('?', 'x');
-            Entity equation = expression;
-            result = equation.Solve("x").Stringize();
+            result += " ";
+            if (solution.EvaluableNumerical && solution.EvalNumerical() is Entity.Number.Real realNumber)
+            {
+                float val = (float)realNumber;
+                result += val.ToString("0.00");
+            }
+            // unknown; could be symbols, complex numbers, etc...
+            else
+            {
+                string t = solution.Simplify().Stringize().Replace(" ", string.Empty);
+                result += t;
+            }
         }
-        else
+
+        result = result.Trim();
+        result = result.Replace(" ", ", ");
+        // If solution set contains multiple elements
+        if (result.Contains(',')) result = "{ " + result + " }";
+
+        foreach (var pair in unitTranslation)
         {
-            Entity equation = expression;
-            result = equation.Simplify().Stringize();
-        }
-        foreach(var pair in unitTranslation){
             result = Regex.Replace(result, pair.Key, pair.Value);
         }
+
+        // remove the '*' between numbers and units.
+        result = Regex.Replace(result, $@"(\d*){space}(m|k)?{space}\*{space}(V|W|A|{sUPPER_OMEGA})", $@"$1$2$3");
+
         controller.Display(result);
     }
 
