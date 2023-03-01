@@ -14,7 +14,6 @@ public partial class UI
         string off = "gamemode-indicator-off";
         void Start()
         {
-            document = GameObject.Find("UIDocument").GetComponent<UIDocument>().rootVisualElement;
             GameModeIndicator = document.Q<Image>("gamemode-indicator");
             GameMode.changed += HandleGameModeChange;
         }

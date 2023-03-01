@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <Style src="uss/utils.uss" />
+    <Style src="uss/style.uss" />
+    <Style src="uss/MainMenu/style.uss" />
+
+    <ui:VisualElement name="main" picking-mode="Ignore">
+        <ui:Image name="background" />
+        <ui:Image name="logo" />
+        <ui:Button name="play-btn" class="stdBtn" />
+        <ui:Button name="collection-btn" class="stdBtn" />
+        <ui:Button name="sandbox-btn" class="stdBtn" />
+        <ui:Button name="settings-btn" />
+        <ui:Button name="copyrights-btn" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -5,14 +5,18 @@ using UnityEngine.UIElements;
 
 public static partial class UI
 {
-    private static UIDocument _document = null;
-    private static VisualElement document = GetRootVisualElement();
+    private static VisualElement document
+    {
+        get
+        {
+            return GetRootVisualElement();
+        }
+    }
 
     public static VisualElement GetRootVisualElement()
     {
-        if (_document == null) _document = GameObject.Find("UIDocument").GetComponent<UIDocument>();
-        if (document == null) document = _document.rootVisualElement;
-        return document;
+        var _document = GameObject.Find("UIDocument").GetComponent<UIDocument>();
+        return _document.rootVisualElement;
     }
 
     public abstract class UIBaseElement : MonoBehaviour { }
