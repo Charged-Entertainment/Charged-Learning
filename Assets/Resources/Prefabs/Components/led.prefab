@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 5268489511488267215}
   - component: {fileID: 1206765479464582037}
   - component: {fileID: 7828512059303300299}
+  - component: {fileID: 6314406443336613784}
   m_Layer: 0
   m_Name: led
   m_TagString: Untagged
@@ -405,3 +406,18 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &6314406443336613784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8709667344526782541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac3d1a855c104d10ab85d912fe05b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 0}
+  lerpSpeed: 3
+  targetIntensity: 0
