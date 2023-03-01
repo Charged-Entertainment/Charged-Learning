@@ -43,7 +43,8 @@ public class Calculator : EditorBehaviour
 
     public static Dictionary<string, string> unitTranslation = new Dictionary<string, string>(){
         {@"((A \* Ω)|(Ω \* A))", "V"},
-        {@"((A \* V)|(V \* A))", "W"}
+        {@"((A \* V)|(V \* A))", "W"},
+        {@"(W / A)", "V"},
     };
 
 
