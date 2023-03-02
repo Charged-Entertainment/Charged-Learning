@@ -16,14 +16,14 @@ public partial class UI
                 if (!Multimeter.IsAvailable()) Multimeter.Spawn();
             });
 
-            Multimeter.created += () =>
-            {
-                MultimeterButton.SetEnabled(false);
-            };
-            Multimeter.destroyed += () =>
-            {
-                MultimeterButton.SetEnabled(true);
-            };
+            // Multimeter.created += () =>
+            // {
+            //     MultimeterButton.SetEnabled(false);
+            // };
+            // Multimeter.destroyed += () =>
+            // {
+            //     MultimeterButton.SetEnabled(true);
+            // };
         }
     }
 }
