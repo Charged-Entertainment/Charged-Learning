@@ -36,17 +36,17 @@ public class Resistor : MonoBehaviour
 
     public static readonly Dictionary<ColorBand, Color> ColorBandToColor = new Dictionary<ColorBand, Color>() {
         {ColorBand.Black, Color.black},
-        {ColorBand.Brown, new Color(153, 102, 51)},
+        {ColorBand.Brown, new Color(153/255f, 102/255f, 51/255f)},
         {ColorBand.Red, Color.red},
-        {ColorBand.Orange, new Color(255, 153, 0)},
+        {ColorBand.Orange, new Color(255f/255f, 153/255f, 0)},
         {ColorBand.Yellow, Color.yellow},
         {ColorBand.Green, Color.green},
         {ColorBand.Blue, Color.blue},
-        {ColorBand.Violet, new Color(255, 0, 255)},
+        {ColorBand.Violet, new Color(255f/255f, 0, 255f/255f)},
         {ColorBand.Grey, Color.gray},
         {ColorBand.White, Color.white},
-        {ColorBand.Gold, new Color(255, 215, 0)},
-        {ColorBand.Silver, new Color(192, 192, 192)},
+        {ColorBand.Gold, new Color(255f/255f, 215/255f, 0)},
+        {ColorBand.Silver, new Color(192/255f, 192/255f, 192/255f)},
     };
 
     public void SetColorBands(ulong resistance)
