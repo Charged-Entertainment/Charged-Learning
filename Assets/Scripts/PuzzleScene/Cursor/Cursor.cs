@@ -16,10 +16,10 @@ public class Cursor : Singleton<Cursor>
 
     private void Start()
     {
-        normalCursor = (Texture2D)Resources.Load("Cursors/normal");
-        panCursor = (Texture2D)Resources.Load("Cursors/pan");
-        liveCursor = (Texture2D)Resources.Load("Cursors/live");
-        dragCursor = (Texture2D)Resources.Load("Cursors/drag");
+        normalCursor = (Texture2D)Resources.Load("Sprites/Cursors/normal");
+        panCursor = (Texture2D)Resources.Load("Sprites/Cursors/pan");
+        liveCursor = (Texture2D)Resources.Load("Sprites/Cursors/live");
+        dragCursor = (Texture2D)Resources.Load("Sprites/Cursors/drag");
 
         InteractionMode.changed += HandleInteractionModeChange;
         LiveComponent.mouseDown += HandleMouseDown;
