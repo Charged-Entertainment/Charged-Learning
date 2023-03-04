@@ -22,7 +22,8 @@
             </ui:VisualElement>
 
             <ui:VisualElement name="level-name" class="row">
-                <ui:Label class="h1" text="Level N: Level Name" />
+                <ui:Label class="h1" text="Sandbox" />
+                <!-- <ui:Label class="h1" text="Level N: Level Name" /> -->
             </ui:VisualElement>
 
             <ui:VisualElement name="controls-section" class="row">
