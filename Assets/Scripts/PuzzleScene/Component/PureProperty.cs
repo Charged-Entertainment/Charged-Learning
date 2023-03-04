@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Components{
-        public enum PropertyType{
+namespace Components
+{
+    public enum PropertyType
+    {
         Resistance,
-        Voltage
+        Voltage,
+        Current
     }
 
     public class PureProperty
@@ -22,7 +25,7 @@ namespace Components{
 
 
 
-        public PureProperty(PropertyType propertyType, double value, int multiplier, string unit, bool isStatic)
+        public PureProperty(PropertyType propertyType, double value, string unit = "undefined_unit", int multiplier = 0, bool isStatic = true)
         {
             this.propertyType = propertyType;
             // this.valueType = valueType;
@@ -31,7 +34,7 @@ namespace Components{
             this.unit = unit;
             this.isStatic = isStatic;
         }
-    
+
     }
 
 }

@@ -167,12 +167,11 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
             }
         }
         var multimeter = GameObject.FindObjectOfType<Multimeter>();
-        if(multimeter.InCircuit && multimeter.DeviceMode is ResistanceMode){
+        if (Multimeter.IsAvailable() && multimeter.DeviceMode is ResistanceMode)
+        {
             groundWire = finalCircuit[multimeter.Terminals[0]];
             return groundWire;
-        }else
-            Debug.Log($"Multimeter.InCircuit:{multimeter.InCircuit}, deviceMode: {multimeter.DeviceMode}");
-        
+        }
         Debug.Log("No wire in the circuit can be considered as ground.");
         return null;
     }

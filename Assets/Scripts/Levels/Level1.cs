@@ -69,7 +69,7 @@ public class Level1 : MonoBehaviour
     {
         UILevelComponent.created += InitBatteryUI;
         battery = Puzzle.CreateLevelComponent("battery", ComponentType.Battery, 1);
-        Puzzle.AddProperty(battery, PropertyType.Voltage, 12, 1, "v", true);
+        Puzzle.AddProperty(battery, PropertyType.Voltage, 12);
         Puzzle.AddGoal(new ComponentMeasured("Measure the battery", battery));
 
     }
@@ -86,7 +86,7 @@ public class Level1 : MonoBehaviour
     {
         UILevelComponent.created += InitResisorUI;
         resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Resistor, 1);
-        Puzzle.AddProperty(resistor, PropertyType.Resistance, 5, 1, "ohm", true);
+        Puzzle.AddProperty(resistor, PropertyType.Resistance, 5);
         Puzzle.AddGoal(new ComponentMeasured("Measure the resistor", resistor));
 
     }

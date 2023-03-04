@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using GameManagement;
 using Components;
+using SpiceSharp;
+using SpiceSharp.Components;
+using SpiceSharp.Entities;
+using System.Text.RegularExpressions;
 
 public partial class LiveComponent : EditorBehaviour, CircuitComponent
 {
@@ -48,6 +52,9 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
                        positiveWire,
                        component.Properties[PropertyType.Voltage].value
                        );
+
+            case ComponentType.Led:
+                return new SpiceSharp.Components.Diode(levelComponent.Name + GetInstanceID(), positiveWire, negativeWire, $"{levelComponent.Name}_model"); ;
         }
         return null;
 
@@ -70,6 +77,4 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
             throw new Exception("Quantity...");
         }
     }
-
-
 }

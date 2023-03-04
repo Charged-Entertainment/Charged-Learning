@@ -14,9 +14,15 @@ public class Puzzle : Singleton<Puzzle>
     public static List<Goal> Goals { get; private set; } = new List<Goal>();
 
     private void Start() {
-        // CreateLevelComponent("resistor", ComponentType.Resistor, 5);
-        // CreateLevelComponent("battery", ComponentType.Battery, 5);
-        // CreateLevelComponent("led", ComponentType.Led, 5);
+        var r = CreateLevelComponent("resistor", ComponentType.Resistor, 5);
+        var b = CreateLevelComponent("battery", ComponentType.Battery, 5);
+        var l = CreateLevelComponent("led", ComponentType.Led, 5);
+
+
+        AddProperty(r, PropertyType.Resistance, 330);
+        AddProperty(b, PropertyType.Voltage, 9);
+
+        FeebackTerminal.Disable();
     }
 
     static public LevelComponent CreateLevelComponent(string name, ComponentType type, int qty)
@@ -28,9 +34,9 @@ public class Puzzle : Singleton<Puzzle>
         return t;
     }
 
-    static public PureProperty AddProperty(LevelComponent c, PropertyType type, float value, int multiplier, string unit, bool isStatic)
+    static public PureProperty AddProperty(LevelComponent c, PropertyType type, float value)
     {
-        var p = new PureProperty(type, value, multiplier, unit, isStatic);
+        var p = new PureProperty(type, value);
         c.AddProperty(p);
         return p;
     }

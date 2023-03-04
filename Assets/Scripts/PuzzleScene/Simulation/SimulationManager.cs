@@ -1,16 +1,18 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 using SpiceSharp.Validation;
+using Components;
 
 public class SimulationManager : Singleton<SimulationManager>
 {
     private static SpiceSharp.Simulations.IBiasingSimulation simulation;
-    public static Action <SpiceSharp.Simulations.IBiasingSimulation> simulationDone;
+    public static Action<SpiceSharp.Simulations.IBiasingSimulation> simulationDone;
     void Update()
     {
-        
+
     }
 
     public static void Simulate()
@@ -20,6 +22,12 @@ public class SimulationManager : Singleton<SimulationManager>
         simulation = new SpiceSharp.Simulations.Transient("sim1");
 
         var circuit = CircuitBuilder.Collect();
+
+        // TEMP for testing. Get attach real models!!
+        var testModel = new SpiceSharp.Components.DiodeModel("led_model"); 
+        // testModel.SetParameter("Rs", 330.0);
+        circuit.Add(testModel);
+
         simulation.ExportSimulationData += HandleSimulationResults;
         try
         {
