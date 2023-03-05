@@ -10,8 +10,9 @@ public class WireManager : Singleton<WireManager>
     private static Dictionary<Terminal, HashSet<Wire>> TerminalToWires;
     private static Dictionary<string, Wire> TerminalPairToWire;
 
-    private void Start()
+    private new void Awake()
     {
+        base.Awake();
         TerminalPairToWire = new Dictionary<string, Wire>();
         TerminalToWires = new Dictionary<Terminal, HashSet<Wire>>();
         gameObject.AddComponent<WireDragPreview>();
