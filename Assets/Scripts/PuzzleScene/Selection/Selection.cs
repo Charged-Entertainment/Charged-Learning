@@ -18,8 +18,9 @@ public partial class Selection : Singleton<Selection>
 
     private SelectionController selectionController;
 
-    private void Start()
+    private new void Awake()
     {
+        base.Awake();
         selectedGameObjects = new Dictionary<int, EditorBehaviour>();
         selectionController = gameObject.AddComponent<SelectionController>();
     }
