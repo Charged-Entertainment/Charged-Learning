@@ -87,4 +87,8 @@ public class CalculatorController : MonoBehaviour
         //not working properly
         inputField.ProcessEvent(Event.KeyboardEvent("left"));
     }
+
+    public bool IsFocused(){
+        return inputField.isFocused;
+    }
 }

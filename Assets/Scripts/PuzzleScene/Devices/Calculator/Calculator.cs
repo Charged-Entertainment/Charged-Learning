@@ -161,4 +161,10 @@ public class Calculator : EditorBehaviour
         if (inScene == null) Debug.Log("Calculator not in scene, cannot destroy.");
         else GameObject.Destroy(inScene);
     }
+
+    public static bool IsFocused(){
+        if(controller == null)
+            return false;
+        return controller.IsFocused();
+    }
 }
