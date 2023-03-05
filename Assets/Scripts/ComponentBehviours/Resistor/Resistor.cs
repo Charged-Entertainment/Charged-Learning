@@ -24,15 +24,19 @@ public class Resistor : MonoBehaviour
         band2 = transform.Find("b2").GetComponent<SpriteRenderer>();
         multiplierBand = transform.Find("b3").GetComponent<SpriteRenderer>();
         toleranceBand = transform.Find("b4").GetComponent<SpriteRenderer>();
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PuzzleScene") {
+            gameObject.AddComponent<ResistorPuzzleSceneBehavior>();
+        }
     }
 
-    #region testing
-    // temporary block just to test
-    [SerializeField] ulong testResistance = 0;
-    private void Update() {
-        SetColorBands(testResistance);
-    }
-    #endregion
+    // #region testing
+    // // temporary block just to test
+    // [SerializeField] ulong testResistance = 0;
+    // private void Update() {
+    //     SetColorBands(testResistance);
+    // }
+    // #endregion
 
     public static readonly Dictionary<ColorBand, Color> ColorBandToColor = new Dictionary<ColorBand, Color>() {
         {ColorBand.Black, Color.black},
