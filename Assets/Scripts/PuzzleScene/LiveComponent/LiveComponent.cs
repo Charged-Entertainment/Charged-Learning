@@ -36,25 +36,26 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
     public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
     {
         var component = levelComponent.Component;
+        var id = gameObject.GetInstanceID().ToString();
         switch (component.componentType)
         {
             case ComponentType.Resistor:
                 return new SpiceSharp.Components.Resistor(
-                        levelComponent.Name + GetInstanceID(),
+                        id,
                         negativeWire,
                         positiveWire,
                         component.Properties[PropertyType.Resistance].value
                         );
             case ComponentType.Battery:
                 return new SpiceSharp.Components.VoltageSource(
-                       levelComponent.Name,
+                       id,
                        negativeWire,
                        positiveWire,
                        component.Properties[PropertyType.Voltage].value
                        );
 
             case ComponentType.Led:
-                return new SpiceSharp.Components.Diode(levelComponent.Name + GetInstanceID(), positiveWire, negativeWire, $"{levelComponent.Name}_model"); ;
+                return new SpiceSharp.Components.Diode(id, negativeWire, positiveWire, $"{levelComponent.Name}_model"); ;
         }
         return null;
 

@@ -21,7 +21,7 @@ public class ResistanceMode : MultimeterMode
     protected override void HandleSimulationDone(IBiasingSimulation simulation)
     {
         if (!multimeter.InCircuit) return;
-        var currentExport = new RealCurrentExport(simulation, multimeter.GetInstanceID().ToString());
+        var currentExport = new RealCurrentExport(simulation, multimeter.gameObject.GetInstanceID().ToString());
         //TODO: magic number set create a constant for it
         multimeter.DisplayMessage($"{System.Math.Abs(1/currentExport.Value)}Ω");
         multimeter.ConnectedComponent.levelComponent.RevealProperty(Components.PropertyType.Resistance);

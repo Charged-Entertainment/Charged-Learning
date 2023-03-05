@@ -67,10 +67,11 @@ public class Multimeter : Device, CircuitComponent
     public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
     {
         Debug.Log(RichText.Color("Multimeter get spice called", PaletteColor.Red));
+        string id = gameObject.GetInstanceID().ToString();
         if (DeviceMode is VoltageMode)
         {
             return new SpiceSharp.Components.Resistor(
-                GetInstanceID().ToString(),
+                id,
                 positiveWire,
                 negativeWire,
                 10e6
@@ -79,7 +80,7 @@ public class Multimeter : Device, CircuitComponent
         else if (DeviceMode is CurrentMode)
         {
             return new SpiceSharp.Components.VoltageSource(
-            GetInstanceID().ToString(),
+            id,
             positiveWire,
             negativeWire,
             0
@@ -90,7 +91,7 @@ public class Multimeter : Device, CircuitComponent
         {
             {
                 return new SpiceSharp.Components.VoltageSource(
-                GetInstanceID().ToString(),
+                id,
                 positiveWire,
                 negativeWire,
                 1
