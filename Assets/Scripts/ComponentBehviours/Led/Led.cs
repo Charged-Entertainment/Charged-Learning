@@ -10,11 +10,15 @@ public class Led : MonoBehaviour
     [SerializeField] private new Light2D light;
     [SerializeField] public float lerpSpeed = 3;
     [SerializeField] private float targetIntensity = 0;
-    void Start()
-    {
+    
+    private void Awake() {
         light = gameObject.GetComponent<Light2D>();
         light.intensity = 0;
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PuzzleScene") {
+            gameObject.AddComponent<LedCurrentBehvior>();
+        }
     }
+
     private void Update()
     {
         if (targetIntensity != light.intensity)
@@ -25,5 +29,8 @@ public class Led : MonoBehaviour
     public void SetIntensity(float intensity)
     {
         targetIntensity = Mathf.Clamp(intensity, MIN_INTENSITY, DANGEROUS_MAX_INTENSITY);
+        if (intensity != targetIntensity) {
+            Debug.Log($"Warning: LED intensity value clamped! ({intensity})");
+        }
     }
 }
