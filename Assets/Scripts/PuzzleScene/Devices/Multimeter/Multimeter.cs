@@ -121,6 +121,11 @@ public class Multimeter : Device, CircuitComponent
     {
         var inScene = GameObject.Find(prefabName);
         if (inScene == null) Debug.Log("Multimeter not in scene, cannot destroy.");
-        else GameObject.Destroy(inScene);
+        else
+        {
+            // unsubscribe the HandleSimulation handler
+            inScene.GetComponent<Multimeter>().DeviceMode.OnExit();
+            GameObject.Destroy(inScene);
+        }
     }
 }
