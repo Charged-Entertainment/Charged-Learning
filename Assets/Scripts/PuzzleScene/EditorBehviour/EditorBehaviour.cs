@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 using GameManagement;
+using System.Collections.Generic;
 
-public partial class EditorBehaviour : MonoBehaviour
+public partial class EditorBehaviour : MonoBehaviour, ContextMenuObject
 {
+    List<ContextMenuElement> contextMenuElements;
+
     static public Action<EditorBehaviour> mouseEntered;
     static public Action<EditorBehaviour> mouseExited;
     static public Action<EditorBehaviour> mouseDown;
@@ -12,6 +15,19 @@ public partial class EditorBehaviour : MonoBehaviour
     static public Action<EditorBehaviour> destroyed;
     static public Action<EditorBehaviour> dragged;
     static public Action<EditorBehaviour> moved;
+
+    private void Start() {
+        contextMenuElements = new List<ContextMenuElement>(){
+            new ContextMenuElement("Flip Horizontally", "Shift+H", FlipH),
+            new ContextMenuElement("Flip Vertically", "Shift+V", FlipV)
+        };
+    }
+
+    public List<ContextMenuElement> GetContextMenuElements(){
+        return contextMenuElements;
+    }
+
+
 
     public void FlipH()
     {

@@ -36,6 +36,7 @@ public class ContextMenuButton : MonoBehaviour
     
 
     public void OnClick(){
+        Debug.Log($"OnClick on: {MenuElement.ClickAction}");
         MenuElement.ClickAction?.Invoke();
     }
     

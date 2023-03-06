@@ -4,10 +4,11 @@ using UnityEngine.UI;
 public class ContextMenuManager : Singleton<ContextMenuManager>
 {
     [SerializeField] static private ContextMenu contextMenu = null;
+    [SerializeField] private ContextMenuController controller;
 
-    private void Start()
-    {
-
+    private new void Awake() {
+        base.Awake();
+        controller = gameObject.AddComponent<ContextMenuController>();
     }
 
     public static void CreateMenu(ContextMenuObject contextMenuObject, Vector2 position)
@@ -17,6 +18,11 @@ public class ContextMenuManager : Singleton<ContextMenuManager>
         contextMenu.transform.position = position;
         contextMenu.AddElements(contextMenuObject.GetContextMenuElements());
 
+    }
+
+    public static void Destroy(){
+        if(contextMenu == null) return;
+        GameObject.Destroy(contextMenu.gameObject);
     }
 
 }
