@@ -14,14 +14,6 @@ public class Puzzle : Singleton<Puzzle>
     public static List<Goal> Goals { get; private set; } = new List<Goal>();
 
     private void Start() {
-        // var r = CreateLevelComponent("resistor", ComponentType.Resistor, 5);
-        // var b = CreateLevelComponent("battery", ComponentType.Battery, 5);
-        // var l = CreateLevelComponent("led", ComponentType.Led, 5);
-
-
-        // AddProperty(r, PropertyType.Resistance, 330);
-        // AddProperty(b, PropertyType.Voltage, 9);
-
         FeebackTerminal.Disable();
     }
 

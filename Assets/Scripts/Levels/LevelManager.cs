@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private byte CurrentLevel = 1;
+    [SerializeField] private short CurrentLevel = 1;
     void Start()
     {
         if (CurrentLevel == 1) gameObject.AddComponent<Level1>();
         else if (CurrentLevel == 2) gameObject.AddComponent<Level2>();
-        else Debug.Log($"Unknown level: #{CurrentLevel}");
+        else
+        {
+            Debug.Log($"Unknown level: #{CurrentLevel}");
+            Debug.Log($"Adding demo components");
+
+            // for testing in sandbox mode
+            var r = Puzzle.CreateLevelComponent("resistor", Components.ComponentType.Resistor, 5);
+            var b = Puzzle.CreateLevelComponent("battery", Components.ComponentType.Battery, 5);
+            var l = Puzzle.CreateLevelComponent("led", Components.ComponentType.Led, 5);
+            Puzzle.AddProperty(r, Components.PropertyType.Resistance, 330);
+            Puzzle.AddProperty(b, Components.PropertyType.Voltage, 9);
+        }
     }
 }
