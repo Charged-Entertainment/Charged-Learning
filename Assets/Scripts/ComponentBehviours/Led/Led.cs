@@ -4,8 +4,7 @@ using UnityEngine.Rendering.Universal;
 public class Led : MonoBehaviour
 {
     public readonly static float MIN_INTENSITY = 0;
-    public readonly static float SAFE_MAX_INTENSITY = 10;
-    public readonly static float DANGEROUS_MAX_INTENSITY = 15;
+    public readonly static float MAX_INTENSITY = 22.5f;
 
     [SerializeField] private new Light2D light;
     [SerializeField] public float lerpSpeed = 3;
@@ -28,7 +27,7 @@ public class Led : MonoBehaviour
     }
     public void SetIntensity(float intensity)
     {
-        targetIntensity = Mathf.Clamp(intensity, MIN_INTENSITY, DANGEROUS_MAX_INTENSITY);
+        targetIntensity = Mathf.Clamp(intensity, MIN_INTENSITY, MAX_INTENSITY);
         if (intensity != targetIntensity) {
             Debug.Log($"Warning: LED intensity value clamped! ({intensity})");
         }
