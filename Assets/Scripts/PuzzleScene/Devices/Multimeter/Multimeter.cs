@@ -128,4 +128,26 @@ public class Multimeter : Device, CircuitComponent
             GameObject.Destroy(inScene);
         }
     }
+
+    public static Multimeter Get() {
+        return GameObject.Find(prefabName)?.GetComponent<Multimeter>();
+    }
+
+    public static EditorBehaviour GetBody() {
+        var inScene = GameObject.Find(prefabName);
+        if (inScene == null) return null;
+        return inScene.transform.Find("Multimeter").GetComponent<Body>();
+    }
+
+    public static Probe GetRedProbe() {
+        var inScene = GameObject.Find(prefabName);
+        if (inScene == null) return null;
+        return inScene.transform.Find("multimeter-wire-red").GetComponent<Probe>();
+    }
+
+    public static Probe GetBlackProbe() {
+        var inScene = GameObject.Find(prefabName);
+        if (inScene == null) return null;
+        return inScene.transform.Find("multimeter-wire-black").GetComponent<Probe>();
+    }
 }

@@ -21,6 +21,31 @@ public class ComponentMeasured : Goal
     }
 }
 
+public class ComponentMeasuredValue : Goal
+{
+    string componentSpiceName;
+    string property;
+    double neededValue;
+    public ComponentMeasuredValue(string message, string componentSpiceName, string property, double neededValue) : base(message)
+    {
+        this.componentSpiceName = componentSpiceName;
+        this.property = property;
+        this.neededValue = neededValue;
+        SimulationManager.simulationDone += HandleSimulationDone;
+    }
+
+    private void HandleSimulationDone(SpiceSharp.Simulations.IBiasingSimulation simulation)
+    {
+        var val = new SpiceSharp.Simulations.RealPropertyExport(simulation, componentSpiceName, "i").Value;
+        if (Utils.Approximately(neededValue, val))
+        {
+            Achieved = true;
+            SimulationManager.simulationDone -= HandleSimulationDone;
+            Puzzle.goalAchieved?.Invoke(this);
+        }
+    }
+}
+
 
 public class CircuitSubmit : Goal
 {

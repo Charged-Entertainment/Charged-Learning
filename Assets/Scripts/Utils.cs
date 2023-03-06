@@ -64,6 +64,10 @@ public class Utils : MonoBehaviour
         return picked;
     }
 
+    public static bool Approximately(double a, double b) {
+        return System.Math.Abs(a - b) <= 1e-3;
+    }
+
     public static List<VisualElement> GetAllUIUnderCursor()
     {
         var panel = UI.GetRootVisualElement().panel;
