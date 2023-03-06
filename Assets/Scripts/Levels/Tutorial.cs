@@ -52,6 +52,11 @@ abstract public class Tutorial : MonoBehaviour
         return t;
     }
 
-    virtual protected void PlaySequence() { Dialog.PlaySequence(new DialogSequence(entries)); }
+    virtual protected void PlaySequence()
+    {
+        entries.Insert(0, new DialogEntry("init"));
+        Dialog.PlaySequence(new DialogSequence(entries));
+        entries = new List<Entry>();
+    }
 
 }
