@@ -9,7 +9,7 @@ using Components;
 using GameManagement;
 using static UI;
 
-public class Level1 : MonoBehaviour
+public class Level1 : Tutorial
 {
     #region script prep and tools 
 
@@ -98,8 +98,9 @@ public class Level1 : MonoBehaviour
             UILevelComponent.created -= InitResisorUI;
         }
     }
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         var document = GetRootVisualElement();
         VisualTreeAsset uxml = Resources.Load<VisualTreeAsset>("Tutorials/One/content");
         StyleSheet styleSheet = Resources.Load<StyleSheet>("Tutorials/One/style");
@@ -121,46 +122,11 @@ public class Level1 : MonoBehaviour
         v.visible = visible.Value;
     }
 
-    private List<DialogEntry> entries;
     private DialogEntry lastEntry;
 
-    private void AddEntry(RichText content)
+    private new void AddEntry(RichText content)
     {
-        var t = new DialogEntry(content);
-        entries.Add(t);
-        lastEntry = t;
-    }
-
-    /// <summary>
-    /// Subscribe to an action with a handler.
-    /// If your handler returns true, it'll call your 'clean' handler.
-    /// Otherwise, it'll continue its subscription.
-    /// </summary>
-    Action<T> Handle<T>(ref Action<T> action, Func<T, bool> handle, Action<Action<T>> clean)
-    {
-        Action<T> _handler = null;
-        _handler = c => { if (handle(c)) clean(_handler); };
-        action += _handler;
-        return _handler;
-    }
-
-    Action<T, T2> Handle<T, T2>(ref Action<T, T2> action, Func<T, T2, bool> handle, Action<Action<T, T2>> clean)
-    {
-        Action<T, T2> _handler = null;
-        _handler = (c, c2) => { if (handle(c, c2)) clean(_handler); };
-        action += _handler;
-        return _handler;
-    }
-
-    void ContinueOnClick(VisualElement v)
-    {
-        EventCallback<ClickEvent> doOnce = null;
-        doOnce = ev =>
-        {
-            Dialog.Continue();
-            v.UnregisterCallback<ClickEvent>(doOnce);
-        };
-        v.RegisterCallback<ClickEvent>(doOnce);
+        lastEntry = base.AddEntry(content);
     }
     #endregion
 
