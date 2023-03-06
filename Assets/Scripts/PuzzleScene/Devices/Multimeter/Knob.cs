@@ -24,13 +24,14 @@ public class Knob : MonoBehaviour
         {
             var diff = Utils.GetMouseWorldPosition() - transform.position;
             diff.Normalize();
-            float rotationZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            var newAngle = Mathf.RoundToInt(rotationZ / degreePerMode) * degreePerMode;
-            newAngle = Mathf.Clamp(newAngle, minAngle, maxAngle);
-            CheckAngleChange(newAngle);
-            if (newAngle < 0) newAngle += 360;
-            currentRotationAngle = newAngle;
-            transform.localRotation = Quaternion.Euler(0, 0, currentRotationAngle);
+            float rotationZ = 90 - Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            if (rotationZ > 180) rotationZ -= 360;
+            rotationZ = Mathf.RoundToInt(rotationZ / degreePerMode) * degreePerMode;
+            rotationZ = Mathf.Clamp(rotationZ, minAngle, maxAngle);
+            
+            CheckAngleChange((int)rotationZ);
+            currentRotationAngle = (int)rotationZ;
+            transform.localRotation = Quaternion.Euler(0, 0, -1 * rotationZ);
         }
     }
 
@@ -43,15 +44,15 @@ public class Knob : MonoBehaviour
     ///<summary>Takes an angle and return the appropriate mode for it.</summary>
     private DeviceMode GetAngleMode(int angle)
     {
-        if (angle == 60)
+        if (angle == -60)
             return new ResistanceMode("200");
-        if (angle is 30)
+        if (angle is -30)
             return new VoltageMode(false, "200");
         if (angle is 0)
             return new OffMode();
-        if (angle is -30)
+        if (angle is 30)
             return new CurrentMode(false, "200");
-        // if(angle is > -60); not implemented yet
+        // if(angle is > 60); not implemented yet
 
         // else
         return new LockedMode();
