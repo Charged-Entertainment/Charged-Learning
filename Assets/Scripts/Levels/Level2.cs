@@ -25,7 +25,9 @@ public class Level2 : Tutorial
 
     private void Seq1()
     {
-        AddEntry("Onto our next order of business.");
+        AddEntry("In the previous level, you learned that batteries function as an energy source or a ‘voltage source’. In your first circuit, you connected your battery to a resistor, which turns the supplied energy into heat. But why would we ever want that?");
+        AddEntry("I guess it could warm you up? I don’t see that happening with this tiny battery though.");
+        AddEntry("Instead, we typically use resistors to limit the current flowing into our main source of interest so that it doesn’t burn out. For example, we might want to power an LED which emits light. Like this one! Let me show you.");
         AddEntry("Wait… Who messed with my circuit??");
         AddEntry("We need to reconnect this LED to the circuit.");
         AddEntry("An LED, short for 'light-emitting diode', is a 'semiconductor' device.");
