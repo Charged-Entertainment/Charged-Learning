@@ -113,10 +113,11 @@
                     <ui:Button name="terminal-btn" class="px-1 tools-btn">
                         <ui:Image />
                     </ui:Button>
+                    <ui:VisualElement name="terminal-btn-notification"/>
 
                 </ui:VisualElement>
 
-                <ui:Button name="submit-btn"/>
+                <ui:Button name="submit-btn" />
 
             </ui:VisualElement>
 

@@ -80,3 +80,13 @@
   width: 81px;
   height: 51px;
 }
+
+#terminal-btn-notification {
+  position: absolute;
+  left: 15px;
+  top: 360px;
+  height: 60px;
+  width: 60px;
+  background-color: red;
+  border-radius: 100%;
+}

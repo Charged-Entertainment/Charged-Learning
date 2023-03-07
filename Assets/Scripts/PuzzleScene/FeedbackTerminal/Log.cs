@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum LogType{Error, Status}
+public enum LogType{Error, Status, Warning}
 
 public class Log
 {
