@@ -6,7 +6,7 @@ using GameManagement;
 public class LedCurrentBehvior : MonoBehaviour
 {
     private readonly static float CURRENT_TO_INTENSITY_MULT = 0.0375f;
-    
+
     /// <summary>
     /// Non-linear (quadratic) conversion from current in milliamps to LED intensity.
     /// </summary>
@@ -37,8 +37,14 @@ public class LedCurrentBehvior : MonoBehaviour
     public void HandleCurrentChanged(SpiceSharp.Simulations.IBiasingSimulation sim)
     {
         var id = gameObject.GetInstanceID().ToString();
-        var current = new SpiceSharp.Simulations.RealPropertyExport(sim, id, "i").Value;
-        led.SetIntensity(CurrentToIntensity((float)(current * 1000)));
+        try
+        {
+            var current = new SpiceSharp.Simulations.RealPropertyExport(sim, id, "i").Value;
+            led.SetIntensity(CurrentToIntensity((float)(current * 1000)));
+        }
+        catch (BehaviorsNotFoundException e) {
+            Debug.Log("LED not connected: " + e);
+        }
 
         // raise errors/warnings (icon/animation near LED + feedback terminal notification) if current is above the maximum rating or the recommended rating
     }
