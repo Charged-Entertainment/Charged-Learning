@@ -138,7 +138,7 @@ public class Level2 : Tutorial
         AddEntry("Of course all of this is dictated by physical laws, and you'll get to hear all about that soon enough. But for now, this page should contain all you need to properly operate this LED.").ended += () => Book.ShowEmpty();
         AddEntry("Try to increase the current a little bit using your new knowledge, I’ll let you experiment as you will.").started += () =>
         {
-            var goal = new ComponentMeasuredValue("Run a current of ~20mA through the LED.", led.gameObject.GetInstanceID().ToString(), "i", 20 * 1e-3);
+            var goal = new ComponentValueMeasuredGoal("Run a current of ~20mA through the LED.", led.gameObject.GetInstanceID().ToString(), "i", 20 * 1e-3);
             Puzzle.AddGoal(goal);
             Handle<Goal>(ref Puzzle.goalAchieved, g =>
             {

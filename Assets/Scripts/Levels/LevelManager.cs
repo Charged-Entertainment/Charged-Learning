@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     {
         if (CurrentLevel == 1) gameObject.AddComponent<Level1>();
         else if (CurrentLevel == 2) gameObject.AddComponent<Level2>();
+        else if (CurrentLevel == 3) gameObject.AddComponent<Level3>();
         else
         {
             Debug.Log($"Unknown level: #{CurrentLevel}");

@@ -21,14 +21,22 @@ public class ComponentMeasured : Goal
     }
 }
 
-public class ComponentMeasuredValue : Goal
+public class ComponentValueMeasuredGoal : Goal
 {
     string componentSpiceName;
     string property;
     double neededValue;
-    public ComponentMeasuredValue(string message, string componentSpiceName, string property, double neededValue) : base(message)
+    public ComponentValueMeasuredGoal(string message, string componentSpiceName, string property, double neededValue) : base(message)
     {
         this.componentSpiceName = componentSpiceName;
+        this.property = property;
+        this.neededValue = neededValue;
+        SimulationManager.simulationDone += HandleSimulationDone;
+    }
+
+    public ComponentValueMeasuredGoal(string message, LiveComponent component, string property, double neededValue) : base(message)
+    {
+        this.componentSpiceName = component.gameObject.GetInstanceID().ToString();
         this.property = property;
         this.neededValue = neededValue;
         SimulationManager.simulationDone += HandleSimulationDone;
