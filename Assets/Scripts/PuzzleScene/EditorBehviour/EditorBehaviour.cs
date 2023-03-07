@@ -19,7 +19,10 @@ public partial class EditorBehaviour : MonoBehaviour, ContextMenuObject
     private void Start() {
         contextMenuElements = new List<ContextMenuElement>(){
             new ContextMenuElement("Flip Horizontally", "Shift+H", FlipH),
-            new ContextMenuElement("Flip Vertically", "Shift+V", FlipV)
+            new ContextMenuElement("Flip Vertically", "Shift+V", FlipV),
+            new ContextMenuElement("Rotate right", "Ctrl+R", () => Rotate(-90)),
+            new ContextMenuElement("Rotate left", "Ctrl+Q", () => Rotate(90)),
+            new ContextMenuElement("Delete", "Delete", Destroy),
         };
     }
 
