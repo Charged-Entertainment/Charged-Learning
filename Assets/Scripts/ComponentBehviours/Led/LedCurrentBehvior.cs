@@ -46,7 +46,11 @@ public class LedCurrentBehvior : MonoBehaviour
             var current = new SpiceSharp.Simulations.RealPropertyExport(sim, id, "i").Value;
             led.SetIntensity(CurrentToIntensity((float)(current * 1000)));
 
-            if (current > MAX_CURRENT) FeebackTerminal.Write(new Log("LED current dangerously high!", LogType.Error));
+            if (current > MAX_CURRENT)
+            {
+                FeebackTerminal.Write(new Log("LED current dangerously high!", LogType.Error));
+                gameObject.AddComponent<LEDBurnAnimation>();
+            }
             else if (System.Math.Abs(current - OPTIMAL_CURRENT) > ACCEPTABLE_CURRENT_DIFF) FeebackTerminal.Write(new Log($"LED current too {(current > OPTIMAL_CURRENT ? "high" : "low")}.", LogType.Warning));
         }
         catch (BehaviorsNotFoundException e)
