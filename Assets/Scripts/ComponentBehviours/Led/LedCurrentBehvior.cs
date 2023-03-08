@@ -6,6 +6,10 @@ using GameManagement;
 public class LedCurrentBehvior : MonoBehaviour
 {
     private readonly static float CURRENT_TO_INTENSITY_MULT = 0.0375f;
+    private readonly static double MIN_CURRENT = 10e-3;
+    private readonly static double OPTIMAL_CURRENT = 20e-3;
+    private readonly static double ACCEPTABLE_CURRENT_DIFF = 2.5e-3;
+    private readonly static double MAX_CURRENT = 30e-3;
 
     /// <summary>
     /// Non-linear (quadratic) conversion from current in milliamps to LED intensity.
@@ -36,17 +40,19 @@ public class LedCurrentBehvior : MonoBehaviour
 
     public void HandleCurrentChanged(SpiceSharp.Simulations.IBiasingSimulation sim)
     {
-        var id = gameObject.GetInstanceID().ToString();
         try
         {
+            var id = gameObject.GetInstanceID().ToString();
             var current = new SpiceSharp.Simulations.RealPropertyExport(sim, id, "i").Value;
             led.SetIntensity(CurrentToIntensity((float)(current * 1000)));
+
+            if (current > MAX_CURRENT) FeebackTerminal.Write(new Log("LED current dangerously high!", LogType.Error));
+            else if (System.Math.Abs(current - OPTIMAL_CURRENT) > ACCEPTABLE_CURRENT_DIFF) FeebackTerminal.Write(new Log($"LED current too {(current > OPTIMAL_CURRENT ? "high" : "low")}.", LogType.Warning));
         }
-        catch (BehaviorsNotFoundException e) {
+        catch (BehaviorsNotFoundException e)
+        {
             Debug.Log("LED not connected: " + e);
         }
-
-        // raise errors/warnings (icon/animation near LED + feedback terminal notification) if current is above the maximum rating or the recommended rating
     }
 
     public void HandleGameModeChanged(State newState)
