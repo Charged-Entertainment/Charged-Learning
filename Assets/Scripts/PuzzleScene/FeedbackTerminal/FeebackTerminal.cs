@@ -104,6 +104,10 @@ public class FeebackTerminal : Singleton<FeebackTerminal>
         Instance.terminalInstance.visible = false;
     }
 
+    public static bool IsEnabled() {
+        return Instance.terminalInstance.visible;
+    }
+
     #region maximize minimize
     private void MaximizeToggle()
     {

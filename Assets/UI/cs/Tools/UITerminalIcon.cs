@@ -16,11 +16,13 @@ public partial class UI
             Notification = document.Q("terminal-btn-notification");
             FeebackTerminal.disabled += () =>
             {
+                FeebackTerminal.LogWritten += HandleLogWritten;
                 TerminalButton.SetEnabled(true);
             };
 
             FeebackTerminal.enabled += () =>
             {
+                FeebackTerminal.LogWritten -= HandleLogWritten;
                 TerminalButton.SetEnabled(false);
                 HideNotification();
             };
@@ -35,7 +37,7 @@ public partial class UI
 
         private void OnEnable()
         {
-            FeebackTerminal.LogWritten += HandleLogWritten;
+            if (!FeebackTerminal.IsEnabled()) FeebackTerminal.LogWritten += HandleLogWritten;
         }
 
         private void OnDisable()
