@@ -8,8 +8,7 @@ public class LEDBurnAnimation : MonoBehaviour
     private void Awake()
     {
         led = gameObject.GetComponent<Led>();
-        led.GetComponent<Light2D>().intensity = INTENSITY;
-        led.SetIntensity(0);
+        led.GetComponentInChildren<PointLight>().SetIntensityImmediate(INTENSITY);
         Invoke("GoToEditMode", 0.05f);
         // play circuit breaker loud trip SFX. 
     }

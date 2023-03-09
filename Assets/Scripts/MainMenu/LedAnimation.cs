@@ -13,7 +13,7 @@ public class LedAnimation : MonoBehaviour
     }
     private void Alternate()
     {
-        led.SetIntensity(Random.Range(Led.MIN_INTENSITY, Led.MAX_INTENSITY));
+        led.SetIntensity(Random.Range(0, Led.MAX_INTENSITY));
         Invoke("Alternate", Random.Range(0.5f,2f));
     }
 }
