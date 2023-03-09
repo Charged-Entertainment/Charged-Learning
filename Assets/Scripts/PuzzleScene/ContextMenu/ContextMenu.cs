@@ -25,7 +25,5 @@ public abstract class ContextMenu : MonoBehaviour
         }
     }
 
-    public abstract void SubscribeToAction(MonoBehaviour monoBehaviour);
-
 
 }

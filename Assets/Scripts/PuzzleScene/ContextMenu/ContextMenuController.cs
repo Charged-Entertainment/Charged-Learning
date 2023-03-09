@@ -12,7 +12,14 @@ public class ContextMenuController : Controller
         if (Input.GetMouseButtonUp(1))
         {
             var hit = Physics2D.Raycast(Utils.GetMouseWorldPosition(), Vector2.zero);
-            if (!hit) return;
+
+            if (!hit)
+            {
+                ContextMenuManager.CreateMenu(typeof(EditorBehaviourContextMenu), Utils.GetMouseWorldPosition());
+                return;
+            }
+
+
             var contextMenuObject = hit.collider.GetComponent<ContextMenuObject>();
             var editorBehaviour = contextMenuObject as EditorBehaviour;
 
@@ -21,9 +28,8 @@ public class ContextMenuController : Controller
                 Selection.Clear();
                 Selection.AddComponent(editorBehaviour);
             }
-
-
             ContextMenuManager.CreateMenu(contextMenuObject.GetContextMenuType(), Utils.GetMouseWorldPosition());
+
         }
 
         if (Input.GetMouseButtonUp(0))
