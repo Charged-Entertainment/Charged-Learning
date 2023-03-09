@@ -10,17 +10,17 @@ public partial class Clipboard : Singleton<Clipboard>
         {
             if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
             {
-                Clipboard.Copy(Selection.GetSelectedComponents<LiveComponent>());
+                Clipboard.Copy();
             }
 
             else if (Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
             {
-                Clipboard.Copy(Selection.GetSelectedComponents<LiveComponent>(), true);
+                Clipboard.Cut();
             }
 
             else if (Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
             {
-                Clipboard.Paste(Utils.GetMouseWorldPosition());
+                Clipboard.Paste();
             }
         }
     }

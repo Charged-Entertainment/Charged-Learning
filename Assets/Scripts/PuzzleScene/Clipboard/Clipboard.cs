@@ -38,17 +38,8 @@ public partial class Clipboard : Singleton<Clipboard>
         else controller.enabled = false;
     }
 
-    static public void Copy(bool isCut = false)
-    {
-        Copy(Selection.GetSelectedComponents<LiveComponent>(), isCut);
-    }
-
-    static public void Copy()
-    {
-        Copy(Selection.GetSelectedComponents<LiveComponent>());
-    }
-
-    static public void Copy(IList<LiveComponent> components, bool isCut = false)
+    #region Clipboard Operations
+    private static void _Copy(IList<LiveComponent> components, bool isCut = false)
     {
         Clear();
         Bounds bounds = Utils.GetBounds<LiveComponent>(components);
@@ -58,30 +49,25 @@ public partial class Clipboard : Singleton<Clipboard>
         foreach (var component in components)
         {
             //filthy solution to allow cutting where qty == 0
-            if (isCut) component.levelComponent.Quantity.Used-= components.Count; 
-            
+            if (isCut) component.levelComponent.Quantity.Used -= components.Count;
+
             LiveComponent copy = LiveComponent.Instantiate(component.levelComponent, Instance.transform, component.transform.position);
             copy.Disable();
-            
+
             if (isCut)
             {
                 component.Destroy();
-                component.levelComponent.Quantity.Used+= components.Count;
+                component.levelComponent.Quantity.Used += components.Count;
             }
         }
     }
 
-    static public void Paste()
-    {
-        Paste(Utils.GetMouseWorldPosition());
-    }
-
-    static public void Paste(Vector2 pos)
+    private static void _Paste(Vector2 pos)
     {
         Instance.transform.position = pos;
-        
+
         var content = GetContent();
-        
+
         Selection.Clear();
         Selection.AddComponents(new List<EditorBehaviour>(content));
 
@@ -94,16 +80,59 @@ public partial class Clipboard : Singleton<Clipboard>
         Instance.transform.position = Vector3.zero;
     }
 
-    static public LiveComponent[] GetContent()
-    {
-        return Instance.GetComponentsInChildren<LiveComponent>(true);
-    }
-
-    static public void Clear()
+    private static void _Clear()
     {
         foreach (var component in GetContent())
         {
             component.Destroy();
         }
     }
+
+    private static LiveComponent[] _GetContent()
+    {
+        return Instance.GetComponentsInChildren<LiveComponent>(true);
+    }
+    #endregion
+
+    #region Clipboard API
+    /// <summary>
+    /// Add the given list of live components to the clipboard.
+    /// </summary>
+    static public void Copy(IList<LiveComponent> components) { _Copy(components); }
+
+    /// <summary>
+    /// Add the currently selected live components to the clipboard.
+    /// </summary>
+    static public void Copy() { _Copy(Selection.GetSelectedComponents<LiveComponent>()); }
+
+    /// <summary>
+    /// Add the given list of live components to the clipboard and destroy them.
+    /// </summary>
+    static public void Cut(IList<LiveComponent> components) { _Copy(components, true); }
+
+    /// <summary>
+    /// Add the currently selected live components to the clipboard and destroy them.
+    /// </summary>
+    static public void Cut() { _Copy(Selection.GetSelectedComponents<LiveComponent>(), true); }
+
+    /// <summary>
+    /// Paste the content of the clipboard at the cursor's current position.
+    /// </summary>
+    static public void Paste() { _Paste(Utils.GetMouseWorldPosition()); }
+
+    /// <summary>
+    /// Paste the content of the clipboard at the given position.
+    /// </summary>
+    static public void Paste(Vector2 pos) { _Paste(pos); }
+
+    /// <summary>
+    /// Retrieve the content of the clipboard.
+    /// </summary>
+    static public LiveComponent[] GetContent() { return _GetContent(); }
+
+    /// <summary>
+    /// Clear the clipboard.
+    /// </summary>
+    static public void Clear() { _Clear(); }
+    #endregion
 }
