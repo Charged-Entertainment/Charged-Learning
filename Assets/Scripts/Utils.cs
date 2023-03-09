@@ -68,6 +68,10 @@ public class Utils : MonoBehaviour
         return System.Math.Abs(a - b) <= 1e-3;
     }
 
+    public static bool Approximately(Vector3 a, Vector3 b) {
+        return Approximately(a.x, b.x) && Approximately(a.y, b.y) && Approximately(a.z, b.z); 
+    }
+
     public static List<VisualElement> GetAllUIUnderCursor()
     {
         var panel = UI.GetRootVisualElement().panel;
