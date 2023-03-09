@@ -38,6 +38,16 @@ public partial class Clipboard : Singleton<Clipboard>
         else controller.enabled = false;
     }
 
+    static public void Copy(bool isCut = false)
+    {
+        Copy(Selection.GetSelectedComponents<LiveComponent>(), isCut);
+    }
+
+    static public void Copy()
+    {
+        Copy(Selection.GetSelectedComponents<LiveComponent>());
+    }
+
     static public void Copy(IList<LiveComponent> components, bool isCut = false)
     {
         Clear();
@@ -59,6 +69,11 @@ public partial class Clipboard : Singleton<Clipboard>
                 component.levelComponent.Quantity.Used+= components.Count;
             }
         }
+    }
+
+    static public void Paste()
+    {
+        Paste(Utils.GetMouseWorldPosition());
     }
 
     static public void Paste(Vector2 pos)
