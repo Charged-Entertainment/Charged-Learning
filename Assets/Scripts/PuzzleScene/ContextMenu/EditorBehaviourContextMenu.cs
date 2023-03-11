@@ -33,10 +33,14 @@ public class EditorBehaviourContextMenu : ContextMenu
             SubscribeToAction(editorBehaviour);
         }
 
+        CopyElement.ClickAction = Clipboard.Copy;
+        PasteElement.ClickAction = Clipboard.Paste;
+        CutElement.ClickAction = Clipboard.Cut;
+
         base.Awake();
     }
 
-    public override void SubscribeToAction(MonoBehaviour monoBehaviour){
+    public void SubscribeToAction(MonoBehaviour monoBehaviour){
         var editorBehaviour = monoBehaviour as EditorBehaviour;
         if(editorBehaviour == null) return;
         
@@ -45,8 +49,5 @@ public class EditorBehaviourContextMenu : ContextMenu
         RotateRightElement.ClickAction += () => editorBehaviour.Rotate(-90);
         RotateLeftElement.ClickAction += () => editorBehaviour.Rotate(90);
         DeleteElement.ClickAction += editorBehaviour.Destroy;
-        CopyElement.ClickAction += Clipboard.Copy;
-        PasteElement.ClickAction += Clipboard.Paste;
-        CutElement.ClickAction += Clipboard.Cut;
     }
 }
