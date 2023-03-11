@@ -64,12 +64,12 @@ public class Utils : MonoBehaviour
         return picked;
     }
 
-    public static bool Approximately(double a, double b) {
-        return System.Math.Abs(a - b) <= 1e-3;
+    public static bool Approximately(double a, double b, double percision = 1e-3) {
+        return System.Math.Abs(a - b) <= percision;
     }
 
-    public static bool Approximately(Vector3 a, Vector3 b) {
-        return Approximately(a.x, b.x) && Approximately(a.y, b.y) && Approximately(a.z, b.z); 
+    public static bool Approximately(Vector3 a, Vector3 b, double percision = 1e-3) {
+        return Approximately((a-b).magnitude, 0, percision); 
     }
 
     public static List<VisualElement> GetAllUIUnderCursor()
