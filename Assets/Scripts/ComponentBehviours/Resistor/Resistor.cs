@@ -89,6 +89,41 @@ public class Resistor : MonoBehaviour
         }
         return new ColorBandSet(val1, val2, mult);
     }
+    // todo: use this insted of regex
+    public static string[] GetResistorColors(double resistanceOhms)
+    {
+        // Define the color codes for each digit
+        string[] colorCodes = new string[] {
+            "black", "brown", "red", "orange", "yellow",
+            "green", "blue", "violet", "gray", "white"
+        };
+        
+        // Calculate the exponent and significant digits of the resistance
+        int exponent = (int)Math.Floor(Math.Log10(resistanceOhms));
+        double significantDigits = resistanceOhms / Math.Pow(10, exponent);
+        
+        // Get the first two significant digits, rounded to the nearest integer
+        int digit1 = (int)Math.Round(significantDigits / 10);
+        int digit2 = (int)Math.Round(significantDigits % 10);
+        
+        // Determine the multiplier and tolerance based on the exponent
+        int multiplier = exponent - 2;
+        double tolerance = (resistanceOhms < 1000) ? 0.2 : 0.05;
+        
+        // Generate the color band codes for each digit and the multiplier
+        string[] colorBands = new string[] {
+            colorCodes[digit1], colorCodes[digit2], colorCodes[multiplier]
+        };
+        
+        // // Add the tolerance band if necessary
+        // if (tolerance > 0)
+        // {
+        //     colorBands[2] += " gold"; // 5% tolerance is indicated by a gold band
+        //     colorBands[3] = "brown"; // Fourth band is always brown for tolerance
+        // }
+        
+        return colorBands;
+    }
 
     /// <Summary>
     /// Must be passed an array of length 3 or greater; indices 3 and above will be ignored.
