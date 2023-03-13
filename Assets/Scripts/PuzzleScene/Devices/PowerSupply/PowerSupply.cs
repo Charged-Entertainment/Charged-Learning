@@ -28,4 +28,31 @@ public class PowerSupply : MonoBehaviour, CircuitComponent
             knob.Value * MAX_VOLTAGE
             );
     }
+
+    static readonly string prefabName = "PowerSupply";
+
+    public static void Spawn()
+    {
+        var inScene = GameObject.Find(prefabName);
+        if (inScene != null) Debug.Log("PowerSupply already in scene, cannot spawn.");
+        else GameObject.Instantiate(Resources.Load<GameObject>($"Prefabs/Devices/PowerSupply/{prefabName}")).name = prefabName;
+    }
+
+    public static bool IsAvailable()
+    {
+        var inScene = GameObject.Find(prefabName);
+        return inScene != null;
+    }
+
+    public static void Destroy()
+    {
+        var inScene = GameObject.Find(prefabName);
+        if (inScene == null) Debug.Log("PowerSupply not in scene, cannot destroy.");
+        else GameObject.Destroy(inScene);
+    }
+
+    public static Multimeter Get() {
+        return GameObject.Find(prefabName)?.GetComponent<Multimeter>();
+    }
+
 }
