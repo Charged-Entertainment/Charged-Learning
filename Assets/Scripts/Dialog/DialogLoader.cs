@@ -19,7 +19,6 @@ public class DialogLoader
         seq1Entries.Add(new DialogEntry(RichText.Bold("story part 6")));
         seq1Entries.Add(new DialogEntry(RichText.Bold("Thanks for listening to me.")));
 
-        var seq = new DialogSequence(seq1Entries);
-        Dialog.PlaySequence(seq);
+        Dialog.PlaySequence(new DialogSequence(seq1Entries));
     }
 }
