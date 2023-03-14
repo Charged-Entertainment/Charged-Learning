@@ -15,6 +15,7 @@ public class SimulationManager : Singleton<SimulationManager>
     private static double startTime = 0;
     private static bool ongoingSimulation = false;
     private static double elapsed = 0;
+    private static double step = 0.1;
 
     private new void Awake()
     {
@@ -27,9 +28,9 @@ public class SimulationManager : Singleton<SimulationManager>
         if (ongoingSimulation)
         {
             elapsed += Time.deltaTime;
-            if (elapsed >= 0.1f)
+            if (elapsed >= step)
             {
-                elapsed = elapsed % 0.1f;
+                elapsed = elapsed % step;
                 startTime++;
                 Simulate();
             }
