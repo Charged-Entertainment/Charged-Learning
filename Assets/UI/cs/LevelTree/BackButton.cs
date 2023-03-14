@@ -4,31 +4,31 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
-namespace MainMenu
+namespace LevelTree
 {
-    public class PlayButton : MonoBehaviour
+    public class BackButton : MonoBehaviour
     {
         public Button button { get; private set; }
         private void Awake()
         {
-            button = UI.GetRootVisualElement().Q<Button>("play-btn");
+            button = UI.GetRootVisualElement().Q<Button>("back-btn");
         }
 
         private void OnEnable()
         {
-            Debug.Log("Play button enabled");
+            Debug.Log("Back button enabled");
             button.RegisterCallback<MouseUpEvent>(HandleClick);
         }
 
         private void OnDisable()
         {
-            Debug.Log("Play button disabled");
+            Debug.Log("Back button disabled");
             button.UnregisterCallback<MouseUpEvent>(HandleClick);
         }
 
         private void HandleClick(MouseUpEvent e)
         {
-            SceneManager.LoadScene("LevelTree");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
