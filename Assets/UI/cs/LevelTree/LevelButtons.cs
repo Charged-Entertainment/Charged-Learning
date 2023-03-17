@@ -11,7 +11,7 @@ namespace LevelTree
         public List<Button> levelButtons { get; private set; }
         private void Awake()
         {
-            levelButtons = UI.GetRootVisualElement().Query<Button>(className:"available").ToList();
+            levelButtons = UI.GetRootVisualElement().Query<Button>(className: "available").ToList();
         }
 
         private void OnEnable()
@@ -26,7 +26,10 @@ namespace LevelTree
 
         private void HandleClick(MouseUpEvent e)
         {
-            Debug.Log($"Clicked: {e.target}");
+            VisualElement ve = (VisualElement)e.target;
+            short n = short.Parse(ve.name.Split('-')[1]);
+            LevelManager.LevelToLoadOnPuzzleSceneEnter = n;
+            SceneManager.LoadScene("PuzzleScene");
         }
     }
 }

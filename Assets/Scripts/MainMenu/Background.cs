@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Background : MonoBehaviour
@@ -17,6 +18,14 @@ public class Background : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else GameObject.Destroy(gameObject);
+    }
+
+    private void OnEnable() {
+        SceneManager.activeSceneChanged += HandleSceneChanged;
+    }
+
+    void HandleSceneChanged(Scene from, Scene to) {
+        if (to.name == "PuzzleScene") Destroy(gameObject);
     }
 
     private void Update()
