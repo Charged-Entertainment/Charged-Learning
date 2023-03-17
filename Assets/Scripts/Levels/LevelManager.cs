@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] static public short LevelToLoadOnPuzzleSceneEnter = 1;
+    [SerializeField] static public short LevelToLoadOnPuzzleSceneEnter = -1;
     void Start()
     {
         if (LevelToLoadOnPuzzleSceneEnter == 1) gameObject.AddComponent<Level1>();
