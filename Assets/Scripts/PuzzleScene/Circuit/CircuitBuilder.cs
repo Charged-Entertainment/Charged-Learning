@@ -166,6 +166,13 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
                 return pair.Value;
             }
         }
+
+        var powerSupply = GameObject.FindObjectOfType<PowerSupply>(); 
+        if(PowerSupply.IsAvailable()){
+            groundWire = finalCircuit[powerSupply.Terminals[0]];
+            return groundWire;
+        }
+
         var multimeter = GameObject.FindObjectOfType<Multimeter>();
         if (Multimeter.IsAvailable() && multimeter.DeviceMode is ResistanceMode)
         {
