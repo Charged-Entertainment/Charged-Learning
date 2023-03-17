@@ -21,6 +21,7 @@ public class PowerSupply : MonoBehaviour, CircuitComponent
     public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
     {
         string id = gameObject.GetInstanceID().ToString();
+        Debug.Log($"value: {knob.Value * MAX_VOLTAGE}");
         return new SpiceSharp.Components.VoltageSource(
             id,
             positiveWire,
