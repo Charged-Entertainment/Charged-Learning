@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class PowerSupply : MonoBehaviour, CircuitComponent
 {
-    public static readonly float MAX_VOLTAGE = 30.0f;
+    [SerializeField] Display voltageDisplay, currentDisplay;
+    public static readonly float MAX_VOLTAGE = 9.0f;
     public static readonly float MAX_CURRENT = 2.0f;
     public static Action created, destroyed;
     PowerSupplyKnob knob;
@@ -16,6 +17,23 @@ public class PowerSupply : MonoBehaviour, CircuitComponent
         created?.Invoke();
         Terminals = gameObject.GetComponentsInChildren<Terminal>(true);
         knob = gameObject.GetComponentInChildren<PowerSupplyKnob>();
+    }
+
+    private void OnEnable()
+    {
+        SimulationManager.simulationDone += HandleSimulationResult;
+    }
+    private void OnDisable()
+    {
+        SimulationManager.simulationDone -= HandleSimulationResult;
+    }
+
+    void HandleSimulationResult(SpiceSharp.Simulations.IBiasingSimulation simulation)
+    {
+        var voltage = knob.Value * MAX_VOLTAGE;
+        var current = new SpiceSharp.Simulations.RealCurrentExport(simulation, gameObject.GetInstanceID().ToString()).Value;
+        voltageDisplay.Write($"{System.Math.Round(voltage, 4)}V");
+        currentDisplay.Write($"{System.Math.Round(current, 4)}A");
     }
 
     public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
@@ -52,7 +70,8 @@ public class PowerSupply : MonoBehaviour, CircuitComponent
         else GameObject.Destroy(inScene);
     }
 
-    public static Multimeter Get() {
+    public static Multimeter Get()
+    {
         return GameObject.Find(prefabName)?.GetComponent<Multimeter>();
     }
 
