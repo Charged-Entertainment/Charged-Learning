@@ -13,6 +13,7 @@ public class Multimeter : Device, CircuitComponent
 
     public static Action created, destroyed;
     public static Action<MultimeterMode> modeChanged;
+    public static Action<double, PropertyType> measured;
     public LiveComponent ConnectedComponent { get; set; }
 
     private static string prefabName = "Multimeter Device";
@@ -103,6 +104,7 @@ public class Multimeter : Device, CircuitComponent
             throw new NotImplementedException("Set the multimeter to current or voltage modes for now");
     }
 
+    public string ID() { return gameObject.GetInstanceID().ToString(); }
 
     public static void Spawn()
     {

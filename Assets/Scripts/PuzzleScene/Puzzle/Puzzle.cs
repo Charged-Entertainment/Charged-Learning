@@ -6,7 +6,6 @@ using Components;
 
 public class Puzzle : Singleton<Puzzle>
 {
-    public static Action<LevelComponent, Property> propertyRevealed { get; set; }
     public static Action<LevelComponent> quantityChanged { get; set; }
     public static Action<Goal> goalAchieved;
     public static Action goalsChanged;

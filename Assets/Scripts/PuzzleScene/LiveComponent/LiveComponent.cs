@@ -33,6 +33,7 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
         destroyed?.Invoke(this);
     }
 
+    // TODO: resturn list of components, including needed models
     public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
     {
         var component = levelComponent.Component;
@@ -60,6 +61,8 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
         return null;
 
     }
+
+    public string ID() { return gameObject.GetInstanceID().ToString(); }
 
     // Handle all that should happen when creating a new component.
     static public LiveComponent Instantiate(Components.LevelComponent comp, Transform parent = null, Vector2? pos = null)

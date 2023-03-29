@@ -40,8 +40,8 @@ public class Level2 : Tutorial
         AddEntry("You can flip the LED by right-clicking, then choosing 'Flip horizontally' from the menu. You'll also find the keyboard shortcut there.");
         AddEntry("Now flip the LED, connect it, then flip the circuit breaker and watch the LED light up.").started += () => Handle<SpiceSharp.Simulations.IBiasingSimulation>(ref SimulationManager.simulationDone, sim =>
         {
-            var current = new SpiceSharp.Simulations.RealPropertyExport(sim, led.gameObject.GetInstanceID().ToString(), "i").Value;
-            var vdrop = new SpiceSharp.Simulations.RealPropertyExport(sim, led.gameObject.GetInstanceID().ToString(), "v").Value;
+            var current = new SpiceSharp.Simulations.RealPropertyExport(sim, led.ID(), "i").Value;
+            var vdrop = new SpiceSharp.Simulations.RealPropertyExport(sim, led.ID(), "v").Value;
 
             // voltage drop across the diode approximately equal to the value actually gotten when measuring if connected correctly.
             if (System.Math.Abs(vdrop - 0.72212958501093D) <= 1e-3)
@@ -106,8 +106,8 @@ public class Level2 : Tutorial
         };
         AddEntry("Now switch the multimeter on, put it in current mode, and flip the circuit breaker to read the measurement.").started += () => Handle<SpiceSharp.Simulations.IBiasingSimulation>(ref SimulationManager.simulationDone, sim =>
         {
-            var current = new SpiceSharp.Simulations.RealPropertyExport(sim, led.gameObject.GetInstanceID().ToString(), "i").Value;
-            var vdrop = new SpiceSharp.Simulations.RealPropertyExport(sim, led.gameObject.GetInstanceID().ToString(), "v").Value;
+            var current = new SpiceSharp.Simulations.RealPropertyExport(sim, led.ID(), "i").Value;
+            var vdrop = new SpiceSharp.Simulations.RealPropertyExport(sim, led.ID(), "v").Value;
 
             // voltage drop across the diode approximately equal to the value actually gotten when measuring if connected correctly.
             if (Utils.Approximately(vdrop, 0.72212958501093D))
@@ -138,7 +138,7 @@ public class Level2 : Tutorial
         AddEntry("Of course all of this is dictated by physical laws, and you'll get to hear all about that soon enough. But for now, this page should contain all you need to properly operate this LED.").ended += () => Book.ShowEmpty();
         AddEntry("Try to increase the current a little bit using your new knowledge, I’ll let you experiment as you will.").started += () =>
         {
-            var goal = new ComponentValueMeasuredGoal("Run a current of ~20mA through the LED.", led.gameObject.GetInstanceID().ToString(), "i", 20 * 1e-3);
+            var goal = new ComponentValueMeasuredGoal("Run a current of ~20mA through the LED.", led.ID(), "i", 20 * 1e-3);
             Puzzle.AddGoal(goal);
             Handle<Goal>(ref Puzzle.goalAchieved, g =>
             {

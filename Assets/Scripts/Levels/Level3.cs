@@ -74,18 +74,19 @@ public class Level3 : Tutorial
 
 
         bool lowMeasured = false, midMeasured = false, highMeasured = false;
-        Handle<LevelComponent>(ref LevelComponent.propertyRevealed, c =>
+        Handle<double, PropertyType>(ref Multimeter.measured, (v, u) =>
         {
-            if (c == lowResistorLevelComponent) lowMeasured = true;
-            if (c == medResistorLevelComponent) midMeasured = true;
-            if (c == highResistorLevelComponent) highMeasured = true;
+            if (u != PropertyType.Resistance) return false;
+            if (v == lowRes) lowMeasured = true;
+            if (v == midRes) midMeasured = true;
+            if (v == highRes) highMeasured = true;
             if (lowMeasured && midMeasured && highMeasured)
             {
                 PlaySequence(Seq2);
                 return true;
             }
             return false;
-        }, handler => LevelComponent.propertyRevealed -= handler);
+        }, handler => Multimeter.measured -= handler);
     }
 
     void Seq2()
@@ -108,7 +109,7 @@ public class Level3 : Tutorial
 
             Handle<IBiasingSimulation>(ref SimulationManager.simulationDone, sim =>
             {
-                var current = new RealPropertyExport(sim, led.gameObject.GetInstanceID().ToString(), "i").Value;
+                var current = new RealPropertyExport(sim, led.ID(), "i").Value;
                 if (Utils.Approximately(current, targetCurrent))
                 {
                     PlaySequence(LastSeq);

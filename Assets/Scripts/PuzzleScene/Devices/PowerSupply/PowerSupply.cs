@@ -48,6 +48,8 @@ public class PowerSupply : MonoBehaviour, CircuitComponent
             );
     }
 
+    public string ID() { return gameObject.GetInstanceID().ToString(); }
+
     static readonly string prefabName = "PowerSupply";
 
     public static void Spawn()
