@@ -65,38 +65,38 @@ public class Multimeter : Device, CircuitComponent
         turnedOn = true;
     }
 
-    public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
+    public SpiceSharp.Entities.Entity[] GetSpiceComponent(string positiveWire, string negativeWire)
     {
         Debug.Log(RichText.Color("Multimeter get spice called", PaletteColor.Red));
         string id = gameObject.GetInstanceID().ToString();
         if (DeviceMode is VoltageMode)
         {
-            return new SpiceSharp.Components.Resistor(
+            return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.Resistor(
                 id,
                 positiveWire,
                 negativeWire,
                 10e6
-                );
+                )};
         }
         else if (DeviceMode is CurrentMode)
         {
-            return new SpiceSharp.Components.VoltageSource(
+            return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.VoltageSource(
             id,
             positiveWire,
             negativeWire,
             0
-            );
+            )};
 
         }
         else if (DeviceMode is ResistanceMode)
         {
             {
-                return new SpiceSharp.Components.VoltageSource(
+                return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.VoltageSource(
                 id,
                 positiveWire,
                 negativeWire,
                 1
-                );
+                )};
             }
 
         }

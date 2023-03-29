@@ -34,29 +34,31 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
     }
 
     // TODO: resturn list of components, including needed models
-    public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
+    public SpiceSharp.Entities.Entity[] GetSpiceComponent(string positiveWire, string negativeWire)
     {
         var component = levelComponent.Component;
         var id = gameObject.GetInstanceID().ToString();
         switch (component.componentType)
         {
             case ComponentType.Resistor:
-                return new SpiceSharp.Components.Resistor(
+                return new SpiceSharp.Entities.Entity[] {new SpiceSharp.Components.Resistor(
                         id,
                         negativeWire,
                         positiveWire,
                         component.Properties[PropertyType.Resistance].value
-                        );
+                        )};
             case ComponentType.Battery:
-                return new SpiceSharp.Components.VoltageSource(
+                return new SpiceSharp.Entities.Entity[] {new SpiceSharp.Components.VoltageSource(
                        id,
                        negativeWire,
                        positiveWire,
                        component.Properties[PropertyType.Voltage].value
-                       );
+                       )};
 
             case ComponentType.Led:
-                return new SpiceSharp.Components.Diode(id, negativeWire, positiveWire, $"{levelComponent.Name}_model"); ;
+                var model = new SpiceSharp.Components.DiodeModel($"${ID()}_model");
+                // TODO: set model params (using default diode for now)
+                return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.Diode(id, negativeWire, positiveWire, model.Name), model };
         }
         return null;
 

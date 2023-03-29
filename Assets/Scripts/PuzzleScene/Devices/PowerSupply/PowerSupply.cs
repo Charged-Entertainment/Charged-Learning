@@ -36,16 +36,16 @@ public class PowerSupply : MonoBehaviour, CircuitComponent
         currentDisplay.Write($"{System.Math.Round(current, 4)}A");
     }
 
-    public SpiceSharp.Components.Component GetSpiceComponent(string positiveWire, string negativeWire)
+    public SpiceSharp.Entities.Entity[] GetSpiceComponent(string positiveWire, string negativeWire)
     {
         string id = gameObject.GetInstanceID().ToString();
         Debug.Log($"value: {knob.Value * MAX_VOLTAGE}");
-        return new SpiceSharp.Components.VoltageSource(
+        return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.VoltageSource(
             id,
             positiveWire,
             negativeWire,
             knob.Value * MAX_VOLTAGE
-            );
+            )};
     }
 
     public string ID() { return gameObject.GetInstanceID().ToString(); }

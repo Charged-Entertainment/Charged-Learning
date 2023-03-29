@@ -46,11 +46,6 @@ public class SimulationManager : Singleton<SimulationManager>
 
         var circuit = CircuitBuilder.Collect();
 
-        // TEMP for testing. Get attach real models!!
-        var testModel = new SpiceSharp.Components.DiodeModel("led_model");
-        // testModel.SetParameter("Rs", 330.0);
-        circuit.Add(testModel);
-
         simulation.ExportSimulationData += HandleSimulationResults;
         try
         {
