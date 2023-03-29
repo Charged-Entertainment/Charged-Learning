@@ -1,0 +1,75 @@
+Button {
+  background-color: transparent;
+  border-color: transparent;
+  transition: scale 50ms ease-in;
+}
+
+Button:hover {
+  scale: 1.02;
+}
+
+Button:active {
+  scale: 0.98;
+}
+
+#back-btn {
+  position: absolute;
+  background-image: resource("Icons/back");
+  height: 140px;
+  width: 140px;
+  left: 197.08203125px;
+  top: 115.0830078125px;
+}
+
+#settings-btn {
+  position: absolute;
+  background-image: resource("UIElements/MainMenu/settingsBtn");
+  height: 134.775634765625px;
+  width: 134.775634765625px;
+  left: 114px;
+  top: 1969px;
+
+  transition: rotate 300ms ease-in;
+}
+
+#settings-btn:hover {
+  rotate: 0.5turn;
+}
+
+.cutscene Button {
+  background-image: resource("UIElements/LevelTree/cutscene");
+  height: 242px;
+  width: 242px;
+}
+
+#cutscene1 {
+  position: absolute;
+  left: 211px;
+  top: 929px;
+}
+
+#cutscene1 TextElement {
+  font-size: 57px;
+  color: white;
+  position: absolute;
+  top: 277.71px;
+  -unity-text-align: middle-center;
+  white-space: nowrap;
+}
+
+#resistor-minigame {
+  background-image: resource("UIElements/LevelTree/resistor-minigame");
+  height: 314.0860595703125px;
+  width: 270.1300048828125px;
+  left: 1407px;
+  top: 1667px;
+}
+
+#fog {
+  position: absolute;
+  background-image: resource("UIElements/LevelTree/locked-levels-fog");
+  height: 2160px;
+  width: 100%;
+  right: -700px;
+  top: 0;
+}

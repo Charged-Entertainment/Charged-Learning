@@ -1,0 +1,69 @@
+.node {
+  position: absolute;
+  background-image: resource("UIElements/LevelTree/node");
+  height: 322.08px;
+  width: 322.08px;
+  font-size: 100px;
+  -unity-font-style: bold;
+  color: #ffcf06;
+  text-shadow: rgb(138, 110, 0) 5px 5px 10px;
+}
+
+.locked {
+  -unity-background-image-tint-color: #31373b;
+  color: #47331d;
+  text-shadow: unset;
+}
+
+.unlocked {
+  
+}
+
+.locked:hover {
+  scale: 1;
+}
+
+#node-1 {
+  left: 628px;
+  top: 906.0322265625px;
+}
+#node-2 {
+  left: 1085.14px;
+  top: 906.0322265625px;
+}
+#node-3 {
+  left: 1542.29px;
+  top: 906.0322265625px;
+}
+#node-4 {
+  left: 2026.59765625px;
+  top: 1404.734375px;
+}
+#node-5 {
+  left: 2026.59765625px;
+  top: 406.73px;
+}
+#node-6 {
+  left: 2515px;
+  top: 67px;
+}
+#node-7 {
+  left: 2515px;
+  top: 1586px;
+}
+#node-8 {
+  left: 2837px;
+  top: 853px;
+}
+#node-9 {
+  left: 3047px;
+  top: 1395px;
+}
+#node-10 {
+  left: 3051px;
+  top: 114px;
+}
+#node-11 {
+  left: 3299px;
+  top: 866px;
+}

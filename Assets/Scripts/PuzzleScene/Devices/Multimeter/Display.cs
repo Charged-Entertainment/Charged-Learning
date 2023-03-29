@@ -8,7 +8,7 @@ public class Display : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        textElement = transform.Find("Canvas").GetChild(0).GetComponent<Text>();
+        textElement = GetComponentInChildren<Text>();
     }
 
 

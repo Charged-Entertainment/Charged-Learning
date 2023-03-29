@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private short CurrentLevel = 1;
+    [SerializeField] static public short LevelToLoadOnPuzzleSceneEnter = -1;
     void Start()
     {
-        if (CurrentLevel == 1) gameObject.AddComponent<Level1>();
-        else if (CurrentLevel == 2) gameObject.AddComponent<Level2>();
-        else if (CurrentLevel == 3) gameObject.AddComponent<Level3>();
+        if (LevelToLoadOnPuzzleSceneEnter == 1) gameObject.AddComponent<Level1>();
+        else if (LevelToLoadOnPuzzleSceneEnter == 2) gameObject.AddComponent<Level2>();
+        else if (LevelToLoadOnPuzzleSceneEnter == 3) gameObject.AddComponent<Level3>();
         else
         {
-            Debug.Log($"Unknown level: #{CurrentLevel}");
+            Debug.Log($"Unknown level: #{LevelToLoadOnPuzzleSceneEnter}");
             Debug.Log($"Adding demo components");
 
             // for testing in sandbox mode

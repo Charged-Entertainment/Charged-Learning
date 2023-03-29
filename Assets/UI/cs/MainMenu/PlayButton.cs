@@ -28,7 +28,7 @@ namespace MainMenu
 
         private void HandleClick(MouseUpEvent e)
         {
-            SceneManager.LoadScene("PuzzleScene");
+            SceneManager.LoadScene("LevelTree");
         }
     }
 }

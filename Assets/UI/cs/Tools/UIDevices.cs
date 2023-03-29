@@ -24,6 +24,9 @@ public partial class UI
             DevicesButtons.Add(CalculatorButton);
             SetButtonVisable(CalculatorButton, false);
 
+            DevicesButtons.Add(PowerSupplyButton);
+            SetButtonVisable(PowerSupplyButton, false);
+
             List<Button> unknowns = container.Query<Button>(className: "unknown").ToList();
             foreach (var b in unknowns)
             {

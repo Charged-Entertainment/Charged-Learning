@@ -1,0 +1,40 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <Style src="uss/utils.uss" />
+    <Style src="uss/style.uss" />
+    <Style src="uss/LevelTree/style.uss" />
+    <Style src="uss/LevelTree/nodes.uss" />
+
+    <ui:VisualElement name="main" picking-mode="Ignore">
+        <ui:Button name="back-btn" />
+        <ui:Button name="settings-btn" />
+
+        <ui:VisualElement name="cutscene1" class="cutscene">
+            <ui:Button />
+            <ui:TextElement text="Chapter 1" />
+        </ui:VisualElement>
+
+        <ui:Button name="resistor-minigame"/>
+
+        <!-- Finished levels -->
+        <ui:Button text="1" name="node-1" class="node complete available" />
+        <ui:Button text="2" name="node-2" class="node complete available" />
+        <ui:Button text="3" name="node-3" class="node complete available" />
+
+        
+
+        <!-- Locked levels -->
+        <ui:Button text="6" name="node-6" class="node locked" />
+        <ui:Button text="7" name="node-7" class="node locked" />
+        <ui:Button text="8" name="node-8" class="node locked" />
+        <ui:Button text="9" name="node-9" class="node locked" />
+        <ui:Button text="10" name="node-10" class="node locked" />
+        <ui:Button text="11" name="node-11" class="node locked" />
+
+        <ui:Image name="fog" picking-mode="Ignore"/>
+        
+        <!-- Currently available levels -->
+        <ui:Button text="4" name="node-4" class="node unlocked available" />
+        <ui:Button text="5" name="node-5" class="node unlocked available" />
+    </ui:VisualElement>
+</ui:UXML>

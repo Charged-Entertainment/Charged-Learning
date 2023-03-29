@@ -102,10 +102,11 @@
                             <ui:Image />
                         </ui:Button>
 
-                        <ui:Button name="unknown1-btn" class="tools-sub-btn unknown">
+                        <ui:Button name="power-supply-btn" class="tools-sub-btn">
                             <ui:Image />
                         </ui:Button>
-                        <ui:Button name="unknown2-btn" class="tools-sub-btn unknown">
+
+                        <ui:Button name="unknown1-btn" class="tools-sub-btn unknown">
                             <ui:Image />
                         </ui:Button>
                     </ui:VisualElement>

@@ -63,6 +63,13 @@
   height: 86px;
 }
 
+#tools #power-supply-btn Image {
+  background-image: resource("Icons/power-supply");
+  align-self: center;
+  height: 58.861724853515625px;
+  width: 76.99943542480469px;
+}
+
 #tools #calculator-btn Image {
   background-image: resource("Icons/calculator");
   align-self: center;

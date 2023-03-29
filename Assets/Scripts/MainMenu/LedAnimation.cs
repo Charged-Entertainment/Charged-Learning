@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class LedAnimation : MonoBehaviour
 {
-    Led led;
+    PointLight led;
     private void Awake()
     {
-        led = GameObject.Find("led").GetComponent<Led>();
+        led = GameObject.Find("led").GetComponentInChildren<PointLight>();
         // led.lerpSpeed /= 2;
         Alternate();
     }

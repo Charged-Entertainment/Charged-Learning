@@ -11,6 +11,6 @@ public class Probe : EditorBehaviour
         }
     }
     public override void Destroy() {
-        Debug.Log("Cannot delete multimeter probes. Delete the whole multimeter instead.");
+        FeebackTerminal.Write(new Log("Cannot delete device probes. Delete the whole device instead.", LogType.Warning));
     }
 }

@@ -32,7 +32,7 @@ abstract public class Tooltip
 
         private static void HandleUILevelComponentCreated(UILevelComponent c)
         {
-            var t = new DefaultTooltipVE(c.visualElement, c.levelComponent.Name, "ctrl +", "Testo besto");
+            var t = new DefaultTooltipVE(c.visualElement, c.levelComponent.Name.ToUpper(), "ctrl +", "Description.");
             // TODO: set the position of t.root to somewhere near c.visualElement
         }
 
@@ -40,7 +40,7 @@ abstract public class Tooltip
         {
             if (c.levelComponent != null)
             {
-                var t = new DefaultTooltipCB(c, c.levelComponent.Name, "ctrl +", "Testo besto");
+                var t = new DefaultTooltipCB(c, c.levelComponent.Name.ToUpper(), "ctrl +", "Description.");
                 // TODO: set the position of t.root to somewhere near c.gameObject.transform.position
             }
             else Debug.Log("Error");
