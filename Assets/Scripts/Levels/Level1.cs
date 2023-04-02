@@ -70,8 +70,6 @@ public class Level1 : Tutorial
         UILevelComponent.created += InitBatteryUI;
         battery = Puzzle.CreateLevelComponent("battery", ComponentType.Battery, 1);
         Puzzle.AddProperty(battery, PropertyType.Voltage, 12);
-        Puzzle.AddGoal(new ComponentMeasured("Measure the battery", battery));
-
     }
     private void InitBatteryUI(UILevelComponent c)
     {
@@ -87,8 +85,6 @@ public class Level1 : Tutorial
         UILevelComponent.created += InitResisorUI;
         resistor = Puzzle.CreateLevelComponent("resistor", ComponentType.Resistor, 1);
         Puzzle.AddProperty(resistor, PropertyType.Resistance, 5);
-        Puzzle.AddGoal(new ComponentMeasured("Measure the resistor", resistor));
-
     }
     private void InitResisorUI(UILevelComponent c)
     {
@@ -271,10 +267,11 @@ public class Level1 : Tutorial
             Dialog.Pause();
             SetEnabled(GameModeIndicator, true);
             SetEnabled(CircuitBreaker, true);
+            Puzzle.AddGoal(new ComponentValueMeasuredGoal("Measure the value of the battery.", battery.Instances.First().ID(), "v", 12f));
             Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {
-                        ComponentMeasured compMeasuredGoal = (goal as ComponentMeasured);
-                        if (compMeasuredGoal != null && compMeasuredGoal.levelComponent == battery)
+                        ComponentValueMeasuredGoal compMeasuredGoal = (goal as ComponentValueMeasuredGoal);
+                        if (compMeasuredGoal != null && compMeasuredGoal.componentSpiceName == battery.Instances.First().ID())
                         {
                             Dialog.Continue();
                             return true;
@@ -309,25 +306,24 @@ public class Level1 : Tutorial
         lastEntry.started += () =>
         {
             SetEnabled(CalculatorButton, true);
-            Puzzle.AddGoal(new CircuitSubmit("Connect the resistor and the battery in a circuit then submit", battery, resistor));
             FeebackTerminal.Enable();
             Knob.SetEnabled(true);
+            Puzzle.AddGoal(new ComponentValueMeasuredGoal("Measure the value of the resistor.", resistor.Instances.First().ID(), "r", 5f));
+            Handle<Goal>(ref Puzzle.goalAchieved, goal =>
+                        {
+                            ComponentValueMeasuredGoal compMeasuredGoal = (goal as ComponentValueMeasuredGoal);
+                            if (compMeasuredGoal != null && compMeasuredGoal.componentSpiceName == resistor.Instances.First().ID())
+                            {
+                                PlayDialogSequence2();
+                                return true;
+                            }
+                            return false;
+                        }, (handler) =>
+                        {
+                            Puzzle.goalAchieved -= handler;
+                        });
         };
 
-        Handle<Goal>(ref Puzzle.goalAchieved, goal =>
-                    {
-                        ComponentMeasured compMeasuredGoal = (goal as ComponentMeasured);
-
-                        if (compMeasuredGoal != null && compMeasuredGoal.levelComponent == resistor)
-                        {
-                            PlayDialogSequence2();
-                            return true;
-                        }
-                        return false;
-                    }, (handler) =>
-                    {
-                        Puzzle.goalAchieved -= handler;
-                    });
         var seq = new DialogSequence(entries);
         Dialog.PlaySequence(seq);
     }
@@ -345,6 +341,7 @@ public class Level1 : Tutorial
             SetEnabled(SubmitButton, true);
             Dialog.Pause();
             Multimeter.Destroy();
+            Puzzle.AddGoal(new CircuitSubmit("Connect the resistor and the battery in a circuit then submit", battery, resistor));
 
             Handle<Goal>(ref Puzzle.goalAchieved, goal =>
                     {

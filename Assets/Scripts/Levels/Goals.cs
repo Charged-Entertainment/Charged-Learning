@@ -2,30 +2,11 @@ using Components;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ComponentMeasured : Goal
-{
-    public LevelComponent levelComponent;
-    public ComponentMeasured(string message, LevelComponent component) : base(message)
-    {
-        this.levelComponent = component;
-        LevelComponent.propertyRevealed += HandlePropertyRevealred;
-    }
-
-    private void HandlePropertyRevealred(LevelComponent component)
-    {
-        if (component == this.levelComponent)
-        {
-            Achieved = true;
-            Puzzle.goalAchieved?.Invoke(this);
-        }
-    }
-}
-
 public class ComponentValueMeasuredGoal : Goal
 {
-    string componentSpiceName;
-    string property;
-    double neededValue;
+    public string componentSpiceName {get; private set;}
+    public string property {get; private set;}
+    public double neededValue {get; private set;}
     public ComponentValueMeasuredGoal(string message, string componentSpiceName, string property, double neededValue) : base(message)
     {
         this.componentSpiceName = componentSpiceName;
@@ -36,7 +17,7 @@ public class ComponentValueMeasuredGoal : Goal
 
     public ComponentValueMeasuredGoal(string message, LiveComponent component, string property, double neededValue) : base(message)
     {
-        this.componentSpiceName = component.gameObject.GetInstanceID().ToString();
+        this.componentSpiceName = component.ID();
         this.property = property;
         this.neededValue = neededValue;
         SimulationManager.simulationDone += HandleSimulationDone;
@@ -44,7 +25,7 @@ public class ComponentValueMeasuredGoal : Goal
 
     private void HandleSimulationDone(SpiceSharp.Simulations.IBiasingSimulation simulation)
     {
-        var val = new SpiceSharp.Simulations.RealPropertyExport(simulation, componentSpiceName, "i").Value;
+        var val = new SpiceSharp.Simulations.RealPropertyExport(simulation, componentSpiceName, property).Value;
         if (Utils.Approximately(neededValue, val))
         {
             Achieved = true;

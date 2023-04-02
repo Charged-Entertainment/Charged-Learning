@@ -26,7 +26,7 @@ public class CurrentMode : MultimeterMode
     protected override void HandleSimulationDone(IBiasingSimulation simulation)
     {
         if (!multimeter.InCircuit) return;
-        var currentExport = new RealCurrentExport(simulation, multimeter.gameObject.GetInstanceID().ToString());
+        var currentExport = new RealCurrentExport(simulation, multimeter.ID());
         multimeter.DisplayMessage($"{currentExport.Value}A");
         
     }

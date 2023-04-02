@@ -19,13 +19,11 @@ namespace Components
     }
     public class Property
     {
-        public bool isRevealed;
         public PureProperty pureProperty { get; private set; }
 
-        public Property(PureProperty pureProperty, bool isRevealed = false)
+        public Property(PureProperty pureProperty)
         {
             this.pureProperty = pureProperty;
-            this.isRevealed = isRevealed;
         }
     }
 
@@ -35,9 +33,10 @@ namespace Components
         public Component Component { get; private set; }
         public static Action<LevelComponent> created;
 
-        public static Action<LevelComponent> quantityChanged, propertyRevealed;
+        public static Action<LevelComponent> quantityChanged;
 
         public Dictionary<PropertyType, Property> Properties { get; private set; }
+        public HashSet<LiveComponent> Instances { get; private set; }
 
         // public Dictionary<string, Terminal> Terminals { get; private set; }
 
@@ -45,11 +44,10 @@ namespace Components
 
         public string Name { get; set; }
 
-
-
         public LevelComponent(Component component, Quantity quantity, string name)
         {
             Properties = new Dictionary<PropertyType, Property>();
+            Instances = new HashSet<LiveComponent>();
             this.Component = component;
             this.Quantity = quantity;
             this.Name = name;
@@ -60,6 +58,8 @@ namespace Components
             }
             LiveComponent.created += HandleComponentCreated;
             LiveComponent.destroyed += HandleComponentDestroyed;
+
+
             created?.Invoke(this);
         }
 
@@ -68,11 +68,11 @@ namespace Components
             Properties.Add(pureProperty.propertyType, new Property(pureProperty));
         }
 
-        // TODO: handle reveal event and qunatity change event
         private void HandleComponentCreated(LiveComponent comp)
         {
             if (comp.levelComponent == this)
             {
+                Instances.Add(comp);
                 if (Quantity.Used < Quantity.Total)
                 {
                     Quantity.Used++;
@@ -86,11 +86,11 @@ namespace Components
             }
         }
 
-        // TODO: handle reveal event and qunatity change event
-        private void HandleComponentDestroyed(EditorBehaviour comp)
+        private void HandleComponentDestroyed(LiveComponent comp)
         {
-            if (comp.GetComponent<LiveComponent>().levelComponent == this)
+            if (comp.levelComponent == this)
             {
+                Instances.Remove(comp);
                 if (Quantity.Used >= 1)
                 {
                     Quantity.Used--;
@@ -104,24 +104,6 @@ namespace Components
                 }
 
             }
-        }
-
-        public void RevealProperty(PropertyType propertyType)
-        {
-            var propertyName = Enum.GetName(typeof(PropertyType), propertyType);
-            if(!Properties.ContainsKey(propertyType)){
-                Debug.Log($"{propertyName} property doesn't exist for this component");
-                return;
-            }
-
-            var propertyIsRevealed = Properties[propertyType].isRevealed;
-            if (propertyIsRevealed){
-                Debug.Log($"{propertyName} has been already revealed");
-                return;
-            }
-            Properties[propertyType].isRevealed = true;
-            Debug.Log("property revealed!");
-            propertyRevealed?.Invoke(this);
         }
     }
 }

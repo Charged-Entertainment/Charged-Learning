@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ public partial class Selection : Singleton<Selection>
     static private SelectionArea selectionArea = null;
 
     private SelectionController selectionController;
+
+    public static Action<EditorBehaviour> objectAdded, objectRemoved;
+    public static Action cleared, selectionChanged;
 
     private new void Awake()
     {
@@ -97,6 +101,8 @@ public partial class Selection : Singleton<Selection>
         {
             selectedGameObjects.Add(component.GetInstanceID(), component);
             component.gameObject.AddComponent<SelectedObjectOverlay>();
+            objectAdded?.Invoke(component);
+            selectionChanged?.Invoke();
         }
     }
 
@@ -104,6 +110,8 @@ public partial class Selection : Singleton<Selection>
     {
         selectedGameObjects.Remove(component.GetInstanceID());
         GameObject.Destroy(component.gameObject.GetComponent<SelectedObjectOverlay>());
+        objectRemoved?.Invoke(component);
+        selectionChanged?.Invoke();
     }
 
     static public void InvertComponents(IList<EditorBehaviour> components)
@@ -134,6 +142,8 @@ public partial class Selection : Singleton<Selection>
     {
         RemoveComponents(selectedGameObjects.Values.ToArray());
         selectedGameObjects.Clear(); // just to make sure
+        cleared?.Invoke();
+        selectionChanged?.Invoke();
     }
 
     static public List<T> GetSelectedComponents<T>(bool includeDisabled = false) where T : EditorBehaviour

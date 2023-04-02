@@ -129,12 +129,11 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
 
         foreach (var circuitComponent in circuitComponents)
         {
-            var entity = circuitComponent.GetSpiceComponent(
+            var entities = circuitComponent.GetSpiceComponent(
                 GetWireName(finalCircuit[circuitComponent.Terminals[0]]),
                 GetWireName(finalCircuit[circuitComponent.Terminals[1]])
                 );
-
-            circuit.Add(entity);
+            foreach (var entity in entities) circuit.Add(entity);
         }
 
         return circuit;
