@@ -17,17 +17,13 @@ public class SyncSelection
     {
         Disable();
         // UnityEditor.Selection.selectionChanged += SyncToGame;
-        Selection.objectAdded += SyncFromGame;
-        Selection.objectRemoved += SyncFromGame;
-        Selection.cleared += SyncFromGame;
+        Selection.selectionChanged += SyncFromGame;
     }
 
     static void Disable()
     {
         // UnityEditor.Selection.selectionChanged -= SyncToGame;
-        Selection.objectAdded -= SyncFromGame;
-        Selection.objectRemoved -= SyncFromGame;
-        Selection.cleared -= SyncFromGame;
+        Selection.selectionChanged -= SyncFromGame;
     }
 
     static void SyncFromGame(EditorBehaviour c) { SyncFromGame(); }
