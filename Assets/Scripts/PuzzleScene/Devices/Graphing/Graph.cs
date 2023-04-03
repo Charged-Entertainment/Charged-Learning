@@ -1,64 +1,43 @@
-using System;
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Unity.Collections;
 
-public class Graph : MonoBehaviour
+public partial class Graph : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    private static readonly int startCapacity = 100;
+    // size of the data ~= 12 bytes * Points.Capacity (starts with Capacity=startCapacity) and NativeLists support automatic reallocation
+    [SerializeField] private NativeList<Vector3> Points;
+    private new GraphRenderer renderer;
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.useWorldSpace = false;
-    }
-    public void DrawPoint(Vector3 point)
-    {
-        lineRenderer.positionCount++;
-        lineRenderer.SetPosition(lineRenderer.positionCount - 1, point);
-        if (Count > 0) transform.position += Vector3.left * (point.x - At(LastIndex - 1).x);
+        Points = new NativeList<Vector3>(startCapacity, Allocator.Persistent);
+        renderer = gameObject.AddComponent<GraphRenderer>();
     }
 
-    public Vector2 Last()
+    private void OnDisable() { Points.Dispose(); }
+
+
+    public float Min { get; private set; } = float.MaxValue;
+    public float Max { get; private set; } = float.MinValue;
+    public float AbsMax { get { return Mathf.Max(Mathf.Abs(Min), Mathf.Abs(Max)); } }
+    public void AddPoint(Vector2 point)
     {
-        return lineRenderer.GetPosition(lineRenderer.positionCount - 1);
+        if (point.y < Min) Min = point.y;
+        if (point.y > Max) Max = point.y;
+        Points.Add(point);
+        renderer.ScrollRight();
     }
 
-    public Vector2 At(int i)
-    {
-        return lineRenderer.GetPosition(i);
+    public void Zoom(float factor) {
+        renderer.Zoom(factor);
     }
+
+    public Vector2 At(int i) { return Points[i]; }
 
     public Vector2 Scale { get { return transform.localScale; } }
-    public int Count { get { return lineRenderer.positionCount; } }
-    public int LastIndex { get { return lineRenderer.positionCount - 1; } }
-    public float AbsoluteMax
-    {
-        get
-        {
-            Vector3[] points = new Vector3[Count];
-            lineRenderer.GetPositions(points);
-            float max = points.Max(e => e.y);
-            float min = points.Min(e => e.y);
-            return Mathf.Max(Mathf.Abs(max), Mathf.Abs(min));
-        }
-    }
 
-    public float Max
-    {
-        get
-        {
-            Vector3[] points = new Vector3[Count];
-            lineRenderer.GetPositions(points);
-            return points.Max(e => e.y);
-        }
-    }
-
-    public float Min
-    {
-        get
-        {
-            Vector3[] points = new Vector3[Count];
-            lineRenderer.GetPositions(points);
-            return points.Min(e => e.y);
-        }
-    }
+    public int LastIndex { get { return Points.Length - 1; } }
+    public Vector3 Last { get { return Points[Points.Length - 1]; } }
+    public int Length { get { return Points.Length; } }
 }
