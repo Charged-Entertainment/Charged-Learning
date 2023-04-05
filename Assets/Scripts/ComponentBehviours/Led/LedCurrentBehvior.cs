@@ -6,7 +6,7 @@ using GameManagement;
 public class LedCurrentBehvior : MonoBehaviour
 {
     private readonly static float CURRENT_TO_INTENSITY_MULT = 0.0375f;
-    private readonly static double MIN_CURRENT = 10e-3;
+    // private readonly static double MIN_CURRENT = 10e-3;
     private readonly static double OPTIMAL_CURRENT = 20e-3;
     private readonly static double ACCEPTABLE_CURRENT_DIFF = 2.5e-3;
     private readonly static double MAX_CURRENT = 30e-3;

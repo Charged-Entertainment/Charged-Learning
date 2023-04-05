@@ -7,7 +7,7 @@ public class Multimeter : Device, CircuitComponent
 {
     [SerializeField] private float testDisplayValue;
     [SerializeField] private Display display;
-    [SerializeField] private bool turnedOn;
+    // [SerializeField] private bool turnedOn;
     public bool InCircuit { get; set; }
     [field: SerializeField] public Terminal[] Terminals { get; private set; }
 
@@ -35,7 +35,7 @@ public class Multimeter : Device, CircuitComponent
         display = transform.Find("Multimeter").gameObject.AddComponent<Display>();
         transform.Find("Multimeter").gameObject.AddComponent<Body>();
         DeviceMode = new OffMode();
-        turnedOn = false;
+        // turnedOn = false;
         DeviceMode.OnEnter(this);
     }
     public override void ChangeMode(DeviceMode newMode)
@@ -56,13 +56,13 @@ public class Multimeter : Device, CircuitComponent
 
     public void TurnOff()
     {
-        turnedOn = false;
+        // turnedOn = false;
         display.TurnOff();
     }
 
     public void TurnOn()
     {
-        turnedOn = true;
+        // turnedOn = true;
     }
 
     public SpiceSharp.Entities.Entity[] GetSpiceComponent(string positiveWire, string negativeWire)
