@@ -31,7 +31,7 @@ namespace CLGraphing
             lineRenderer.SetPositions(seg);
 
             transform.position = new Vector3(-First.x * Scale.x, transform.position.y, transform.position.z);
-            transform.position += transform.parent.position;
+            transform.position += transform.parent.position.x * Vector3.right;
 
             FitVertically();
             if (UnderflowX > 0) FitHorizontally();
