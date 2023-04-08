@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using SpiceSharp.Simulations;
+using CLGraphing;
+
+public class GraphingToolCurrentMode : GraphingToolMode
+{
+    bool ac;
+    string measurementRange;
+
+    public override void OnEnter(Device device)
+    {
+        base.OnEnter(device);
+        // do stuff if needed
+    }
+
+    /// <param name="ac">Decide weather you are measuring AC or DC voltage</param>
+    /// <param name="measurementRange">The range you expect the measurement to be in</param>
+    public GraphingToolCurrentMode(bool ac, string measurementRange)
+    {
+        this.ac = ac;
+        this.measurementRange = measurementRange;
+    }
+
+
+    protected override void HandleSimulationDone(IBiasingSimulation simulation)
+    {
+        if (!graphingTool.InCircuit) return;
+        var currentExport = new RealCurrentExport(simulation, graphingTool.ID());
+        GraphingTool.Plot(new Vector2(Graphing.time, (float)currentExport.Value));
+        
+    }
+}

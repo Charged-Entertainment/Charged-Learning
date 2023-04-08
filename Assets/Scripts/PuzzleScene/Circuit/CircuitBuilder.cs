@@ -173,7 +173,7 @@ public class CircuitBuilder : Singleton<CircuitBuilder>
         }
 
         var multimeter = GameObject.FindObjectOfType<Multimeter>();
-        if (Multimeter.IsAvailable() && multimeter.DeviceMode is ResistanceMode)
+        if (Multimeter.IsAvailable() && multimeter.currentMode is ResistanceMode)
         {
             groundWire = finalCircuit[multimeter.Terminals[0]];
             return groundWire;

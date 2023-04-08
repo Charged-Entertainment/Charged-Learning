@@ -34,15 +34,15 @@ public class Multimeter : Device, CircuitComponent
     {
         display = transform.Find("Multimeter").gameObject.AddComponent<Display>();
         transform.Find("Multimeter").gameObject.AddComponent<Body>();
-        DeviceMode = new OffMode();
+        currentMode = new OffMode();
         // turnedOn = false;
-        DeviceMode.OnEnter(this);
+        currentMode.OnEnter(this);
     }
     public override void ChangeMode(DeviceMode newMode)
     {
-        DeviceMode.OnExit();
+        currentMode.OnExit();
         newMode.OnEnter(this);
-        DeviceMode = newMode;
+        currentMode = newMode;
         modeChanged?.Invoke((MultimeterMode)newMode);
     }
     private void Update()
@@ -69,7 +69,7 @@ public class Multimeter : Device, CircuitComponent
     {
         Debug.Log(RichText.Color("Multimeter get spice called", PaletteColor.Red));
         string id = gameObject.GetInstanceID().ToString();
-        if (DeviceMode is VoltageMode)
+        if (currentMode is VoltageMode)
         {
             return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.Resistor(
                 id,
@@ -78,7 +78,7 @@ public class Multimeter : Device, CircuitComponent
                 10e6
                 )};
         }
-        else if (DeviceMode is CurrentMode)
+        else if (currentMode is CurrentMode)
         {
             return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.VoltageSource(
             id,
@@ -88,7 +88,7 @@ public class Multimeter : Device, CircuitComponent
             )};
 
         }
-        else if (DeviceMode is ResistanceMode)
+        else if (currentMode is ResistanceMode)
         {
             {
                 return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.VoltageSource(
@@ -126,7 +126,7 @@ public class Multimeter : Device, CircuitComponent
         else
         {
             // unsubscribe the HandleSimulation handler
-            inScene.GetComponent<Multimeter>().DeviceMode.OnExit();
+            inScene.GetComponent<Multimeter>().currentMode.OnExit();
             GameObject.Destroy(inScene);
         }
     }

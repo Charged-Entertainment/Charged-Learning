@@ -106,9 +106,13 @@
                             <ui:Image />
                         </ui:Button>
 
-                        <ui:Button name="unknown1-btn" class="tools-sub-btn unknown">
+                        <ui:Button name="graphing-tool-btn" class="tools-sub-btn">
                             <ui:Image />
                         </ui:Button>
+
+                        <!-- <ui:Button name="unknown1-btn" class="tools-sub-btn unknown">
+                            <ui:Image />
+                        </ui:Button> -->
                     </ui:VisualElement>
 
                     <ui:Button name="terminal-btn" class="px-1 tools-btn">

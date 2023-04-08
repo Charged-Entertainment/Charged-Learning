@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Device : MonoBehaviour
 {
-    public DeviceMode DeviceMode{get; protected set;}
+    public DeviceMode currentMode { get; protected set; }
     public abstract void ChangeMode(DeviceMode newMode);
 }
 

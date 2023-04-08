@@ -39,8 +39,8 @@ namespace CLGraphing
             Debug.Log($"Value: {Graphing.cursor.Value}, FirstIdx: {FirstIdx}, CurrentIdx: {Graphing.cursor.CurrentIdx}, LastIdx: {LastIdx}");
         }
 
-        private float OverflowX { get { return WorldLength - Graphing.MAX_WIDTH; } }
-        private float UnderflowX { get { return Graphing.MAX_WIDTH - WorldLength; } }
+        private float OverflowX { get { return WorldLength - Graphing.maxWidth; } }
+        private float UnderflowX { get { return Graphing.maxWidth - WorldLength; } }
         public void FitHorizontally(bool right = true)
         {
             LastIdx = Mathf.Clamp(LastIdx, 0, graph.LastIdx);
@@ -61,7 +61,7 @@ namespace CLGraphing
             // foreach (var graph in graphs.Values) 
             max = Mathf.Max(max, getMax(graph));
             if (max == 0) return;
-            Graphing.container.transform.localScale = new Vector3(Scale.x, Graphing.MAX_HEIGHT / max, Scale.z);
+            Graphing.container.transform.localScale = new Vector3(Scale.x, Graphing.maxHeight / max, Scale.z);
         }
 
         ///<summary>

@@ -77,6 +77,13 @@
   width: 86px;
 }
 
+#tools #graphing-tool-btn Image {
+  background-image: resource("Icons/graphing-tool");
+  align-self: center;
+  height: 52px;
+  width: 89px;
+}
+
 #tools #terminal-btn {
   top: 200px;
 }
