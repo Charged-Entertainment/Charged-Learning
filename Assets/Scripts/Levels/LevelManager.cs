@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
             var b = Puzzle.CreateLevelComponent("battery", Components.ComponentType.Battery, 5);
             var l = Puzzle.CreateLevelComponent("led", Components.ComponentType.Led, 5);
             var c = Puzzle.CreateLevelComponent("capacitor", Components.ComponentType.Capacitor, 5);
-            Puzzle.AddProperty(r, Components.PropertyType.Resistance, 10e3);
+            Puzzle.AddProperty(r, Components.PropertyType.Resistance, 330);
             Puzzle.AddProperty(b, Components.PropertyType.Voltage, 9);
             Puzzle.AddProperty(c, Components.PropertyType.Capacitance, 1e-3);
         }
