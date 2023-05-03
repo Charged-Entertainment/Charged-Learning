@@ -25,7 +25,7 @@ public class Puzzle : Singleton<Puzzle>
         return t;
     }
 
-    static public PureProperty AddProperty(LevelComponent c, PropertyType type, float value)
+    static public PureProperty AddProperty(LevelComponent c, PropertyType type, double value)
     {
         var p = new PureProperty(type, value);
         c.AddProperty(p);
