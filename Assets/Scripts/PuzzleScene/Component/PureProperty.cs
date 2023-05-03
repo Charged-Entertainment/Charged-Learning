@@ -9,7 +9,8 @@ namespace Components
     {
         Resistance,
         Voltage,
-        Current
+        Current,
+        Capacitance
     }
 
     public class PureProperty

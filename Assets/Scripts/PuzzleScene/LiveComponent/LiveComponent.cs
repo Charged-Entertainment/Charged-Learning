@@ -50,15 +50,27 @@ public partial class LiveComponent : EditorBehaviour, CircuitComponent
             case ComponentType.Battery:
                 return new SpiceSharp.Entities.Entity[] {new SpiceSharp.Components.VoltageSource(
                        id,
-                       negativeWire,
                        positiveWire,
+                       negativeWire,
                        component.Properties[PropertyType.Voltage].value
                        )};
 
             case ComponentType.Led:
                 var model = new SpiceSharp.Components.DiodeModel($"${ID()}_model");
                 // TODO: set model params (using default diode for now)
-                return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.Diode(id, negativeWire, positiveWire, model.Name), model };
+                return new SpiceSharp.Entities.Entity[] { new SpiceSharp.Components.Diode(
+                    id,
+                    positiveWire,
+                    negativeWire,
+                    model.Name
+                    ), model };
+            case ComponentType.Capacitor:
+                return new SpiceSharp.Entities.Entity[] {new SpiceSharp.Components.Capacitor(
+                    id,
+                    positiveWire,
+                    negativeWire,
+                    component.Properties[PropertyType.Capacitance].value
+                )};
         }
         return null;
 

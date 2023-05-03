@@ -9,7 +9,8 @@ namespace Components
     public enum ComponentType{
         Resistor,
         Battery,
-        Led
+        Led,
+        Capacitor
     }
 
     public class Component
