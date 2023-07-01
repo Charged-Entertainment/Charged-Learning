@@ -1,0 +1,29 @@
+#tooltip {
+    position: absolute;
+    flex-direction: column;
+    display: flex;
+    height: 400px;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    text-overflow: ellipsis;
+}
+
+#tooltip .title {
+    position: relative;
+    background-color: black;
+    border-radius: 20px 20px 0 0;
+    color: white;
+    padding: 20px;
+    -unity-text-align: middle-left;
+}
+
+#tooltip .subtitle {
+    -unity-text-align: middle-right;
+    color: rgb(125, 125, 125);
+}
+
+#tooltip .description {
+    color: white;
+    border-radius: 0 0 20px 20px;
+}

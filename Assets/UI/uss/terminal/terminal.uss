@@ -1,0 +1,85 @@
+#window {
+  left: 1800px;
+  top: 200px;
+  width: 862px;
+}
+
+#title-bar {
+  justify-content: space-between;
+  background-color: #282828;
+  border-radius: 21.025px 21.025px 0px 0px;
+  align-items: center;
+  /* height: 30%; */
+  height: 100px;
+}
+
+#main {
+  opacity: 0.6;
+  background-color: #1f0101;
+  height: 100%;
+  border-radius: 0px 0px 21.025px 21.025px;
+}
+
+#body {
+  padding: 32px;
+  padding-left: 32px;
+}
+
+#body Label {
+  white-space: normal;
+}
+
+#maximize-btn {
+  border-width: 0;
+  border-radius: 100%;
+}
+
+#minimize-btn {
+  background-color: rgb(145, 11, 11);
+  border-width: 0;
+  border-radius: 100%;
+}
+
+#minimize-btn:hover {
+  background-color: rgb(170, 34, 34);
+}
+
+#scroll-view Scroller {
+  width: 3%;
+  margin-right: 2%;
+}
+
+#scroll-view .unity-scroller__high-button {
+  display: none;
+  /* 
+    width: 99%;
+    border-radius: 3px 3px;
+    border-width: 0;
+    background-color: #282828; */
+}
+#scroll-view .unity-scroller__low-button {
+  display: none;
+  /* 
+    width: 98%;
+    border-radius: 3px 3px;
+    border-width: 0;
+    background-color: #282828; */
+}
+
+#scroll-view .unity-scroller--vertical .unity-base-slider__tracker {
+  display: none;
+  /* border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px; */
+}
+
+#scroll-view .unity-scroller--vertical .unity-base-slider__dragger {
+  width: 25%;
+  /* align-self: center; */
+  background-color: #323131;
+  /* border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px; */
+}

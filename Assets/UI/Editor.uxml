@@ -1,0 +1,143 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+    <Style src="uss/utils.uss" />
+    <Style src="uss/style.uss" />
+
+    <Style src="uss/editor/editor.uss" />
+    <Style src="uss/editor/controls-bar.uss" />
+    <Style src="uss/editor/game-area.uss" />
+    <Style src="uss/editor/tools.uss" />
+    <Style src="uss/tooltip.uss" />
+    <Style src="uss/dialog.uss" />
+    <Style src="uss/book.uss" />
+
+    <Template src="Terminal.uxml" name="Terminal" />
+
+    <ui:VisualElement name="main" picking-mode="Ignore">
+
+        <ui:VisualElement name="controls-bar" class="row">
+
+            <ui:VisualElement>
+                <!-- blank spot on the left spacer -->
+            </ui:VisualElement>
+
+            <ui:VisualElement name="level-name" class="row">
+                <ui:Label class="h1" text="Sandbox" />
+                <!-- <ui:Label class="h1" text="Level N: Level Name" /> -->
+            </ui:VisualElement>
+
+            <ui:VisualElement name="controls-section" class="row">
+                <ui:Button name="circuit-breaker" class="circuit-breaker-up"/>
+                <ui:Button name="hint-btn" class="icon" />
+                <ui:Button name="reset-btn" class="icon" />
+                <ui:Button name="pause-btn" class="icon" />
+            </ui:VisualElement>
+            
+        </ui:VisualElement>
+        
+        <ui:VisualElement name="middle-section" class="row" picking-mode="Ignore">
+            <ui:VisualElement name="game-area" class="row-reverse rel" picking-mode="Ignore">
+                <ui:Image name="gamemode-indicator" class="gamemode-indicator-off"/>
+                <ui:VisualElement name="dialog" class="abs">
+                    <ui:Label
+                        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae eros non augue vulputate mollis sed ut velit. Vestibulum scelerisque ipsum a interdum sodales. Integer cursus id purus ut rutrum. Praesent non molestie elit, ut egestas enim. Nullam ac tortor auctor, volutpat lacus eget, dapibus turpis.">
+                        <!-- Fill through code, below this is a demo to see in the editor only -->
+                    </ui:Label>
+                    <ui:Image>
+                        <!-- Fill through code -->
+                    </ui:Image>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="editor-controls" class="row">
+                    <ui:VisualElement class="px-1">
+                        <ui:Button name="book-btn" class="tools-btn">
+                            <ui:Image />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="px-1">
+
+                        <ui:Button name="normal-btn" class="editor-control-btn">
+                            <ui:Image class="icon" />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement class="px-1">
+
+                        <ui:Button name="zoom-in-btn" class="editor-control-btn">
+                            <ui:Image class="icon" />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+
+                    <ui:VisualElement class="px-1">
+                        <ui:Button name="zoom-out-btn" class="editor-control-btn">
+                            <ui:Image class="icon" />
+                        </ui:Button>
+
+                    </ui:VisualElement>
+
+                    
+
+                    <ui:VisualElement class="px-1">
+                        <ui:Button name="pan-btn" class="editor-control-btn">
+                            <ui:Image class="icon" />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                </ui:VisualElement>
+
+                <ui:VisualElement name="tools">
+                    <ui:VisualElement name="devices" class="px-1">
+                        <ui:Button name="devices-btn" class="tools-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+
+                        <ui:Button name="multimeter-btn" class="tools-sub-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Button name="calculator-btn" class="tools-sub-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Button name="power-supply-btn" class="tools-sub-btn">
+                            <ui:Image />
+                        </ui:Button>
+
+                        <ui:Button name="unknown1-btn" class="tools-sub-btn unknown">
+                            <ui:Image />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <ui:Button name="terminal-btn" class="px-1 tools-btn">
+                        <ui:Image />
+                    </ui:Button>
+                    <ui:VisualElement name="terminal-btn-notification"/>
+
+                </ui:VisualElement>
+
+                <ui:Button name="submit-btn" />
+
+            </ui:VisualElement>
+
+            <ui:VisualElement name="components-bar" class="col">
+
+                <ui:VisualElement name="components-bar-header" class="row">
+                    <ui:Image class="up-arrow" />
+                    <ui:Label text="Components" />
+                </ui:VisualElement>
+
+                <ui:VisualElement name="level-components" class="col">
+                    <!-- UILevelComponents should be dynamically spawned here. -->
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:Image name="corner-logo " />
+
+        <ui:Instance template="Terminal" name="terminal-instance" picking-mode="Ignore" />
+
+    </ui:VisualElement>
+</ui:UXML>

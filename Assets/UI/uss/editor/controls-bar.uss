@@ -1,0 +1,60 @@
+#controls-bar {
+  background-color: #000;
+  height: 140px;
+  width: 100%;
+  padding: 0px 50px;
+  font-family: jira;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#pause-section {
+  justify-content: center;
+}
+
+#controls-bar Button {
+  border-width: 0;
+  background-color: transparent;
+  margin: 0 40px;
+  align-self: center;
+}
+
+#pause-section #pause-label {
+  align-self: center;
+}
+
+#level-name {
+  justify-content: center;
+}
+
+#controls-section {
+  justify-content: space-between;
+}
+
+#controls-section #circuit-breaker {
+    height: 101.187px;
+    width: 48.77px;
+}
+
+.circuit-breaker-up {
+    background-image: resource("Icons/breaker-up");
+}
+
+.circuit-breaker-down {
+    background-image: resource("Icons/breaker-down");
+}
+
+#controls-section #pause-btn {
+  background-image: resource("Icons/pause");
+  border-radius: 100%;
+}
+
+#controls-section #reset-btn {
+  background-image: resource("Icons/reset");
+  border-radius: 100%;
+}
+
+#controls-section #hint-btn {
+  background-image: resource("Icons/hint");
+  border-radius: 100%;
+}

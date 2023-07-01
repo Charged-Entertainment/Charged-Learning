@@ -75,3 +75,7 @@ crashlytics-build.properties
 *.keystore
 *BurstDebugInformation*/
 *BackUpThisFolder_ButDontShipItWithYourGame*/
+
+TestScene.unity
+*[Tt]emp*
+*[Tt]estScene*

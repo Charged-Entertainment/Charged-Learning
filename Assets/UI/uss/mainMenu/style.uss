@@ -1,0 +1,79 @@
+#background {
+  position: absolute;
+  background-image: resource("UIElements/MainMenu/backgroundComponents");
+  height: 2047px;
+  width: 4122px;
+  left: -107px;
+  top: 338px;
+}
+
+Button {
+  background-color: transparent;
+  border-color: transparent;
+  transition: scale 50ms ease-in;
+}
+
+Button:hover {
+  scale: 1.02;
+}
+
+Button:active {
+  scale: 0.98;
+}
+
+#logo {
+  position: absolute;
+  background-image: resource("Logos/mainMenu");
+  height: 412.75px;
+  width: 1614px;
+  left: 1113px;
+  top: 304px;
+}
+
+.stdBtn {
+  position: absolute;
+  height: 158px;
+  width: 1179px;
+}
+
+#play-btn {
+  background-image: resource("UIElements/MainMenu/playBtn");
+  left: 1355px;
+  top: 922px;
+}
+
+#collection-btn {
+  background-image: resource("UIElements/MainMenu/collectionBtn");
+  left: 1355px;
+  top: 1216px;
+}
+
+#sandbox-btn {
+  background-image: resource("UIElements/MainMenu/sandboxBtn");
+  left: 1355px;
+  top: 1510px;
+}
+
+#settings-btn {
+  position: absolute;
+  background-image: resource("UIElements/MainMenu/settingsBtn");
+  height: 134.775634765625px;
+  width: 134.775634765625px;
+  left: 114px;
+  top: 1969px;
+
+  transition: rotate 300ms ease-in;
+}
+
+#settings-btn:hover {
+  rotate: 0.5turn;
+}
+
+#copyrights-btn {
+  position: absolute;
+  background-image: resource("UIElements/MainMenu/copyrightsBtn");
+  height: 132px;
+  width: 132px;
+  left: 352.5234375px;
+  top: 1970.5224609375px;
+}

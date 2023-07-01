@@ -1,0 +1,22 @@
+/* common styles for the entire game */
+Label {
+  font-size: 46px;
+}
+
+.icon {
+  height: 64px;
+  width: 64px;
+  border-width: 0;
+}
+
+.small-icon {
+  border-width: 0;
+  height: 46px;
+  width: 46px;
+}
+
+.large-icon {
+  border-width: 0;
+  height: 95px;
+  width: 95px;
+}

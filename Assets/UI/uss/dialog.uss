@@ -1,0 +1,24 @@
+#dialog {
+  background-color: transparent;
+  flex-direction: row;
+  margin-right: 400px;
+  bottom: 80px;
+}
+
+#dialog Label {
+  padding: 80px;
+  min-height: 356px;
+  width: 1709px;
+  white-space: normal;
+  margin-right: 200px;
+
+  background-color: rgba(27, 15, 22, 0.8);
+  border-radius: 40px;
+}
+
+#dialog Image {
+  height: 349px;
+  width: 485px;
+  align-self: center;
+  background-image: resource("Sprites/Robot/default");
+}

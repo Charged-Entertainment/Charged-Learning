@@ -1,0 +1,99 @@
+#tools {
+  position: absolute;
+  top: 400px;
+  left: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  margin-top: 120px;
+  margin-left: 120px;
+}
+
+#tools #devices {
+  position: relative;
+}
+
+#devices-btn Image {
+  background-image: resource("Icons/devices");
+  align-self: center;
+  width: 96.2px;
+  height: 80.28px;
+  border-radius: 0px;
+}
+
+.tools-btn {
+  background-color: black;
+  width: 160px;
+  height: 160px;
+  border-width: 0;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  margin-right: 20px;
+}
+
+.tools-sub-btn {
+  position: absolute;
+  background-color: white;
+  width: 160px;
+  height: 160px;
+  border-width: 0;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  transition: opacity 0.3s ease-out;
+}
+
+#tools .unknown {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#tools .unknown Image {
+  background-image: resource("Icons/question-mark");
+  width: 51px;
+  height: 76.32px;
+}
+
+#tools #multimeter-btn Image {
+  background-image: resource("Icons/multimeter");
+  align-self: center;
+  width: 92px;
+  height: 86px;
+}
+
+#tools #power-supply-btn Image {
+  background-image: resource("Icons/power-supply");
+  align-self: center;
+  height: 58.861724853515625px;
+  width: 76.99943542480469px;
+}
+
+#tools #calculator-btn Image {
+  background-image: resource("Icons/calculator");
+  align-self: center;
+  height: 82px;
+  width: 86px;
+}
+
+#tools #terminal-btn {
+  top: 200px;
+}
+
+#tools #terminal-btn Image {
+  background-image: resource("Icons/terminal");
+  align-self: center;
+  width: 81px;
+  height: 51px;
+}
+
+#terminal-btn-notification {
+  position: absolute;
+  left: 15px;
+  top: 360px;
+  height: 60px;
+  width: 60px;
+  background-color: red;
+  border-radius: 100%;
+}
